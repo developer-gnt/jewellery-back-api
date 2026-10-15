@@ -60,6 +60,11 @@
 - **Reason:** Client requirement is only for current rates; history is optional
 - **Status:** Implement stub, leave empty/disabled unless client confirms
 
+### ADR-008: Strict Migration-First Database Schema Policy
+- **Decision:** All table creations, alterations, and schema changes MUST be managed strictly via TypeORM migration files.
+- **Rule:** `DB_SYNC` is set to `false`. TypeORM `synchronize: true` is strictly prohibited.
+- **Workflow:** When any entity is modified or added in `src/modules/**/entities/`, generate or write a migration in `src/database/migrations/` and run via `npm run migration:run`.
+
 ---
 
 ## Module Registration Order (app.module.ts)
