@@ -173,13 +173,13 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 61 | POST | `/admin/auth/login` | Admin login | [ ] |
-| 62 | POST | `/admin/auth/logout` | Admin logout | [ ] |
-| 63 | GET | `/admin/auth/me` | Retrieve current admin details | [ ] |
-| 64 | GET | `/admin/dashboard` | Retrieve CMS dashboard statistics | [ ] |
-| 65 | GET | `/admin/users` | List registered customers | [ ] |
-| 66 | GET | `/admin/users/:id` | Retrieve customer details | [ ] |
-| 67 | PATCH | `/admin/users/:id/status` | Activate / deactivate a user | [ ] |
+| 61 | POST | `/admin/auth/login` | Admin login | [x] |
+| 62 | POST | `/admin/auth/logout` | Admin logout | [x] |
+| 63 | GET | `/admin/auth/me` | Retrieve current admin details | [x] |
+| 64 | GET | `/admin/dashboard` | Retrieve CMS dashboard statistics | [x] |
+| 65 | GET | `/admin/users` | List registered customers | [x] |
+| 66 | GET | `/admin/users/:id` | Retrieve customer details | [x] |
+| 67 | PATCH | `/admin/users/:id/status` | Activate / deactivate a user | [x] |
 
 **Subtotal: 7**
 
@@ -200,8 +200,8 @@
 | 9. Banner Management | 4 | 0 | 4 |
 | 10. Customer Enquiries | 5 | 0 | 5 |
 | 11. Notifications & FCM | 6 | 0 | 6 |
-| 12. Admin Auth & Users | 7 | 0 | 7 |
-| **TOTAL** | **67** | **0** | **67** |
+| 12. Admin Auth & Users | 7 | 7 | 0 |
+| **TOTAL** | **67** | **7** | **60** |
 
 ---
 

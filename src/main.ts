@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module.js';
@@ -75,7 +75,9 @@ async function bootstrap() {
   const port = configService.get<number>('app.port', 3000);
   await app.listen(port);
 
-  console.log(`🚀 Zewar Mahal API running on: http://localhost:${port}/${apiPrefix}`);
+  console.log(
+    `🚀 Zewar Mahal API running on: http://localhost:${port}/${apiPrefix}`,
+  );
   console.log(`📚 Swagger docs: http://localhost:${port}/api`);
 }
 

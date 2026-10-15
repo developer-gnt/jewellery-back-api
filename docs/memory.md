@@ -60,6 +60,23 @@
 - **Reason:** Client requirement is only for current rates; history is optional
 - **Status:** Implement stub, leave empty/disabled unless client confirms
 
+### ADR-008: Mandatory Database Migrations
+- **Decision:** All database schema changes must be executed strictly via TypeORM migration files (`src/database/migrations/`).
+- **Reason:** Enforce reproducible, version-controlled database changes across environments and avoid data loss from `synchronize: true`.
+- **Requirement:** Every migration must provide both `up()` and `down()` methods and be tested before committing.
+
+### ADR-009: Governance & Living Memory Protocol
+- **Decision:** Mandatory adherence to [`rule.md`](file:///c:/Gnt-codebase/jewellery-back-api/rule.md) for all tasks.
+- **Rules:**
+  1. Any architectural changes, patterns, gotchas must be recorded in `docs/memory.md`.
+  2. Every phase and endpoint completion must be updated in `docs/phases.md` and `docs/api-list.md`.
+  3. Migration scripts configured: `npm run migration:run`, `migration:revert`, `migration:generate`.
+
+### ADR-010: Containerization, CI/CD & Production Topology
+- **Decision:** Dual deployment support — Docker containerization with `docker-compose.yml` and native PM2 clustering (`ecosystem.config.cjs`).
+- **CI/CD:** GitHub Actions (`.github/workflows/ci.yml`) runs automated lint, build, TypeORM migrations, unit tests, and E2E tests against PostgreSQL and Redis service containers.
+- **Reverse Proxy:** Nginx configuration (`nginx/nginx.conf`) handles SSL termination, gzip compression, body size limit (20MB), and rate limiting.
+
 ---
 
 ## Module Registration Order (app.module.ts)
@@ -248,7 +265,17 @@ const ref = `ZM-${format(new Date(), 'yyyyMMdd')}-${Math.floor(100000 + Math.ran
 - Access tokens are short-lived (15 min) and not blacklisted (stateless JWT)
 - For immediate access token revocation, consider Redis blacklist if required
 
----
+### 7. Node 24 ESM & Type-Stripping
+- In Node.js 24+, native TypeScript type-stripping fails on TypeScript `enum` syntax (`SyntaxError: TypeScript enum is not supported in strip-only mode`).
+- **Pattern:** Always use `as const` object maps instead:
+  ```typescript
+  export const AdminRole = { SUPER_ADMIN: 'super_admin', ADMIN: 'admin' } as const;
+  export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole];
+  ```
+
+### 8. Testing & Postman Collections
+- E2E test suites reside in `test/*.e2e-spec.ts`.
+- Postman collection resides in `test/postman_collection.json` with pre-configured variables (`{{baseUrl}}`, `{{adminAccessToken}}`).
 
 ## Environment Setup (Local Dev)
 

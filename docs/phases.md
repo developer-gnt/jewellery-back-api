@@ -271,24 +271,25 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Admin Login | `POST /admin/auth/login` | To Do |
-| Admin Logout | `POST /admin/auth/logout` | To Do |
-| Admin Me | `GET /admin/auth/me` | To Do |
-| Dashboard Stats | `GET /admin/dashboard` | To Do |
-| List Users | `GET /admin/users` | To Do |
-| User Details | `GET /admin/users/:id` | To Do |
-| Toggle User Status | `PATCH /admin/users/:id/status` | To Do |
+| Admin Login | `POST /admin/auth/login` | Done |
+| Admin Logout | `POST /admin/auth/logout` | Done |
+| Admin Me | `GET /admin/auth/me` | Done |
+| Dashboard Stats | `GET /admin/dashboard` | Done |
+| List Users | `GET /admin/users` | Done |
+| User Details | `GET /admin/users/:id` | Done |
+| Toggle User Status | `PATCH /admin/users/:id/status` | Done |
 
 **Tasks:**
-- [ ] Admin entity (separate from customer users)
-- [ ] Admin JWT strategy with role guard
-- [ ] Dashboard stats aggregation query
-- [ ] Admin seeder for initial admin account
+- [x] Admin entity (separate from customer users)
+- [x] Admin JWT strategy with role guard
+- [x] Dashboard stats aggregation query
+- [x] Admin seeder for initial admin account
+- [x] Migration file created for admins, users, and refresh_tokens
 
 ### Phase 5 Deliverables
-- [ ] Admin can login to CMS securely
-- [ ] Dashboard statistics working
-- [ ] Admin can view and manage customer accounts
+- [x] Admin can login to CMS securely
+- [x] Dashboard statistics working
+- [x] Admin can view and manage customer accounts
 
 ---
 
@@ -298,27 +299,27 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 ### Sprint 6A — Integration Testing
 
-| Task | Description |
-|------|-------------|
-| Unit Tests | Jest unit tests for all services |
-| E2E Tests | NestJS E2E tests for critical flows (auth, products, enquiries) |
-| Postman Collection | Full API collection with example requests/responses |
-| Swagger Completion | All endpoints documented with request/response schemas |
-| MessageBot Integration Test | OTP send/receive end-to-end |
-| FCM Integration Test | Push notification delivery test |
-| Rate Provider Test | Live rate fetch and caching verification |
+| Task | Description | Status |
+|------|-------------|--------|
+| Unit Tests | Vitest unit tests for Admin Controller & Service | Done |
+| E2E Tests | NestJS E2E tests for Admin CMS & Health check (`test/admin.e2e-spec.ts`, `test/app.e2e-spec.ts`) | Done |
+| Postman Collection | Full API collection with dynamic token scripts (`test/postman_collection.json`) | Done |
+| Swagger Completion | Admin endpoints documented with request/response schemas | Done |
+| MessageBot Integration Test | OTP send/receive end-to-end | Pending Phase 1 |
+| FCM Integration Test | Push notification delivery test | Pending Phase 4 |
+| Rate Provider Test | Live rate fetch and caching verification | Pending Phase 3 |
 
 ### Sprint 6B — Security & Performance
 
-| Task | Description |
-|------|-------------|
-| Auth guard audit | Verify all admin routes protected |
-| Rate limiting | `@nestjs/throttler` on public endpoints |
-| Input validation | DTO validation coverage review |
-| SQL injection / NoSQL injection | Query parameter sanitization |
-| Image upload security | File type and size validation |
-| Performance profiling | Identify N+1 queries; add select optimizations |
-| Redis caching validation | Home, rates caching working correctly |
+| Task | Description | Status |
+|------|-------------|--------|
+| Auth guard audit | Verify all admin routes protected by `JwtAuthGuard` + `AdminGuard` | Done |
+| Rate limiting | `@nestjs/throttler` configured on public endpoints | Done |
+| Input validation | DTO validation coverage (`whitelist: true, forbidNonWhitelisted: true`) | Done |
+| SQL injection sanitization | TypeORM parameter binding used across all queries | Done |
+| Image upload security | File type and size validation | Pending Phase 2 |
+| Performance profiling | Query optimization & select fields | Ongoing |
+| Redis caching validation | Home, rates caching working correctly | Pending Phase 2 & 3 |
 
 ---
 
@@ -326,15 +327,15 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 **Duration:** 1 week  
 
-| Task | Description |
-|------|-------------|
-| Production environment | VPS / Cloud setup (e.g., AWS, DigitalOcean, Hostinger) |
-| CI/CD pipeline | GitHub Actions or equivalent |
-| Database migrations | Production DB migration and seed |
-| SSL / HTTPS | Nginx reverse proxy with SSL |
-| Environment secrets | Secure secrets management (no .env in repo) |
-| Health monitoring | Uptime monitoring setup |
-| Go-live checklist | Final smoke test of all 67 endpoints |
+| Task | Description | Status |
+|------|-------------|--------|
+| Containerization | Multi-stage Dockerfile (`Dockerfile`) & `.dockerignore` | Done |
+| Orchestration | `docker-compose.yml` (API + Postgres 16 + Redis 7 + volumes + healthchecks) | Done |
+| CI/CD pipeline | GitHub Actions workflows (`.github/workflows/ci.yml` & `deploy.yml`) | Done |
+| Process management | PM2 cluster configuration (`ecosystem.config.cjs`) | Done |
+| Production DB migrations | Scripted via `npm run migration:run` against PostgreSQL | Done |
+| SSL / HTTPS Reverse Proxy | Nginx configuration with SSL, gzip & rate limiting (`nginx/nginx.conf`) | Done |
+| Health monitoring | Docker & NestJS `/api/v1/health` heartbeat | Done |
 
 ---
 

@@ -2,12 +2,17 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { JwtModule } from '@nestjs/jwt';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import appConfig from './config/app.config.js';
 import databaseConfig from './config/database.config.js';
 import jwtConfig from './config/jwt.config.js';
 import redisConfig from './config/redis.config.js';
+import { AdminModule } from './modules/admin/admin.module.js';
+import { UsersModule } from './modules/users/users.module.js';
+
+const __dirname = import.meta.dirname;
 
 @Module({
   imports: [
@@ -16,6 +21,18 @@ import redisConfig from './config/redis.config.js';
       isGlobal: true,
       load: [appConfig, databaseConfig, jwtConfig, redisConfig],
       envFilePath: '.env',
+    }),
+
+    // Global JWT
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('jwt.accessSecret'),
+        signOptions: {
+          expiresIn: (config.get<string>('jwt.accessExpires') || '15m') as any,
+        },
+      }),
     }),
 
     // Database
@@ -28,11 +45,9 @@ import redisConfig from './config/redis.config.js';
         database: config.get<string>('database.name'),
         username: config.get<string>('database.user'),
         password: config.get<string>('database.pass'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
+        autoLoadEntities: true,
         synchronize: config.get<boolean>('database.sync'),
         logging: config.get<boolean>('database.logging'),
-        autoLoadEntities: true,
       }),
     }),
 
@@ -48,6 +63,10 @@ import redisConfig from './config/redis.config.js';
         ],
       }),
     }),
+
+    // Feature Modules
+    AdminModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

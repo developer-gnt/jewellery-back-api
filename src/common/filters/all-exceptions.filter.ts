@@ -30,7 +30,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       } else if (typeof exceptionResponse === 'object') {
         const res = exceptionResponse as Record<string, unknown>;
         message = (res.message as string | string[]) || message;
-        errors = Array.isArray(res.message) ? (res.message as string[]) : undefined;
+        errors = Array.isArray(res.message)
+          ? (res.message as string[])
+          : undefined;
         if (errors) message = 'Validation failed';
       }
     } else if (exception instanceof Error) {
