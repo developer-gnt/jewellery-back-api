@@ -65,6 +65,24 @@
 - **Rule:** `DB_SYNC` is set to `false`. TypeORM `synchronize: true` is strictly prohibited.
 - **Workflow:** When any entity is modified or added in `src/modules/**/entities/`, generate or write a migration in `src/database/migrations/` and run via `npm run migration:run`.
 
+### ADR-009: Continuous Memory & Phase Tracking
+- **Decision:** After every code change, `docs/memory.md` must be updated. When a phase is completed, `docs/phases.md` and `docs/api-list.md` must be marked done.
+
+---
+
+## Phase Implementation Status
+
+| Phase | Description | Status | Endpoints Done |
+|-------|-------------|--------|----------------|
+| **Phase 0** | Project Setup & Infrastructure | ✅ Complete | Health check (`GET /api/v1/health`) |
+| **Phase 1** | Auth, Users & Core Foundation | ✅ Complete | 10/10 endpoints (Auth: 5, Users: 5) |
+| **Phase 2** | Catalogue & Content APIs | ⏳ Up Next | 0/22 endpoints |
+| **Phase 3** | Rates, Offers & Banners | ⏳ Pending | 0/13 endpoints |
+| **Phase 4** | Enquiries & Notifications | ⏳ Pending | 0/11 endpoints |
+| **Phase 5** | Admin CMS APIs | ⏳ Pending | 0/11 endpoints |
+| **Phase 6** | Integrations & Testing | ⏳ Pending | Testing & CI/CD |
+| **Phase 7** | Deployment & Go-Live | ⏳ Pending | Production Launch |
+
 ---
 
 ## Module Registration Order (app.module.ts)

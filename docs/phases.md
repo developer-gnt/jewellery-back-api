@@ -46,11 +46,11 @@ Phase 7: Deployment & Go-Live              [Week 11]
 | Health check endpoint | `GET /health` for uptime monitoring | Medium |
 
 ### Deliverables
-- [ ] Running NestJS server on port 3000
-- [ ] Database connected and schema migratable
-- [ ] Swagger docs accessible at `/api`
-- [ ] Docker Compose working locally
-- [ ] `.env.example` committed to repo
+- [x] Running NestJS server on port 3000
+- [x] Database connected and schema migratable via TypeORM migrations
+- [x] Swagger docs accessible at `/api`
+- [x] Docker setup removed as requested
+- [x] `.env.example` committed to repo
 
 ---
 
