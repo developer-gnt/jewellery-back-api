@@ -11,6 +11,9 @@ import jwtConfig from './config/jwt.config.js';
 import redisConfig from './config/redis.config.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { UsersModule } from './modules/users/users.module.js';
+import { CategoriesModule } from './modules/categories/categories.module.js';
+import { ProductsModule } from './modules/products/products.module.js';
+import { HomeModule } from './modules/home/home.module.js';
 
 @Module({
   imports: [
@@ -67,6 +70,9 @@ import { UsersModule } from './modules/users/users.module.js';
     // Feature Modules
     AuthModule,
     UsersModule,
+    CategoriesModule,
+    ProductsModule,
+    HomeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

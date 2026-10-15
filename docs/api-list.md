@@ -42,11 +42,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 11 | GET | `/home` | Aggregate homepage content in one request | [ ] |
-| 12 | GET | `/banners` | Retrieve active banners | [ ] |
-| 13 | GET | `/products/featured` | Retrieve featured products | [ ] |
-| 14 | GET | `/products/latest` | Retrieve latest designs | [ ] |
-| 15 | GET | `/offers/active` | Retrieve active offers | [ ] |
+| 11 | GET | `/home` | Aggregate homepage content in one request | [x] |
+| 12 | GET | `/banners` | Retrieve active banners | [x] |
+| 13 | GET | `/products/featured` | Retrieve featured products | [x] |
+| 14 | GET | `/products/latest` | Retrieve latest designs | [x] |
+| 15 | GET | `/offers/active` | Retrieve active offers | [x] |
 
 **Subtotal: 5**
 
@@ -56,12 +56,12 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 16 | GET | `/categories` | Retrieve active categories | [ ] |
-| 17 | GET | `/categories/:id` | Retrieve category details | [ ] |
-| 18 | POST | `/admin/categories` | Create category | [ ] |
-| 19 | PUT | `/admin/categories/:id` | Update category | [ ] |
-| 20 | PATCH | `/admin/categories/:id/status` | Activate / deactivate category | [ ] |
-| 21 | DELETE | `/admin/categories/:id` | Delete category | [ ] |
+| 16 | GET | `/categories` | Retrieve active categories | [x] |
+| 17 | GET | `/categories/:id` | Retrieve category details | [x] |
+| 18 | POST | `/admin/categories` | Create category | [x] |
+| 19 | PUT | `/admin/categories/:id` | Update category | [x] |
+| 20 | PATCH | `/admin/categories/:id/status` | Activate / deactivate category | [x] |
+| 21 | DELETE | `/admin/categories/:id` | Delete category | [x] |
 
 **Subtotal: 6**
 
@@ -71,17 +71,17 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 22 | GET | `/products` | Paginated catalogue; supports filters & sorting | [ ] |
-| 23 | GET | `/products/:id` | Retrieve product details and image URLs | [ ] |
-| 24 | GET | `/products/search` | Search products by name or keyword | [ ] |
-| 25 | GET | `/products/featured` | Retrieve featured products | [ ] |
-| 26 | GET | `/products/latest` | Retrieve latest products | [ ] |
-| 27 | POST | `/admin/products` | Create product | [ ] |
-| 28 | PUT | `/admin/products/:id` | Update product | [ ] |
-| 29 | PATCH | `/admin/products/:id/status` | Publish / unpublish product | [ ] |
-| 30 | DELETE | `/admin/products/:id` | Delete product | [ ] |
-| 31 | POST | `/admin/products/:id/images` | Add product images | [ ] |
-| 32 | DELETE | `/admin/products/:id/images/:imageId` | Remove product image | [ ] |
+| 22 | GET | `/products` | Paginated catalogue; supports filters & sorting | [x] |
+| 23 | GET | `/products/:id` | Retrieve product details and image URLs | [x] |
+| 24 | GET | `/products/search` | Search products by name or keyword | [x] |
+| 25 | GET | `/products/featured` | Retrieve featured products | [x] |
+| 26 | GET | `/products/latest` | Retrieve latest products | [x] |
+| 27 | POST | `/admin/products` | Create product | [x] |
+| 28 | PUT | `/admin/products/:id` | Update product | [x] |
+| 29 | PATCH | `/admin/products/:id/status` | Publish / unpublish product | [x] |
+| 30 | DELETE | `/admin/products/:id` | Delete product | [x] |
+| 31 | POST | `/admin/products/:id/images` | Add product images | [x] |
+| 32 | DELETE | `/admin/products/:id/images/:imageId` | Remove product image | [x] |
 
 **Subtotal: 11**
 

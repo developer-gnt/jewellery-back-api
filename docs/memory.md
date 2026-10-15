@@ -76,8 +76,8 @@
 |-------|-------------|--------|----------------|
 | **Phase 0** | Project Setup & Infrastructure | ✅ Complete | Health check (`GET /api/v1/health`) |
 | **Phase 1** | Auth, Users & Core Foundation | ✅ Complete | 10/10 endpoints (Auth: 5, Users: 5) |
-| **Phase 2** | Catalogue & Content APIs | ⏳ Up Next | 0/22 endpoints |
-| **Phase 3** | Rates, Offers & Banners | ⏳ Pending | 0/13 endpoints |
+| **Phase 2** | Catalogue & Content APIs | ✅ Complete | 22/22 endpoints (Home: 5, Categories: 6, Products: 11) |
+| **Phase 3** | Rates, Offers & Banners | ⏳ Up Next | 0/13 endpoints |
 | **Phase 4** | Enquiries & Notifications | ⏳ Pending | 0/11 endpoints |
 | **Phase 5** | Admin CMS APIs | ⏳ Pending | 0/11 endpoints |
 | **Phase 6** | Integrations & Testing | ⏳ Pending | Testing & CI/CD |

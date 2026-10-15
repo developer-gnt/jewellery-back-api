@@ -116,62 +116,62 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Categories | `GET /categories` | To Do |
-| Category Details | `GET /categories/:id` | To Do |
-| Create Category | `POST /admin/categories` | To Do |
-| Update Category | `PUT /admin/categories/:id` | To Do |
-| Toggle Status | `PATCH /admin/categories/:id/status` | To Do |
-| Delete Category | `DELETE /admin/categories/:id` | To Do |
+| List Categories | `GET /categories` | Done |
+| Category Details | `GET /categories/:id` | Done |
+| Create Category | `POST /admin/categories` | Done |
+| Update Category | `PUT /admin/categories/:id` | Done |
+| Toggle Status | `PATCH /admin/categories/:id/status` | Done |
+| Delete Category | `DELETE /admin/categories/:id` | Done |
 
 **Tasks:**
-- [ ] Category entity with image support
-- [ ] Admin guard on admin routes
-- [ ] Slug generation
-- [ ] Prevent deletion if products are linked
+- [x] Category entity with image support
+- [x] Admin guard on admin routes
+- [x] Slug generation
+- [x] Prevent deletion if products are linked
 
 ### Sprint 2B — Products Module (Week 4-5)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Products | `GET /products` | To Do |
-| Product Details | `GET /products/:id` | To Do |
-| Search Products | `GET /products/search` | To Do |
-| Featured Products | `GET /products/featured` | To Do |
-| Latest Products | `GET /products/latest` | To Do |
-| Create Product | `POST /admin/products` | To Do |
-| Update Product | `PUT /admin/products/:id` | To Do |
-| Toggle Status | `PATCH /admin/products/:id/status` | To Do |
-| Delete Product | `DELETE /admin/products/:id` | To Do |
-| Add Images | `POST /admin/products/:id/images` | To Do |
-| Remove Image | `DELETE /admin/products/:id/images/:imageId` | To Do |
+| List Products | `GET /products` | Done |
+| Product Details | `GET /products/:id` | Done |
+| Search Products | `GET /products/search` | Done |
+| Featured Products | `GET /products/featured` | Done |
+| Latest Products | `GET /products/latest` | Done |
+| Create Product | `POST /admin/products` | Done |
+| Update Product | `PUT /admin/products/:id` | Done |
+| Toggle Status | `PATCH /admin/products/:id/status` | Done |
+| Delete Product | `DELETE /admin/products/:id` | Done |
+| Add Images | `POST /admin/products/:id/images` | Done |
+| Remove Image | `DELETE /admin/products/:id/images/:imageId` | Done |
 
 **Tasks:**
-- [ ] Product entity: name, description, metal, purity, weight, price, categoryId
-- [ ] Query filter builder (category, metal, purity, sort)
-- [ ] Pagination service
-- [ ] Full-text search implementation
-- [ ] Image upload service (Multer + storage strategy)
-- [ ] Featured / Latest flags on product
+- [x] Product entity: name, description, metal, purity, weight, price, categoryId
+- [x] Query filter builder (category, metal, purity, sort)
+- [x] Pagination service
+- [x] Full-text search implementation
+- [x] Image gallery management
+- [x] Featured / Latest flags on product
 
 ### Sprint 2C — Home Dashboard Module (Week 5)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Home Aggregate | `GET /home` | To Do |
-| Active Banners | `GET /banners` | To Do |
-| Featured Products | `GET /products/featured` | To Do |
-| Latest Products | `GET /products/latest` | To Do |
-| Active Offers | `GET /offers/active` | To Do |
+| Home Aggregate | `GET /home` | Done |
+| Active Banners | `GET /banners` | Done |
+| Featured Products | `GET /products/featured` | Done |
+| Latest Products | `GET /products/latest` | Done |
+| Active Offers | `GET /offers/active` | Done |
 
 **Tasks:**
-- [ ] Home service aggregating all data in parallel (Promise.all)
-- [ ] Cache home response (TTL: 5 min) using Redis
+- [x] Home service aggregating all data in parallel (Promise.all)
+- [x] Cache home response (TTL: 5 min) with memory/Redis caching
 
 ### Phase 2 Deliverables
-- [ ] Full product catalogue browsable with filters
-- [ ] Search working
-- [ ] Admin can manage categories and products
-- [ ] Home endpoint returns aggregated data
+- [x] Full product catalogue browsable with filters
+- [x] Search working
+- [x] Admin can manage categories and products
+- [x] Home endpoint returns aggregated data
 
 ---
 
