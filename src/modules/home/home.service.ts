@@ -1,9 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Banner } from '../banners/entities/banner.entity.js';
 import { Offer } from '../offers/entities/offer.entity.js';
 import { ProductsService } from '../products/products.service.js';
+import { RatesService } from '../rates/rates.service.js';
 
 interface CacheItem<T> {
   data: T;
@@ -22,6 +23,8 @@ export class HomeService {
     @InjectRepository(Offer)
     private readonly offerRepository: Repository<Offer>,
     private readonly productsService: ProductsService,
+    @Optional()
+    private readonly ratesService?: RatesService,
   ) {}
 
   async getBanners() {
@@ -48,16 +51,18 @@ export class HomeService {
       return this.homeCache.data;
     }
 
-    const [banners, featuredProducts, latestProducts, activeOffers] =
+    const [banners, featuredProducts, latestProducts, activeOffers, rates] =
       await Promise.all([
         this.getBanners(),
         this.productsService.getFeatured(8),
         this.productsService.getLatest(8),
         this.getActiveOffers(),
+        this.ratesService
+          ? this.ratesService.getCurrentRates()
+          : Promise.resolve(null),
       ]);
 
-    // Live or standard mock rate placeholder until Phase 3 rates module
-    const currentRates = {
+    const currentRates = rates ?? {
       gold24K: 7450.0,
       gold22K: 6850.0,
       silver: 92.5,

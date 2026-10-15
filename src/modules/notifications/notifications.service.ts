@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, IsNull } from 'typeorm';
 import { UserDevice } from './entities/user-device.entity.js';
 import { Notification } from './entities/notification.entity.js';
+import { NotificationPreference } from '../users/entities/notification-preference.entity.js';
 import { FcmService } from './services/fcm.service.js';
 import { RegisterDeviceDto } from './dto/register-device.dto.js';
 import { SendNotificationDto } from './dto/send-notification.dto.js';
@@ -19,6 +20,8 @@ export class NotificationsService {
     private readonly deviceRepository: Repository<UserDevice>,
     @InjectRepository(Notification)
     private readonly notificationRepository: Repository<Notification>,
+    @InjectRepository(NotificationPreference)
+    private readonly prefRepository: Repository<NotificationPreference>,
     private readonly fcmService: FcmService,
   ) {}
 
@@ -130,6 +133,21 @@ export class NotificationsService {
       );
     }
 
+    const notifType = dto.type ?? 'general';
+    let disabledUserIds = new Set<string>();
+
+    if (['offers', 'rates', 'enquiries', 'general'].includes(notifType)) {
+      try {
+        const disabled = await this.prefRepository.find({
+          where: { [notifType]: false },
+          select: { userId: true },
+        });
+        disabledUserIds = new Set(disabled.map((p) => p.userId));
+      } catch {
+        // Fallback gracefully if preference check cannot be completed
+      }
+    }
+
     let devices: UserDevice[] = [];
 
     if (dto.targetAll) {
@@ -138,6 +156,13 @@ export class NotificationsService {
       devices = await this.deviceRepository.find({
         where: { userId: In(dto.userIds) },
       });
+    }
+
+    // Filter out devices for users who turned off this notification type
+    if (disabledUserIds.size > 0) {
+      devices = devices.filter(
+        (d) => !d.userId || !disabledUserIds.has(d.userId),
+      );
     }
 
     const tokens = devices.map((d) => d.fcmToken);
@@ -157,27 +182,90 @@ export class NotificationsService {
         title: dto.title,
         body: dto.body,
         data: dto.data ?? null,
-        type: 'general',
+        type: notifType,
       });
       await this.notificationRepository.save(broadcastNotif);
     } else if (dto.userIds) {
-      const records = dto.userIds.map((uid) =>
-        this.notificationRepository.create({
-          userId: uid,
-          title: dto.title,
-          body: dto.body,
-          data: dto.data ?? null,
-          type: 'general',
-        }),
+      const eligibleUserIds = dto.userIds.filter(
+        (uid) => !disabledUserIds.has(uid),
       );
-      await this.notificationRepository.save(records);
+      if (eligibleUserIds.length > 0) {
+        const records = eligibleUserIds.map((uid) =>
+          this.notificationRepository.create({
+            userId: uid,
+            title: dto.title,
+            body: dto.body,
+            data: dto.data ?? null,
+            type: notifType,
+          }),
+        );
+        await this.notificationRepository.save(records);
+      }
     }
 
     return {
       message: 'Push notification dispatched',
       targetDevices: tokens.length,
+      type: notifType,
       ...dispatchResult,
     };
+  }
+
+  async sendToUser(
+    userId: string,
+    type: 'offers' | 'rates' | 'enquiries' | 'general',
+    title: string,
+    body: string,
+    data?: Record<string, any>,
+  ) {
+    try {
+      const pref = await this.prefRepository.findOne({ where: { userId } });
+      if (pref && pref[type] === false) {
+        return {
+          delivered: false,
+          reason: `User has disabled ${type} notifications`,
+        };
+      }
+    } catch {
+      // Continue if preference check fails
+    }
+
+    const devices = await this.deviceRepository.find({ where: { userId } });
+    const tokens = devices.map((d) => d.fcmToken);
+
+    if (tokens.length > 0) {
+      await this.fcmService.sendPushNotification(tokens, title, body, data);
+    }
+
+    const notification = this.notificationRepository.create({
+      userId,
+      title,
+      body,
+      type,
+      data: data ?? null,
+    });
+    const saved = await this.notificationRepository.save(notification);
+
+    return {
+      delivered: true,
+      deviceCount: tokens.length,
+      notificationId: saved.id,
+    };
+  }
+
+  async broadcast(
+    type: 'offers' | 'rates' | 'enquiries' | 'general',
+    title: string,
+    body: string,
+    data?: Record<string, any>,
+  ) {
+    return this.sendNotification({
+      title,
+      body,
+      targetAll: true,
+      type,
+      data,
+    });
   }
 
   async getAdminNotificationHistory(page = 1, limit = 20) {

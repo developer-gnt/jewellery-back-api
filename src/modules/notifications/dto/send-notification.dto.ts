@@ -42,4 +42,13 @@ export class SendNotificationDto {
   @IsArray()
   @IsUUID('4', { each: true })
   userIds?: string[];
+
+  @ApiPropertyOptional({
+    example: 'general',
+    enum: ['offers', 'rates', 'enquiries', 'general'],
+    description: 'Notification category type to respect user notification preferences',
+  })
+  @IsOptional()
+  @IsString()
+  type?: 'offers' | 'rates' | 'enquiries' | 'general';
 }

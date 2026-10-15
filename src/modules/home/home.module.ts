@@ -5,11 +5,13 @@ import { HomeService } from './home.service.js';
 import { Banner } from '../banners/entities/banner.entity.js';
 import { Offer } from '../offers/entities/offer.entity.js';
 import { ProductsModule } from '../products/products.module.js';
+import { RatesModule } from '../rates/rates.module.js';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Banner, Offer]),
     ProductsModule,
+    RatesModule,
   ],
   controllers: [HomeController],
   providers: [HomeService],

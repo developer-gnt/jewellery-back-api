@@ -87,6 +87,14 @@
   5. `1729400000000-CreateAdminCMS.ts` (Phase 5): Admins table and adminId column on refresh_tokens.
 - **ESM NodeNext Relation TDZ Fix:** Use string targets for circular entity relations (e.g. `@OneToOne('NotificationPreference', 'user')` and `user: any;`) to eliminate decorator metadata TDZ errors in Node 24 ESM.
 
+### ADR-012: Cross-Module Connections & Notification Preference Enforcement
+- **Decision:** Fully wire all dependent modules together across the application and enforce user `NotificationPreference` flags before dispatching any notification:
+  1. **Notification Preferences**: `NotificationsService` queries `NotificationPreference` repository and automatically suppresses/filters notifications for users who turned off that specific category (`offers`, `rates`, `enquiries`, `general`).
+  2. **Enquiries <-> Notifications**: Customer enquiry creation (`POST /enquiries`) triggers a confirmation push/in-app notification (`type: 'enquiries'`), and Admin status transition (`PATCH /admin/enquiries/:id/status`) automatically notifies the customer with their reference number.
+  3. **Rates <-> Notifications**: Admin rate override (`PUT /admin/rates`) broadcasts rate alerts (`type: 'rates'`) strictly to users who opted into rate notifications.
+  4. **Offers <-> Notifications**: Admin offer creation/activation (`POST /admin/offers`, `PATCH /admin/offers/:id/status`) broadcasts offer alerts (`type: 'offers'`) strictly to users who opted into promotional notifications.
+  5. **Home <-> Rates**: `HomeService` injects `RatesService` so that `GET /home` returns real, live cached metal rates instead of static placeholders.
+
 ---
 
 ## Phase Implementation Status

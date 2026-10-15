@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { MetalRate } from './entities/metal-rate.entity.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import { UpdateRatesDto } from './dto/update-rates.dto.js';
 
 interface CachedRate {
@@ -20,6 +21,8 @@ export class RatesService {
     @InjectRepository(MetalRate)
     private readonly metalRateRepository: Repository<MetalRate>,
     private readonly configService: ConfigService,
+    @Optional()
+    private readonly notificationsService?: NotificationsService,
   ) {}
 
   async getCurrentRates() {
@@ -138,6 +141,22 @@ export class RatesService {
 
     const saved = await this.metalRateRepository.save(rate);
     this.cache = null; // Invalidate cache immediately
+
+    // Broadcast rate update notification to users who enabled 'rates' notifications
+    if (this.notificationsService) {
+      this.notificationsService
+        .broadcast(
+          'rates',
+          'Live Metal Rates Updated',
+          `Today's Rates — 22K Gold: ₹${saved.gold22K}/${saved.unit}, 24K Gold: ₹${saved.gold24K}/${saved.unit}, Silver: ₹${saved.silver}/${saved.unit}`,
+          {
+            gold24K: Number(saved.gold24K),
+            gold22K: Number(saved.gold22K),
+            silver: Number(saved.silver),
+          },
+        )
+        .catch(() => {});
+    }
 
     return {
       message: 'Metal rates updated successfully',

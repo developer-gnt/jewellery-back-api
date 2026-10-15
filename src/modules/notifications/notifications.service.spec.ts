@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotificationsService } from './notifications.service.js';
 import { UserDevice } from './entities/user-device.entity.js';
 import { Notification } from './entities/notification.entity.js';
+import { NotificationPreference } from '../users/entities/notification-preference.entity.js';
 import { FcmService } from './services/fcm.service.js';
 
 describe('NotificationsService', () => {
@@ -57,12 +58,18 @@ describe('NotificationsService', () => {
     sendPushNotification: vi.fn().mockResolvedValue({ successCount: 1, failureCount: 0 }),
   };
 
+  const mockPrefRepo = {
+    find: vi.fn().mockResolvedValue([]),
+    findOne: vi.fn().mockResolvedValue({ offers: true, rates: true, enquiries: true, general: true }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotificationsService,
         { provide: getRepositoryToken(UserDevice), useValue: mockDeviceRepo },
         { provide: getRepositoryToken(Notification), useValue: mockNotificationRepo },
+        { provide: getRepositoryToken(NotificationPreference), useValue: mockPrefRepo },
         { provide: FcmService, useValue: mockFcmService },
       ],
     }).compile();

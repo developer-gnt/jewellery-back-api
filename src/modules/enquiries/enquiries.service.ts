@@ -2,11 +2,13 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Optional,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Enquiry } from './entities/enquiry.entity.js';
 import { Product } from '../products/entities/product.entity.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto.js';
 import { UpdateEnquiryStatusDto } from './dto/update-enquiry-status.dto.js';
 import { QueryEnquiriesDto } from './dto/query-enquiries.dto.js';
@@ -19,6 +21,8 @@ export class EnquiriesService {
     private readonly enquiryRepository: Repository<Enquiry>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @Optional()
+    private readonly notificationsService?: NotificationsService,
   ) {}
 
   private generateReferenceNumber(): string {
@@ -47,6 +51,19 @@ export class EnquiriesService {
     });
 
     const saved = await this.enquiryRepository.save(enquiry);
+
+    // Send confirmation notification to customer if authenticated
+    if (userId && this.notificationsService) {
+      this.notificationsService
+        .sendToUser(
+          userId,
+          'enquiries',
+          `Enquiry Received: ${referenceNumber}`,
+          'Thank you for contacting Zewar Mahal. We have received your enquiry and our team will get back to you shortly.',
+          { referenceNumber, enquiryId: saved.id },
+        )
+        .catch(() => {});
+    }
 
     return {
       id: saved.id,
@@ -115,6 +132,23 @@ export class EnquiriesService {
     }
 
     await this.enquiryRepository.save(enquiry);
+
+    // Notify user if enquiry is associated with an account
+    if (enquiry.userId && this.notificationsService) {
+      this.notificationsService
+        .sendToUser(
+          enquiry.userId,
+          'enquiries',
+          `Enquiry Update: ${enquiry.referenceNumber}`,
+          `Your enquiry status has been updated to "${enquiry.status}".`,
+          {
+            referenceNumber: enquiry.referenceNumber,
+            enquiryId: enquiry.id,
+            status: enquiry.status,
+          },
+        )
+        .catch(() => {});
+    }
 
     return {
       id: enquiry.id,
