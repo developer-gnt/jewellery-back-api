@@ -14,6 +14,10 @@ import { UsersModule } from './modules/users/users.module.js';
 import { CategoriesModule } from './modules/categories/categories.module.js';
 import { ProductsModule } from './modules/products/products.module.js';
 import { HomeModule } from './modules/home/home.module.js';
+import { RatesModule } from './modules/rates/rates.module.js';
+import { ShopRatesModule } from './modules/shop-rates/shop-rates.module.js';
+import { OffersModule } from './modules/offers/offers.module.js';
+import { BannersModule } from './modules/banners/banners.module.js';
 
 @Module({
   imports: [
@@ -73,6 +77,10 @@ import { HomeModule } from './modules/home/home.module.js';
     CategoriesModule,
     ProductsModule,
     HomeModule,
+    RatesModule,
+    ShopRatesModule,
+    OffersModule,
+    BannersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -91,10 +91,10 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 33 | GET | `/rates/current` | Retrieve current Gold and Silver rates | [ ] |
-| 34 | GET | `/rates/history` | Rate history (optional) | [ ] |
-| 35 | GET | `/admin/rates` | Retrieve rates for admin management | [ ] |
-| 36 | PUT | `/admin/rates` | Manually update rates | [ ] |
+| 33 | GET | `/rates/current` | Retrieve current Gold and Silver rates | [x] |
+| 34 | GET | `/rates/history` | Rate history (optional) | [x] |
+| 35 | GET | `/admin/rates` | Retrieve rates for admin management | [x] |
+| 36 | PUT | `/admin/rates` | Manually update rates | [x] |
 
 **Subtotal: 4**
 
@@ -104,9 +104,9 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 37 | GET | `/shop/rates` | Retrieve Zewar Mahal's own rates | [ ] |
-| 38 | PUT | `/admin/shop/rates` | Update shop rates | [ ] |
-| 39 | GET | `/shop/rates/share` | Return share-ready rate information | [ ] |
+| 37 | GET | `/shop/rates` | Retrieve Zewar Mahal's own rates | [x] |
+| 38 | PUT | `/admin/shop/rates` | Update shop rates | [x] |
+| 39 | GET | `/shop/rates/share` | Return share-ready rate information | [x] |
 
 **Subtotal: 3**
 
@@ -116,12 +116,12 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 40 | GET | `/offers` | Retrieve all offers | [ ] |
-| 41 | GET | `/offers/:id` | Retrieve offer details | [ ] |
-| 42 | POST | `/admin/offers` | Create offer | [ ] |
-| 43 | PUT | `/admin/offers/:id` | Update offer | [ ] |
-| 44 | PATCH | `/admin/offers/:id/status` | Activate / deactivate offer | [ ] |
-| 45 | DELETE | `/admin/offers/:id` | Delete offer | [ ] |
+| 40 | GET | `/offers` | Retrieve all offers | [x] |
+| 41 | GET | `/offers/:id` | Retrieve offer details | [x] |
+| 42 | POST | `/admin/offers` | Create offer | [x] |
+| 43 | PUT | `/admin/offers/:id` | Update offer | [x] |
+| 44 | PATCH | `/admin/offers/:id/status` | Activate / deactivate offer | [x] |
+| 45 | DELETE | `/admin/offers/:id` | Delete offer | [x] |
 
 **Subtotal: 6**
 
@@ -131,10 +131,10 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 46 | POST | `/admin/banners` | Create banner | [ ] |
-| 47 | PUT | `/admin/banners/:id` | Update banner | [ ] |
-| 48 | PATCH | `/admin/banners/:id/status` | Activate / deactivate banner | [ ] |
-| 49 | DELETE | `/admin/banners/:id` | Delete banner | [ ] |
+| 46 | POST | `/admin/banners` | Create banner | [x] |
+| 47 | PUT | `/admin/banners/:id` | Update banner | [x] |
+| 48 | PATCH | `/admin/banners/:id/status` | Activate / deactivate banner | [x] |
+| 49 | DELETE | `/admin/banners/:id` | Delete banner | [x] |
 
 **Subtotal: 4**
 

@@ -8,6 +8,8 @@ import { Product } from '../modules/products/entities/product.entity.js';
 import { ProductImage } from '../modules/products/entities/product-image.entity.js';
 import { Banner } from '../modules/banners/entities/banner.entity.js';
 import { Offer } from '../modules/offers/entities/offer.entity.js';
+import { MetalRate } from '../modules/rates/entities/metal-rate.entity.js';
+import { ShopRate } from '../modules/shop-rates/entities/shop-rate.entity.js';
 
 dotenv.config();
 
@@ -29,6 +31,8 @@ export const AppDataSource = new DataSource({
     ProductImage,
     Banner,
     Offer,
+    MetalRate,
+    ShopRate,
   ],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 });

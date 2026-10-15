@@ -178,45 +178,45 @@ Phase 7: Deployment & Go-Live              [Week 11]
 ## Phase 3 — Rates, Offers & Banners
 
 **Duration:** 1 week  
-**APIs:** 13 endpoints  
+**APIs:** 17 endpoints  
 
 ### Sprint 3A — Rates Module
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Current Rates | `GET /rates/current` | To Do |
-| Rate History | `GET /rates/history` | To Do |
-| Admin Get Rates | `GET /admin/rates` | To Do |
-| Admin Update Rates | `PUT /admin/rates` | To Do |
-| Shop Rates | `GET /shop/rates` | To Do |
-| Update Shop Rates | `PUT /admin/shop/rates` | To Do |
-| Share Rates | `GET /shop/rates/share` | To Do |
+| Current Rates | `GET /rates/current` | Done |
+| Rate History | `GET /rates/history` | Done |
+| Admin Get Rates | `GET /admin/rates` | Done |
+| Admin Update Rates | `PUT /admin/rates` | Done |
+| Shop Rates | `GET /shop/rates` | Done |
+| Update Shop Rates | `PUT /admin/shop/rates` | Done |
+| Share Rates | `GET /shop/rates/share` | Done |
 
 **Tasks:**
-- [ ] Gold/Silver rate provider integration (HTTP service)
-- [ ] Rate normalization and caching (Redis, TTL: 10 min)
-- [ ] Manual override logic for admin
-- [ ] Shop rates separate entity
+- [x] Gold/Silver rate provider integration (HTTP service)
+- [x] Rate normalization and caching (Redis/memory, TTL: 10 min)
+- [x] Manual override logic for admin
+- [x] Shop rates separate entity
 
 ### Sprint 3B — Offers & Banners Module
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Offers | `GET /offers` | To Do |
-| Offer Details | `GET /offers/:id` | To Do |
-| Create Offer | `POST /admin/offers` | To Do |
-| Update Offer | `PUT /admin/offers/:id` | To Do |
-| Toggle Offer Status | `PATCH /admin/offers/:id/status` | To Do |
-| Delete Offer | `DELETE /admin/offers/:id` | To Do |
-| Create Banner | `POST /admin/banners` | To Do |
-| Update Banner | `PUT /admin/banners/:id` | To Do |
-| Toggle Banner Status | `PATCH /admin/banners/:id/status` | To Do |
-| Delete Banner | `DELETE /admin/banners/:id` | To Do |
+| List Offers | `GET /offers` | Done |
+| Offer Details | `GET /offers/:id` | Done |
+| Create Offer | `POST /admin/offers` | Done |
+| Update Offer | `PUT /admin/offers/:id` | Done |
+| Toggle Offer Status | `PATCH /admin/offers/:id/status` | Done |
+| Delete Offer | `DELETE /admin/offers/:id` | Done |
+| Create Banner | `POST /admin/banners` | Done |
+| Update Banner | `PUT /admin/banners/:id` | Done |
+| Toggle Banner Status | `PATCH /admin/banners/:id/status` | Done |
+| Delete Banner | `DELETE /admin/banners/:id` | Done |
 
 ### Phase 3 Deliverables
-- [ ] Live gold/silver rates fetched from provider
-- [ ] Shop rates manageable via admin
-- [ ] Offers and banners fully manageable via CMS
+- [x] Live gold/silver rates fetched from provider
+- [x] Shop rates manageable via admin
+- [x] Offers and banners fully manageable via CMS
 
 ---
 
