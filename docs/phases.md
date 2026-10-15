@@ -298,28 +298,28 @@ Phase 7: Deployment & Go-Live              [Week 11]
 **Duration:** 2 weeks  
 
 ### Sprint 6A — Integration Testing
-
+ 
 | Task | Description | Status |
 |------|-------------|--------|
-| Unit Tests | Vitest unit tests for Admin Controller & Service | Done |
+| Unit Tests | Vitest unit tests for all services & controllers (63 tests) | Done |
 | E2E Tests | NestJS E2E tests for Admin CMS & Health check (`test/admin.e2e-spec.ts`, `test/app.e2e-spec.ts`) | Done |
 | Postman Collection | Full API collection with dynamic token scripts (`test/postman_collection.json`) | Done |
-| Swagger Completion | Admin endpoints documented with request/response schemas | Done |
-| MessageBot Integration Test | OTP send/receive end-to-end | Pending Phase 1 |
-| FCM Integration Test | Push notification delivery test | Pending Phase 4 |
-| Rate Provider Test | Live rate fetch and caching verification | Pending Phase 3 |
-
+| Swagger Completion | All 67 endpoints documented with schemas & bearer auth | Done |
+| MessageBot Integration Test | Live SMS OTP send/receive validation with live vendor API key | Pending Live Credentials |
+| FCM Integration Test | Push notification delivery test with live Firebase Service Account | Pending Live Credentials |
+| Rate Provider Test | Live rate fetch and caching verification with live provider API key | Pending Live Credentials |
+ 
 ### Sprint 6B — Security & Performance
-
+ 
 | Task | Description | Status |
 |------|-------------|--------|
 | Auth guard audit | Verify all admin routes protected by `JwtAuthGuard` + `AdminGuard` | Done |
-| Rate limiting | `@nestjs/throttler` configured on public endpoints | Done |
+| Rate limiting | `@nestjs/throttler` configured on public endpoints (100 req/60s) + OTP throttling | Done |
 | Input validation | DTO validation coverage (`whitelist: true, forbidNonWhitelisted: true`) | Done |
 | SQL injection sanitization | TypeORM parameter binding used across all queries | Done |
-| Image upload security | File type and size validation | Pending Phase 2 |
+| Image upload security | File type and size validation (local & cloud storage options) | Done |
 | Performance profiling | Query optimization & select fields | Ongoing |
-| Redis caching validation | Home, rates caching working correctly | Pending Phase 2 & 3 |
+| Redis caching validation | Home, rates caching with memory/Redis fallback | Done |
 
 ---
 
@@ -361,6 +361,6 @@ Phase 7: Deployment & Go-Live              [Week 11]
 | M2: Catalogue complete | Week 5 | 32 |
 | M3: Rates, Offers, Banners complete | Week 6 | 45 |
 | M4: Enquiries + Notifications complete | Week 7 | 56 |
-| M5: Admin CMS complete | Week 8 | 63 |
-| M6: Tested and documented | Week 10 | 63 |
-| M7: Production deployment | Week 11 | 63 |
+| M5: Admin CMS complete | Week 8 | 67 |
+| M6: Tested and documented | Week 10 | 67 |
+| M7: Production deployment | Week 11 | 67 |

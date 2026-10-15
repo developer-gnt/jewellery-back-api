@@ -189,19 +189,19 @@
 
 | Module | Endpoints | Done | Remaining |
 |--------|-----------|------|-----------|
-| 1. Auth & OTP | 5 | 0 | 5 |
-| 2. User & Profile | 5 | 0 | 5 |
-| 3. Home Dashboard | 5 | 0 | 5 |
-| 4. Categories | 6 | 0 | 6 |
-| 5. Products & Catalogue | 11 | 0 | 11 |
-| 6. Gold & Silver Rates | 4 | 0 | 4 |
-| 7. Shop Rates | 3 | 0 | 3 |
-| 8. Offers & Promotions | 6 | 0 | 6 |
-| 9. Banner Management | 4 | 0 | 4 |
-| 10. Customer Enquiries | 5 | 0 | 5 |
-| 11. Notifications & FCM | 6 | 0 | 6 |
+| 1. Auth & OTP | 5 | 5 | 0 |
+| 2. User & Profile | 5 | 5 | 0 |
+| 3. Home Dashboard | 5 | 5 | 0 |
+| 4. Categories | 6 | 6 | 0 |
+| 5. Products & Catalogue | 11 | 11 | 0 |
+| 6. Gold & Silver Rates | 4 | 4 | 0 |
+| 7. Shop Rates | 3 | 3 | 0 |
+| 8. Offers & Promotions | 6 | 6 | 0 |
+| 9. Banner Management | 4 | 4 | 0 |
+| 10. Customer Enquiries | 5 | 5 | 0 |
+| 11. Notifications & FCM | 6 | 6 | 0 |
 | 12. Admin Auth & Users | 7 | 7 | 0 |
-| **TOTAL** | **67** | **7** | **60** |
+| **TOTAL** | **67** | **67** | **0** |
 
 ---
 
