@@ -9,8 +9,6 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { Category } from '../../categories/entities/category.entity.js';
-import { ProductImage } from './product-image.entity.js';
 
 @Entity('products')
 export class Product {
@@ -43,14 +41,14 @@ export class Product {
   @Column({ type: 'uuid' })
   categoryId: string;
 
-  @ManyToOne(() => Category, (category) => category.products, {
+  @ManyToOne('Category', 'products', {
     onDelete: 'RESTRICT',
   })
   @JoinColumn({ name: 'categoryId' })
-  category: Category;
+  category: any;
 
-  @OneToMany(() => ProductImage, (image) => image.product, { cascade: true })
-  images: ProductImage[];
+  @OneToMany('ProductImage', 'product', { cascade: true })
+  images: any[];
 
   @Column({ type: 'boolean', default: true })
   isPublished: boolean;

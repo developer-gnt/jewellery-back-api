@@ -7,7 +7,6 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from './user.entity.js';
 
 @Entity('notification_preferences')
 export class NotificationPreference {
@@ -17,11 +16,11 @@ export class NotificationPreference {
   @Column({ type: 'uuid' })
   userId: string;
 
-  @OneToOne(() => User, (user) => user.notificationPreferences, {
+  @OneToOne('User', 'notificationPreferences', {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user: any;
 
   @Column({ type: 'boolean', default: true })
   offers: boolean;

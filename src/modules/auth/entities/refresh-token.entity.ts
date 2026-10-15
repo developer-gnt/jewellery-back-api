@@ -7,7 +7,6 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity.js';
 
 @Entity('refresh_tokens')
 export class RefreshToken {
@@ -19,12 +18,16 @@ export class RefreshToken {
   token: string;
 
   @Index()
-  @Column({ type: 'uuid' })
-  userId: string;
+  @Column({ type: 'uuid', nullable: true })
+  userId: string | null;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne('User', { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user?: any;
+
+  @Index()
+  @Column({ type: 'uuid', nullable: true })
+  adminId: string | null;
 
   @Column({ type: 'timestamp with time zone' })
   expiresAt: Date;

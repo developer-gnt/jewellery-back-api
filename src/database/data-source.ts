@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 import { User } from '../modules/users/entities/user.entity.js';
 import { NotificationPreference } from '../modules/users/entities/notification-preference.entity.js';
 import { Admin } from '../modules/admin/entities/admin.entity.js';
-import { RefreshToken as AuthRefreshToken } from '../modules/auth/entities/refresh-token.entity.js';
-import { RefreshToken as AdminRefreshToken } from '../modules/admin/entities/refresh-token.entity.js';
+import { RefreshToken } from '../modules/auth/entities/refresh-token.entity.js';
 import { Category } from '../modules/categories/entities/category.entity.js';
 import { Product } from '../modules/products/entities/product.entity.js';
 import { ProductImage } from '../modules/products/entities/product-image.entity.js';
@@ -30,8 +29,7 @@ export const AppDataSource = new DataSource({
     User,
     NotificationPreference,
     Admin,
-    AuthRefreshToken,
-    AdminRefreshToken,
+    RefreshToken,
     Category,
     Product,
     ProductImage,
@@ -42,5 +40,3 @@ export const AppDataSource = new DataSource({
   ],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 });
-
-export default AppDataSource;

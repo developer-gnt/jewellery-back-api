@@ -77,6 +77,15 @@
 - **CI/CD:** GitHub Actions (`.github/workflows/ci.yml`) runs automated lint, build, TypeORM migrations, unit tests, and E2E tests against PostgreSQL and Redis service containers.
 - **Reverse Proxy:** Nginx configuration (`nginx/nginx.conf`) handles SSL termination, gzip compression, body size limit (20MB), and rate limiting.
 
+### ADR-011: Unified RefreshToken & Migration Sequencing
+- **Decision:** Consolidated customer and admin JWT refresh tokens into a single TypeORM entity `src/modules/auth/entities/refresh-token.entity.ts` containing nullable `userId` and `adminId`.
+- **Migration Sequencing:**
+  1. `1729000000000-InitialSchema.ts` (Phase 1): Initial users, notification preferences, refresh tokens.
+  2. `1729100000000-CatalogueAndContent.ts` (Phase 2): Categories, products, images, banners, offers.
+  3. `1729200000000-RatesAndShopRates.ts` (Phase 3): Metal rates, shop rates.
+  4. `1729400000000-CreateAdminCMS.ts` (Phase 5): Admins table and adminId column on refresh_tokens.
+- **ESM NodeNext Relation TDZ Fix:** Use string targets for circular entity relations (e.g. `@OneToOne('NotificationPreference', 'user')` and `user: any;`) to eliminate decorator metadata TDZ errors in Node 24 ESM.
+
 ---
 
 ## Phase Implementation Status

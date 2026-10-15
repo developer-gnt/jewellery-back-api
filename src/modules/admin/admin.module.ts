@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Admin } from './entities/admin.entity.js';
-import { RefreshToken } from './entities/refresh-token.entity.js';
+import { RefreshToken } from '../auth/entities/refresh-token.entity.js';
 import { User } from '../users/entities/user.entity.js';
 import { AdminController } from './admin.controller.js';
 import { AdminService } from './admin.service.js';

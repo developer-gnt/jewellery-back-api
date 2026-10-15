@@ -7,7 +7,6 @@ import {
   OneToMany,
   Index,
 } from 'typeorm';
-import { Product } from '../../products/entities/product.entity.js';
 
 @Entity('categories')
 export class Category {
@@ -30,8 +29,8 @@ export class Category {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @OneToMany('Product', 'category')
+  products: any[];
 
   @CreateDateColumn({ type: 'timestamp with time zone' })
   createdAt: Date;

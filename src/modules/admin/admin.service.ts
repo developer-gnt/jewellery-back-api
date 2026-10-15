@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
 import { Admin, AdminRole } from './entities/admin.entity.js';
-import { RefreshToken } from './entities/refresh-token.entity.js';
+import { RefreshToken } from '../auth/entities/refresh-token.entity.js';
 import { User } from '../users/entities/user.entity.js';
 import { AdminLoginDto } from './dto/admin-login.dto.js';
 import { AdminUsersQueryDto } from './dto/admin-users-query.dto.js';

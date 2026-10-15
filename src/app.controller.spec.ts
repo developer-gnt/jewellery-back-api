@@ -20,6 +20,5 @@ describe('AppController', () => {
       expect(result.status).toBe('ok');
       expect(result.service).toBe('Zewar Mahal API');
     });
-    });
   });
 });

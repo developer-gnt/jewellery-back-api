@@ -7,7 +7,6 @@ import {
   OneToOne,
   Index,
 } from 'typeorm';
-import { NotificationPreference } from './notification-preference.entity.js';
 
 @Entity('users')
 export class User {
@@ -39,12 +38,11 @@ export class User {
   @Column({ type: 'timestamp with time zone', nullable: true })
   deletedAt: Date | null;
 
-  @OneToOne(
-    () => NotificationPreference,
-    (preference) => preference.user,
-    { cascade: true, nullable: true },
-  )
-  notificationPreferences: NotificationPreference | null;
+  @OneToOne('NotificationPreference', 'user', {
+    cascade: true,
+    nullable: true,
+  })
+  notificationPreferences: any;
 
   @CreateDateColumn({ type: 'timestamp with time zone' })
   createdAt: Date;
