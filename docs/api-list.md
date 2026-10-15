@@ -14,11 +14,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 1 | POST | `/auth/send-otp` | Send OTP to mobile number | [ ] |
-| 2 | POST | `/auth/verify-otp` | Verify OTP and authenticate user | [ ] |
-| 3 | POST | `/auth/refresh-token` | Refresh access token | [ ] |
-| 4 | POST | `/auth/logout` | End user session | [ ] |
-| 5 | GET | `/auth/me` | Get authenticated user details | [ ] |
+| 1 | POST | `/auth/send-otp` | Send OTP to mobile number | [x] |
+| 2 | POST | `/auth/verify-otp` | Verify OTP and authenticate user | [x] |
+| 3 | POST | `/auth/refresh-token` | Refresh access token | [x] |
+| 4 | POST | `/auth/logout` | End user session | [x] |
+| 5 | GET | `/auth/me` | Get authenticated user details | [x] |
 
 **Subtotal: 5**
 
@@ -28,11 +28,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 6 | GET | `/users/profile` | Retrieve customer profile | [ ] |
-| 7 | PUT | `/users/profile` | Update customer details | [ ] |
-| 8 | DELETE | `/users/account` | Request account deletion | [ ] |
-| 9 | GET | `/users/notification-preferences` | Retrieve notification preferences | [ ] |
-| 10 | PUT | `/users/notification-preferences` | Update notification preferences | [ ] |
+| 6 | GET | `/users/profile` | Retrieve customer profile | [x] |
+| 7 | PUT | `/users/profile` | Update customer details | [x] |
+| 8 | DELETE | `/users/account` | Request account deletion | [x] |
+| 9 | GET | `/users/notification-preferences` | Retrieve notification preferences | [x] |
+| 10 | PUT | `/users/notification-preferences` | Update notification preferences | [x] |
 
 **Subtotal: 5**
 
@@ -42,11 +42,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 11 | GET | `/home` | Aggregate homepage content in one request | [ ] |
-| 12 | GET | `/banners` | Retrieve active banners | [ ] |
-| 13 | GET | `/products/featured` | Retrieve featured products | [ ] |
-| 14 | GET | `/products/latest` | Retrieve latest designs | [ ] |
-| 15 | GET | `/offers/active` | Retrieve active offers | [ ] |
+| 11 | GET | `/home` | Aggregate homepage content in one request | [x] |
+| 12 | GET | `/banners` | Retrieve active banners | [x] |
+| 13 | GET | `/products/featured` | Retrieve featured products | [x] |
+| 14 | GET | `/products/latest` | Retrieve latest designs | [x] |
+| 15 | GET | `/offers/active` | Retrieve active offers | [x] |
 
 **Subtotal: 5**
 
@@ -56,12 +56,12 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 16 | GET | `/categories` | Retrieve active categories | [ ] |
-| 17 | GET | `/categories/:id` | Retrieve category details | [ ] |
-| 18 | POST | `/admin/categories` | Create category | [ ] |
-| 19 | PUT | `/admin/categories/:id` | Update category | [ ] |
-| 20 | PATCH | `/admin/categories/:id/status` | Activate / deactivate category | [ ] |
-| 21 | DELETE | `/admin/categories/:id` | Delete category | [ ] |
+| 16 | GET | `/categories` | Retrieve active categories | [x] |
+| 17 | GET | `/categories/:id` | Retrieve category details | [x] |
+| 18 | POST | `/admin/categories` | Create category | [x] |
+| 19 | PUT | `/admin/categories/:id` | Update category | [x] |
+| 20 | PATCH | `/admin/categories/:id/status` | Activate / deactivate category | [x] |
+| 21 | DELETE | `/admin/categories/:id` | Delete category | [x] |
 
 **Subtotal: 6**
 
@@ -71,17 +71,17 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 22 | GET | `/products` | Paginated catalogue; supports filters & sorting | [ ] |
-| 23 | GET | `/products/:id` | Retrieve product details and image URLs | [ ] |
-| 24 | GET | `/products/search` | Search products by name or keyword | [ ] |
-| 25 | GET | `/products/featured` | Retrieve featured products | [ ] |
-| 26 | GET | `/products/latest` | Retrieve latest products | [ ] |
-| 27 | POST | `/admin/products` | Create product | [ ] |
-| 28 | PUT | `/admin/products/:id` | Update product | [ ] |
-| 29 | PATCH | `/admin/products/:id/status` | Publish / unpublish product | [ ] |
-| 30 | DELETE | `/admin/products/:id` | Delete product | [ ] |
-| 31 | POST | `/admin/products/:id/images` | Add product images | [ ] |
-| 32 | DELETE | `/admin/products/:id/images/:imageId` | Remove product image | [ ] |
+| 22 | GET | `/products` | Paginated catalogue; supports filters & sorting | [x] |
+| 23 | GET | `/products/:id` | Retrieve product details and image URLs | [x] |
+| 24 | GET | `/products/search` | Search products by name or keyword | [x] |
+| 25 | GET | `/products/featured` | Retrieve featured products | [x] |
+| 26 | GET | `/products/latest` | Retrieve latest products | [x] |
+| 27 | POST | `/admin/products` | Create product | [x] |
+| 28 | PUT | `/admin/products/:id` | Update product | [x] |
+| 29 | PATCH | `/admin/products/:id/status` | Publish / unpublish product | [x] |
+| 30 | DELETE | `/admin/products/:id` | Delete product | [x] |
+| 31 | POST | `/admin/products/:id/images` | Add product images | [x] |
+| 32 | DELETE | `/admin/products/:id/images/:imageId` | Remove product image | [x] |
 
 **Subtotal: 11**
 
@@ -91,10 +91,10 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 33 | GET | `/rates/current` | Retrieve current Gold and Silver rates | [ ] |
-| 34 | GET | `/rates/history` | Rate history (optional) | [ ] |
-| 35 | GET | `/admin/rates` | Retrieve rates for admin management | [ ] |
-| 36 | PUT | `/admin/rates` | Manually update rates | [ ] |
+| 33 | GET | `/rates/current` | Retrieve current Gold and Silver rates | [x] |
+| 34 | GET | `/rates/history` | Rate history (optional) | [x] |
+| 35 | GET | `/admin/rates` | Retrieve rates for admin management | [x] |
+| 36 | PUT | `/admin/rates` | Manually update rates | [x] |
 
 **Subtotal: 4**
 
@@ -104,9 +104,9 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 37 | GET | `/shop/rates` | Retrieve Zewar Mahal's own rates | [ ] |
-| 38 | PUT | `/admin/shop/rates` | Update shop rates | [ ] |
-| 39 | GET | `/shop/rates/share` | Return share-ready rate information | [ ] |
+| 37 | GET | `/shop/rates` | Retrieve Zewar Mahal's own rates | [x] |
+| 38 | PUT | `/admin/shop/rates` | Update shop rates | [x] |
+| 39 | GET | `/shop/rates/share` | Return share-ready rate information | [x] |
 
 **Subtotal: 3**
 
@@ -116,12 +116,12 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 40 | GET | `/offers` | Retrieve all offers | [ ] |
-| 41 | GET | `/offers/:id` | Retrieve offer details | [ ] |
-| 42 | POST | `/admin/offers` | Create offer | [ ] |
-| 43 | PUT | `/admin/offers/:id` | Update offer | [ ] |
-| 44 | PATCH | `/admin/offers/:id/status` | Activate / deactivate offer | [ ] |
-| 45 | DELETE | `/admin/offers/:id` | Delete offer | [ ] |
+| 40 | GET | `/offers` | Retrieve all offers | [x] |
+| 41 | GET | `/offers/:id` | Retrieve offer details | [x] |
+| 42 | POST | `/admin/offers` | Create offer | [x] |
+| 43 | PUT | `/admin/offers/:id` | Update offer | [x] |
+| 44 | PATCH | `/admin/offers/:id/status` | Activate / deactivate offer | [x] |
+| 45 | DELETE | `/admin/offers/:id` | Delete offer | [x] |
 
 **Subtotal: 6**
 
@@ -131,10 +131,10 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 46 | POST | `/admin/banners` | Create banner | [ ] |
-| 47 | PUT | `/admin/banners/:id` | Update banner | [ ] |
-| 48 | PATCH | `/admin/banners/:id/status` | Activate / deactivate banner | [ ] |
-| 49 | DELETE | `/admin/banners/:id` | Delete banner | [ ] |
+| 46 | POST | `/admin/banners` | Create banner | [x] |
+| 47 | PUT | `/admin/banners/:id` | Update banner | [x] |
+| 48 | PATCH | `/admin/banners/:id/status` | Activate / deactivate banner | [x] |
+| 49 | DELETE | `/admin/banners/:id` | Delete banner | [x] |
 
 **Subtotal: 4**
 

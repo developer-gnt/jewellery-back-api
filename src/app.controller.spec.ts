@@ -16,10 +16,10 @@ describe('AppController', () => {
 
   describe('health', () => {
     it('should return health status', () => {
-      expect(appController.health()).toMatchObject({
-        status: 'ok',
-        service: 'Zewar Mahal API',
-      });
+      const result = appController.health() as any;
+      expect(result.status).toBe('ok');
+      expect(result.service).toBe('Zewar Mahal API');
+    });
     });
   });
 });

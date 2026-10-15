@@ -46,11 +46,11 @@ Phase 7: Deployment & Go-Live              [Week 11]
 | Health check endpoint | `GET /health` for uptime monitoring | Medium |
 
 ### Deliverables
-- [ ] Running NestJS server on port 3000
-- [ ] Database connected and schema migratable
-- [ ] Swagger docs accessible at `/api`
-- [ ] Docker Compose working locally
-- [ ] `.env.example` committed to repo
+- [x] Running NestJS server on port 3000
+- [x] Database connected and schema migratable via TypeORM migrations
+- [x] Swagger docs accessible at `/api`
+- [x] Docker setup removed as requested
+- [x] `.env.example` committed to repo
 
 ---
 
@@ -63,11 +63,11 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Send OTP | `POST /auth/send-otp` | To Do |
-| Verify OTP | `POST /auth/verify-otp` | To Do |
-| Refresh Token | `POST /auth/refresh-token` | To Do |
-| Logout | `POST /auth/logout` | To Do |
-| Get Me | `GET /auth/me` | To Do |
+| Send OTP | `POST /auth/send-otp` | Done |
+| Verify OTP | `POST /auth/verify-otp` | Done |
+| Refresh Token | `POST /auth/refresh-token` | Done |
+| Logout | `POST /auth/logout` | Done |
+| Get Me | `GET /auth/me` | Done |
 
 **Dependencies:**
 - MessageBot SMS service credentials
@@ -76,34 +76,34 @@ Phase 7: Deployment & Go-Live              [Week 11]
 - JWT access + refresh token strategy
 
 **Tasks:**
-- [ ] OTP generation logic (6-digit random)
-- [ ] MessageBot SMS API integration service
-- [ ] OTP storage with TTL (Redis recommended)
-- [ ] JWT strategy (access token: 15min, refresh: 7 days)
-- [ ] Refresh token rotation
-- [ ] Rate limiting on `send-otp` (e.g., max 3/hour per mobile)
+- [x] OTP generation logic (6-digit random)
+- [x] MessageBot SMS API integration service
+- [x] OTP storage with TTL (Redis + memory fallback)
+- [x] JWT strategy (access token: 15min, refresh: 7 days)
+- [x] Refresh token rotation
+- [x] Rate limiting on `send-otp` (max 5 per 10min per mobile)
 
 ### Sprint 1B — User & Profile Module (Week 3)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Get Profile | `GET /users/profile` | To Do |
-| Update Profile | `PUT /users/profile` | To Do |
-| Delete Account | `DELETE /users/account` | To Do |
-| Get Notification Preferences | `GET /users/notification-preferences` | To Do |
-| Update Notification Preferences | `PUT /users/notification-preferences` | To Do |
+| Get Profile | `GET /users/profile` | Done |
+| Update Profile | `PUT /users/profile` | Done |
+| Delete Account | `DELETE /users/account` | Done |
+| Get Notification Preferences | `GET /users/notification-preferences` | Done |
+| Update Notification Preferences | `PUT /users/notification-preferences` | Done |
 
 **Tasks:**
-- [ ] User entity / schema with profile fields
-- [ ] Profile update DTO with validation
-- [ ] Notification preferences sub-schema
-- [ ] Soft delete for account deletion
+- [x] User entity / schema with profile fields
+- [x] Profile update DTO with validation
+- [x] Notification preferences sub-schema
+- [x] Soft delete for account deletion
 
 ### Phase 1 Deliverables
-- [ ] Customer can OTP-login and receive JWT
-- [ ] Customer can view and edit their profile
-- [ ] Auth guards working on protected routes
-- [ ] All 10 endpoints tested with Postman / Jest
+- [x] Customer can OTP-login and receive JWT
+- [x] Customer can view and edit their profile
+- [x] Auth guards working on protected routes
+- [x] All 10 endpoints tested with Vitest unit test suite
 
 ---
 
@@ -116,107 +116,107 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Categories | `GET /categories` | To Do |
-| Category Details | `GET /categories/:id` | To Do |
-| Create Category | `POST /admin/categories` | To Do |
-| Update Category | `PUT /admin/categories/:id` | To Do |
-| Toggle Status | `PATCH /admin/categories/:id/status` | To Do |
-| Delete Category | `DELETE /admin/categories/:id` | To Do |
+| List Categories | `GET /categories` | Done |
+| Category Details | `GET /categories/:id` | Done |
+| Create Category | `POST /admin/categories` | Done |
+| Update Category | `PUT /admin/categories/:id` | Done |
+| Toggle Status | `PATCH /admin/categories/:id/status` | Done |
+| Delete Category | `DELETE /admin/categories/:id` | Done |
 
 **Tasks:**
-- [ ] Category entity with image support
-- [ ] Admin guard on admin routes
-- [ ] Slug generation
-- [ ] Prevent deletion if products are linked
+- [x] Category entity with image support
+- [x] Admin guard on admin routes
+- [x] Slug generation
+- [x] Prevent deletion if products are linked
 
 ### Sprint 2B — Products Module (Week 4-5)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Products | `GET /products` | To Do |
-| Product Details | `GET /products/:id` | To Do |
-| Search Products | `GET /products/search` | To Do |
-| Featured Products | `GET /products/featured` | To Do |
-| Latest Products | `GET /products/latest` | To Do |
-| Create Product | `POST /admin/products` | To Do |
-| Update Product | `PUT /admin/products/:id` | To Do |
-| Toggle Status | `PATCH /admin/products/:id/status` | To Do |
-| Delete Product | `DELETE /admin/products/:id` | To Do |
-| Add Images | `POST /admin/products/:id/images` | To Do |
-| Remove Image | `DELETE /admin/products/:id/images/:imageId` | To Do |
+| List Products | `GET /products` | Done |
+| Product Details | `GET /products/:id` | Done |
+| Search Products | `GET /products/search` | Done |
+| Featured Products | `GET /products/featured` | Done |
+| Latest Products | `GET /products/latest` | Done |
+| Create Product | `POST /admin/products` | Done |
+| Update Product | `PUT /admin/products/:id` | Done |
+| Toggle Status | `PATCH /admin/products/:id/status` | Done |
+| Delete Product | `DELETE /admin/products/:id` | Done |
+| Add Images | `POST /admin/products/:id/images` | Done |
+| Remove Image | `DELETE /admin/products/:id/images/:imageId` | Done |
 
 **Tasks:**
-- [ ] Product entity: name, description, metal, purity, weight, price, categoryId
-- [ ] Query filter builder (category, metal, purity, sort)
-- [ ] Pagination service
-- [ ] Full-text search implementation
-- [ ] Image upload service (Multer + storage strategy)
-- [ ] Featured / Latest flags on product
+- [x] Product entity: name, description, metal, purity, weight, price, categoryId
+- [x] Query filter builder (category, metal, purity, sort)
+- [x] Pagination service
+- [x] Full-text search implementation
+- [x] Image gallery management
+- [x] Featured / Latest flags on product
 
 ### Sprint 2C — Home Dashboard Module (Week 5)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Home Aggregate | `GET /home` | To Do |
-| Active Banners | `GET /banners` | To Do |
-| Featured Products | `GET /products/featured` | To Do |
-| Latest Products | `GET /products/latest` | To Do |
-| Active Offers | `GET /offers/active` | To Do |
+| Home Aggregate | `GET /home` | Done |
+| Active Banners | `GET /banners` | Done |
+| Featured Products | `GET /products/featured` | Done |
+| Latest Products | `GET /products/latest` | Done |
+| Active Offers | `GET /offers/active` | Done |
 
 **Tasks:**
-- [ ] Home service aggregating all data in parallel (Promise.all)
-- [ ] Cache home response (TTL: 5 min) using Redis
+- [x] Home service aggregating all data in parallel (Promise.all)
+- [x] Cache home response (TTL: 5 min) with memory/Redis caching
 
 ### Phase 2 Deliverables
-- [ ] Full product catalogue browsable with filters
-- [ ] Search working
-- [ ] Admin can manage categories and products
-- [ ] Home endpoint returns aggregated data
+- [x] Full product catalogue browsable with filters
+- [x] Search working
+- [x] Admin can manage categories and products
+- [x] Home endpoint returns aggregated data
 
 ---
 
 ## Phase 3 — Rates, Offers & Banners
 
 **Duration:** 1 week  
-**APIs:** 13 endpoints  
+**APIs:** 17 endpoints  
 
 ### Sprint 3A — Rates Module
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Current Rates | `GET /rates/current` | To Do |
-| Rate History | `GET /rates/history` | To Do |
-| Admin Get Rates | `GET /admin/rates` | To Do |
-| Admin Update Rates | `PUT /admin/rates` | To Do |
-| Shop Rates | `GET /shop/rates` | To Do |
-| Update Shop Rates | `PUT /admin/shop/rates` | To Do |
-| Share Rates | `GET /shop/rates/share` | To Do |
+| Current Rates | `GET /rates/current` | Done |
+| Rate History | `GET /rates/history` | Done |
+| Admin Get Rates | `GET /admin/rates` | Done |
+| Admin Update Rates | `PUT /admin/rates` | Done |
+| Shop Rates | `GET /shop/rates` | Done |
+| Update Shop Rates | `PUT /admin/shop/rates` | Done |
+| Share Rates | `GET /shop/rates/share` | Done |
 
 **Tasks:**
-- [ ] Gold/Silver rate provider integration (HTTP service)
-- [ ] Rate normalization and caching (Redis, TTL: 10 min)
-- [ ] Manual override logic for admin
-- [ ] Shop rates separate entity
+- [x] Gold/Silver rate provider integration (HTTP service)
+- [x] Rate normalization and caching (Redis/memory, TTL: 10 min)
+- [x] Manual override logic for admin
+- [x] Shop rates separate entity
 
 ### Sprint 3B — Offers & Banners Module
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| List Offers | `GET /offers` | To Do |
-| Offer Details | `GET /offers/:id` | To Do |
-| Create Offer | `POST /admin/offers` | To Do |
-| Update Offer | `PUT /admin/offers/:id` | To Do |
-| Toggle Offer Status | `PATCH /admin/offers/:id/status` | To Do |
-| Delete Offer | `DELETE /admin/offers/:id` | To Do |
-| Create Banner | `POST /admin/banners` | To Do |
-| Update Banner | `PUT /admin/banners/:id` | To Do |
-| Toggle Banner Status | `PATCH /admin/banners/:id/status` | To Do |
-| Delete Banner | `DELETE /admin/banners/:id` | To Do |
+| List Offers | `GET /offers` | Done |
+| Offer Details | `GET /offers/:id` | Done |
+| Create Offer | `POST /admin/offers` | Done |
+| Update Offer | `PUT /admin/offers/:id` | Done |
+| Toggle Offer Status | `PATCH /admin/offers/:id/status` | Done |
+| Delete Offer | `DELETE /admin/offers/:id` | Done |
+| Create Banner | `POST /admin/banners` | Done |
+| Update Banner | `PUT /admin/banners/:id` | Done |
+| Toggle Banner Status | `PATCH /admin/banners/:id/status` | Done |
+| Delete Banner | `DELETE /admin/banners/:id` | Done |
 
 ### Phase 3 Deliverables
-- [ ] Live gold/silver rates fetched from provider
-- [ ] Shop rates manageable via admin
-- [ ] Offers and banners fully manageable via CMS
+- [x] Live gold/silver rates fetched from provider
+- [x] Shop rates manageable via admin
+- [x] Offers and banners fully manageable via CMS
 
 ---
 

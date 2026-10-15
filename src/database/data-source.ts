@@ -1,22 +1,46 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import { User } from '../modules/users/entities/user.entity.js';
+import { NotificationPreference } from '../modules/users/entities/notification-preference.entity.js';
+import { Admin } from '../modules/admin/entities/admin.entity.js';
+import { RefreshToken as AuthRefreshToken } from '../modules/auth/entities/refresh-token.entity.js';
+import { RefreshToken as AdminRefreshToken } from '../modules/admin/entities/refresh-token.entity.js';
+import { Category } from '../modules/categories/entities/category.entity.js';
+import { Product } from '../modules/products/entities/product.entity.js';
+import { ProductImage } from '../modules/products/entities/product-image.entity.js';
+import { Banner } from '../modules/banners/entities/banner.entity.js';
+import { Offer } from '../modules/offers/entities/offer.entity.js';
+import { MetalRate } from '../modules/rates/entities/metal-rate.entity.js';
+import { ShopRate } from '../modules/shop-rates/entities/shop-rate.entity.js';
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = import.meta.dirname;
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432', 10),
-  database: process.env.DB_NAME || 'zewar_mahal',
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASS || 'postgres',
-  synchronize: process.env.DB_SYNC === 'true',
+  database: process.env.DB_NAME || 'zewar_mahal',
+  synchronize: false,
   logging: process.env.DB_LOGGING === 'true',
-  entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
-  migrations: [path.join(__dirname, 'migrations/*{.ts,.js}')],
+  entities: [
+    User,
+    NotificationPreference,
+    Admin,
+    AuthRefreshToken,
+    AdminRefreshToken,
+    Category,
+    Product,
+    ProductImage,
+    Banner,
+    Offer,
+    MetalRate,
+    ShopRate,
+  ],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
 });
+
+export default AppDataSource;

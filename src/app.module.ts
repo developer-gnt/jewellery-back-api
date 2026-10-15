@@ -9,10 +9,16 @@ import appConfig from './config/app.config.js';
 import databaseConfig from './config/database.config.js';
 import jwtConfig from './config/jwt.config.js';
 import redisConfig from './config/redis.config.js';
-import { AdminModule } from './modules/admin/admin.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
 import { UsersModule } from './modules/users/users.module.js';
-
-const __dirname = import.meta.dirname;
+import { AdminModule } from './modules/admin/admin.module.js';
+import { CategoriesModule } from './modules/categories/categories.module.js';
+import { ProductsModule } from './modules/products/products.module.js';
+import { HomeModule } from './modules/home/home.module.js';
+import { RatesModule } from './modules/rates/rates.module.js';
+import { ShopRatesModule } from './modules/shop-rates/shop-rates.module.js';
+import { OffersModule } from './modules/offers/offers.module.js';
+import { BannersModule } from './modules/banners/banners.module.js';
 
 @Module({
   imports: [
@@ -65,8 +71,16 @@ const __dirname = import.meta.dirname;
     }),
 
     // Feature Modules
-    AdminModule,
+    AuthModule,
     UsersModule,
+    AdminModule,
+    CategoriesModule,
+    ProductsModule,
+    HomeModule,
+    RatesModule,
+    ShopRatesModule,
+    OffersModule,
+    BannersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

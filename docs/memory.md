@@ -60,13 +60,13 @@
 - **Reason:** Client requirement is only for current rates; history is optional
 - **Status:** Implement stub, leave empty/disabled unless client confirms
 
-### ADR-008: Mandatory Database Migrations
-- **Decision:** All database schema changes must be executed strictly via TypeORM migration files (`src/database/migrations/`).
-- **Reason:** Enforce reproducible, version-controlled database changes across environments and avoid data loss from `synchronize: true`.
-- **Requirement:** Every migration must provide both `up()` and `down()` methods and be tested before committing.
+### ADR-008: Strict Migration-First Database Schema Policy
+- **Decision:** All table creations, alterations, and schema changes MUST be managed strictly via TypeORM migration files (`src/database/migrations/`).
+- **Rule:** `DB_SYNC` is set to `false`. TypeORM `synchronize: true` is strictly prohibited.
+- **Workflow:** When any entity is modified or added in `src/modules/**/entities/`, generate or write a migration in `src/database/migrations/` and run via `npm run migration:run`. Both `up()` and `down()` methods must be implemented.
 
 ### ADR-009: Governance & Living Memory Protocol
-- **Decision:** Mandatory adherence to [`rule.md`](file:///c:/Gnt-codebase/jewellery-back-api/rule.md) for all tasks.
+- **Decision:** Mandatory adherence to [`rule.md`](file:///c:/Gnt-codebase/jewellery-back-api/rule.md) and [`docs/rules.md`](file:///c:/Gnt-codebase/jewellery-back-api/docs/rules.md) for all tasks.
 - **Rules:**
   1. Any architectural changes, patterns, gotchas must be recorded in `docs/memory.md`.
   2. Every phase and endpoint completion must be updated in `docs/phases.md` and `docs/api-list.md`.
@@ -76,6 +76,21 @@
 - **Decision:** Dual deployment support — Docker containerization with `docker-compose.yml` and native PM2 clustering (`ecosystem.config.cjs`).
 - **CI/CD:** GitHub Actions (`.github/workflows/ci.yml`) runs automated lint, build, TypeORM migrations, unit tests, and E2E tests against PostgreSQL and Redis service containers.
 - **Reverse Proxy:** Nginx configuration (`nginx/nginx.conf`) handles SSL termination, gzip compression, body size limit (20MB), and rate limiting.
+
+---
+
+## Phase Implementation Status
+
+| Phase | Description | Status | Endpoints Done |
+|-------|-------------|--------|----------------|
+| **Phase 0** | Project Setup & Infrastructure | ✅ Complete | Health check (`GET /api/v1/health`) |
+| **Phase 1** | Auth, Users & Core Foundation | ✅ Complete | 10/10 endpoints (Auth: 5, Users: 5) |
+| **Phase 2** | Catalogue & Content APIs | ✅ Complete | 22/22 endpoints (Home: 5, Categories: 6, Products: 11) |
+| **Phase 3** | Rates, Offers & Banners | ✅ Complete | 17/17 endpoints (Rates: 4, Shop Rates: 3, Offers: 6, Banners: 4) |
+| **Phase 4** | Enquiries & Notifications | ⏳ Up Next | 0/11 endpoints |
+| **Phase 5** | Admin CMS APIs | ✅ Complete | 7/7 endpoints (Admin Auth: 3, Dashboard: 1, Users: 3) |
+| **Phase 6** | Integrations & Testing | ✅ Complete | E2E test suites (10/10), Postman collection, Security audit |
+| **Phase 7** | Deployment & Go-Live | ✅ Complete | Docker, Docker Compose, CI/CD Actions, Nginx, PM2 |
 
 ---
 

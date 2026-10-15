@@ -4,42 +4,47 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
+  Index,
 } from 'typeorm';
+import { NotificationPreference } from './notification-preference.entity.js';
 
-export interface NotificationPreferences {
-  offers?: boolean;
-  rates?: boolean;
-  enquiries?: boolean;
-  general?: boolean;
-}
-
-@Entity({ name: 'users' })
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Index({ unique: true })
   @Column({ type: 'varchar', length: 20, unique: true })
   mobile: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   name: string | null;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 150, nullable: true })
   email: string | null;
 
-  @Column({ type: 'varchar', length: 500, nullable: true })
+  @Column({ type: 'text', nullable: true })
   avatar: string | null;
+
+  @Column({ type: 'varchar', length: 20, default: 'customer' })
+  role: string;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @Column({
-    type: 'jsonb',
-    nullable: true,
-    default: () =>
-      '\'{"offers":true,"rates":true,"enquiries":true,"general":true}\'',
-  })
-  notificationPreferences: NotificationPreferences | null;
+  @Column({ type: 'boolean', default: false })
+  isDeleted: boolean;
+
+  @Column({ type: 'timestamp with time zone', nullable: true })
+  deletedAt: Date | null;
+
+  @OneToOne(
+    () => NotificationPreference,
+    (preference) => preference.user,
+    { cascade: true, nullable: true },
+  )
+  notificationPreferences: NotificationPreference | null;
 
   @CreateDateColumn({ type: 'timestamp with time zone' })
   createdAt: Date;
