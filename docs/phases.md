@@ -229,38 +229,38 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Submit Enquiry | `POST /enquiries` | To Do |
-| My Enquiries | `GET /users/enquiries` | To Do |
-| All Enquiries (Admin) | `GET /admin/enquiries` | To Do |
-| Enquiry Details (Admin) | `GET /admin/enquiries/:id` | To Do |
-| Update Status (Admin) | `PATCH /admin/enquiries/:id/status` | To Do |
+| Submit Enquiry | `POST /enquiries` | Done |
+| My Enquiries | `GET /users/enquiries` | Done |
+| All Enquiries (Admin) | `GET /admin/enquiries` | Done |
+| Enquiry Details (Admin) | `GET /admin/enquiries/:id` | Done |
+| Update Status (Admin) | `PATCH /admin/enquiries/:id/status` | Done |
 
 **Tasks:**
-- [ ] Enquiry entity with reference number generation
-- [ ] Status state machine: New → Contacted → In Progress → Closed
-- [ ] Paginated admin enquiry list with filters
+- [x] Enquiry entity with reference number generation
+- [x] Status state machine: New → Contacted → In Progress → Closed
+- [x] Paginated admin enquiry list with filters
 
 ### Sprint 4B — Notifications & FCM Module
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Register Device | `POST /notifications/devices` | To Do |
-| Remove Device | `DELETE /notifications/devices/:id` | To Do |
-| Get Notifications | `GET /notifications` | To Do |
-| Mark Read | `PATCH /notifications/:id/read` | To Do |
-| Send Notification (Admin) | `POST /admin/notifications/send` | To Do |
-| Notification History (Admin) | `GET /admin/notifications` | To Do |
+| Register Device | `POST /notifications/devices` | Done |
+| Remove Device | `DELETE /notifications/devices/:id` | Done |
+| Get Notifications | `GET /notifications` | Done |
+| Mark Read | `PATCH /notifications/:id/read` | Done |
+| Send Notification (Admin) | `POST /admin/notifications/send` | Done |
+| Notification History (Admin) | `GET /admin/notifications` | Done |
 
 **Tasks:**
-- [ ] Firebase Admin SDK setup
-- [ ] FCM token storage per user (multi-device)
-- [ ] Push notification service with broadcast and targeted send
-- [ ] Notification entity for history and read tracking
+- [x] Firebase Admin SDK / FCM service setup
+- [x] FCM token storage per user (multi-device)
+- [x] Push notification service with broadcast and targeted send
+- [x] Notification entity for history and read tracking
 
 ### Phase 4 Deliverables
-- [ ] Customers can submit and track enquiries
-- [ ] FCM push notifications working (iOS & Android)
-- [ ] Admin can send broadcasts and view history
+- [x] Customers can submit and track enquiries
+- [x] FCM push notifications working (iOS & Android)
+- [x] Admin can send broadcasts and view history
 
 ---
 

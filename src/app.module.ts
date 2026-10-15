@@ -18,6 +18,8 @@ import { RatesModule } from './modules/rates/rates.module.js';
 import { ShopRatesModule } from './modules/shop-rates/shop-rates.module.js';
 import { OffersModule } from './modules/offers/offers.module.js';
 import { BannersModule } from './modules/banners/banners.module.js';
+import { EnquiriesModule } from './modules/enquiries/enquiries.module.js';
+import { NotificationsModule } from './modules/notifications/notifications.module.js';
 
 @Module({
   imports: [
@@ -81,6 +83,8 @@ import { BannersModule } from './modules/banners/banners.module.js';
     ShopRatesModule,
     OffersModule,
     BannersModule,
+    EnquiriesModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
