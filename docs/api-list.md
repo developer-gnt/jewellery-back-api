@@ -14,11 +14,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 1 | POST | `/auth/send-otp` | Send OTP to mobile number | [ ] |
-| 2 | POST | `/auth/verify-otp` | Verify OTP and authenticate user | [ ] |
-| 3 | POST | `/auth/refresh-token` | Refresh access token | [ ] |
-| 4 | POST | `/auth/logout` | End user session | [ ] |
-| 5 | GET | `/auth/me` | Get authenticated user details | [ ] |
+| 1 | POST | `/auth/send-otp` | Send OTP to mobile number | [x] |
+| 2 | POST | `/auth/verify-otp` | Verify OTP and authenticate user | [x] |
+| 3 | POST | `/auth/refresh-token` | Refresh access token | [x] |
+| 4 | POST | `/auth/logout` | End user session | [x] |
+| 5 | GET | `/auth/me` | Get authenticated user details | [x] |
 
 **Subtotal: 5**
 
@@ -28,11 +28,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 6 | GET | `/users/profile` | Retrieve customer profile | [ ] |
-| 7 | PUT | `/users/profile` | Update customer details | [ ] |
-| 8 | DELETE | `/users/account` | Request account deletion | [ ] |
-| 9 | GET | `/users/notification-preferences` | Retrieve notification preferences | [ ] |
-| 10 | PUT | `/users/notification-preferences` | Update notification preferences | [ ] |
+| 6 | GET | `/users/profile` | Retrieve customer profile | [x] |
+| 7 | PUT | `/users/profile` | Update customer details | [x] |
+| 8 | DELETE | `/users/account` | Request account deletion | [x] |
+| 9 | GET | `/users/notification-preferences` | Retrieve notification preferences | [x] |
+| 10 | PUT | `/users/notification-preferences` | Update notification preferences | [x] |
 
 **Subtotal: 5**
 

@@ -63,11 +63,11 @@ Phase 7: Deployment & Go-Live              [Week 11]
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Send OTP | `POST /auth/send-otp` | To Do |
-| Verify OTP | `POST /auth/verify-otp` | To Do |
-| Refresh Token | `POST /auth/refresh-token` | To Do |
-| Logout | `POST /auth/logout` | To Do |
-| Get Me | `GET /auth/me` | To Do |
+| Send OTP | `POST /auth/send-otp` | Done |
+| Verify OTP | `POST /auth/verify-otp` | Done |
+| Refresh Token | `POST /auth/refresh-token` | Done |
+| Logout | `POST /auth/logout` | Done |
+| Get Me | `GET /auth/me` | Done |
 
 **Dependencies:**
 - MessageBot SMS service credentials
@@ -76,34 +76,34 @@ Phase 7: Deployment & Go-Live              [Week 11]
 - JWT access + refresh token strategy
 
 **Tasks:**
-- [ ] OTP generation logic (6-digit random)
-- [ ] MessageBot SMS API integration service
-- [ ] OTP storage with TTL (Redis recommended)
-- [ ] JWT strategy (access token: 15min, refresh: 7 days)
-- [ ] Refresh token rotation
-- [ ] Rate limiting on `send-otp` (e.g., max 3/hour per mobile)
+- [x] OTP generation logic (6-digit random)
+- [x] MessageBot SMS API integration service
+- [x] OTP storage with TTL (Redis + memory fallback)
+- [x] JWT strategy (access token: 15min, refresh: 7 days)
+- [x] Refresh token rotation
+- [x] Rate limiting on `send-otp` (max 5 per 10min per mobile)
 
 ### Sprint 1B — User & Profile Module (Week 3)
 
 | API | Endpoint | Status |
 |-----|----------|--------|
-| Get Profile | `GET /users/profile` | To Do |
-| Update Profile | `PUT /users/profile` | To Do |
-| Delete Account | `DELETE /users/account` | To Do |
-| Get Notification Preferences | `GET /users/notification-preferences` | To Do |
-| Update Notification Preferences | `PUT /users/notification-preferences` | To Do |
+| Get Profile | `GET /users/profile` | Done |
+| Update Profile | `PUT /users/profile` | Done |
+| Delete Account | `DELETE /users/account` | Done |
+| Get Notification Preferences | `GET /users/notification-preferences` | Done |
+| Update Notification Preferences | `PUT /users/notification-preferences` | Done |
 
 **Tasks:**
-- [ ] User entity / schema with profile fields
-- [ ] Profile update DTO with validation
-- [ ] Notification preferences sub-schema
-- [ ] Soft delete for account deletion
+- [x] User entity / schema with profile fields
+- [x] Profile update DTO with validation
+- [x] Notification preferences sub-schema
+- [x] Soft delete for account deletion
 
 ### Phase 1 Deliverables
-- [ ] Customer can OTP-login and receive JWT
-- [ ] Customer can view and edit their profile
-- [ ] Auth guards working on protected routes
-- [ ] All 10 endpoints tested with Postman / Jest
+- [x] Customer can OTP-login and receive JWT
+- [x] Customer can view and edit their profile
+- [x] Auth guards working on protected routes
+- [x] All 10 endpoints tested with Vitest unit test suite
 
 ---
 

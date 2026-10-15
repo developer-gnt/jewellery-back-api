@@ -2,12 +2,15 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { JwtModule } from '@nestjs/jwt';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import appConfig from './config/app.config.js';
 import databaseConfig from './config/database.config.js';
 import jwtConfig from './config/jwt.config.js';
 import redisConfig from './config/redis.config.js';
+import { AuthModule } from './modules/auth/auth.module.js';
+import { UsersModule } from './modules/users/users.module.js';
 
 @Module({
   imports: [
@@ -36,6 +39,18 @@ import redisConfig from './config/redis.config.js';
       }),
     }),
 
+    // Global JWT Module
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('jwt.accessSecret'),
+        signOptions: {
+          expiresIn: config.get<string>('jwt.accessExpires', '15m') as any,
+        },
+      }),
+    }),
+
     // Rate Limiting
     ThrottlerModule.forRootAsync({
       inject: [ConfigService],
@@ -48,6 +63,10 @@ import redisConfig from './config/redis.config.js';
         ],
       }),
     }),
+
+    // Feature Modules
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
