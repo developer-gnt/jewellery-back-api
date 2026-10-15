@@ -144,11 +144,11 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 50 | POST | `/enquiries` | Submit a product enquiry | [ ] |
-| 51 | GET | `/users/enquiries` | Retrieve customer's own enquiries | [ ] |
-| 52 | GET | `/admin/enquiries` | Retrieve all enquiries (paginated) | [ ] |
-| 53 | GET | `/admin/enquiries/:id` | Retrieve enquiry details | [ ] |
-| 54 | PATCH | `/admin/enquiries/:id/status` | Update enquiry status | [ ] |
+| 50 | POST | `/enquiries` | Submit a product enquiry | [x] |
+| 51 | GET | `/users/enquiries` | Retrieve customer's own enquiries | [x] |
+| 52 | GET | `/admin/enquiries` | Retrieve all enquiries (paginated) | [x] |
+| 53 | GET | `/admin/enquiries/:id` | Retrieve enquiry details | [x] |
+| 54 | PATCH | `/admin/enquiries/:id/status` | Update enquiry status | [x] |
 
 **Subtotal: 5**
 
@@ -158,12 +158,12 @@
 
 | # | Method | Endpoint | Purpose | Status |
 |---|--------|----------|---------|--------|
-| 55 | POST | `/notifications/devices` | Register device FCM token | [ ] |
-| 56 | DELETE | `/notifications/devices/:id` | Remove registered device | [ ] |
-| 57 | GET | `/notifications` | Retrieve customer notifications | [ ] |
-| 58 | PATCH | `/notifications/:id/read` | Mark notification as read | [ ] |
-| 59 | POST | `/admin/notifications/send` | Send push notification | [ ] |
-| 60 | GET | `/admin/notifications` | Retrieve notification history | [ ] |
+| 55 | POST | `/notifications/devices` | Register device FCM token | [x] |
+| 56 | DELETE | `/notifications/devices/:id` | Remove registered device | [x] |
+| 57 | GET | `/notifications` | Retrieve customer notifications | [x] |
+| 58 | PATCH | `/notifications/:id/read` | Mark notification as read | [x] |
+| 59 | POST | `/admin/notifications/send` | Send push notification | [x] |
+| 60 | GET | `/admin/notifications` | Retrieve notification history | [x] |
 
 **Subtotal: 6**
 

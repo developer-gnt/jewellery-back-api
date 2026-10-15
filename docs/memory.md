@@ -83,7 +83,8 @@
   1. `1729000000000-InitialSchema.ts` (Phase 1): Initial users, notification preferences, refresh tokens.
   2. `1729100000000-CatalogueAndContent.ts` (Phase 2): Categories, products, images, banners, offers.
   3. `1729200000000-RatesAndShopRates.ts` (Phase 3): Metal rates, shop rates.
-  4. `1729400000000-CreateAdminCMS.ts` (Phase 5): Admins table and adminId column on refresh_tokens.
+  4. `1729300000000-EnquiriesAndNotifications.ts` (Phase 4): Enquiries, user_devices, notifications.
+  5. `1729400000000-CreateAdminCMS.ts` (Phase 5): Admins table and adminId column on refresh_tokens.
 - **ESM NodeNext Relation TDZ Fix:** Use string targets for circular entity relations (e.g. `@OneToOne('NotificationPreference', 'user')` and `user: any;`) to eliminate decorator metadata TDZ errors in Node 24 ESM.
 
 ---
@@ -96,7 +97,7 @@
 | **Phase 1** | Auth, Users & Core Foundation | ✅ Complete | 10/10 endpoints (Auth: 5, Users: 5) |
 | **Phase 2** | Catalogue & Content APIs | ✅ Complete | 22/22 endpoints (Home: 5, Categories: 6, Products: 11) |
 | **Phase 3** | Rates, Offers & Banners | ✅ Complete | 17/17 endpoints (Rates: 4, Shop Rates: 3, Offers: 6, Banners: 4) |
-| **Phase 4** | Enquiries & Notifications | ⏳ Up Next | 0/11 endpoints |
+| **Phase 4** | Enquiries & Notifications | ✅ Complete | 11/11 endpoints (Enquiries: 5, Notifications: 6) |
 | **Phase 5** | Admin CMS APIs | ✅ Complete | 7/7 endpoints (Admin Auth: 3, Dashboard: 1, Users: 3) |
 | **Phase 6** | Integrations & Testing | ✅ Complete | E2E test suites (10/10), Postman collection, Security audit |
 | **Phase 7** | Deployment & Go-Live | ✅ Complete | Docker, Docker Compose, CI/CD Actions, Nginx, PM2 |

@@ -11,6 +11,9 @@ import { Banner } from '../modules/banners/entities/banner.entity.js';
 import { Offer } from '../modules/offers/entities/offer.entity.js';
 import { MetalRate } from '../modules/rates/entities/metal-rate.entity.js';
 import { ShopRate } from '../modules/shop-rates/entities/shop-rate.entity.js';
+import { Enquiry } from '../modules/enquiries/entities/enquiry.entity.js';
+import { UserDevice } from '../modules/notifications/entities/user-device.entity.js';
+import { Notification } from '../modules/notifications/entities/notification.entity.js';
 
 dotenv.config();
 
@@ -37,6 +40,9 @@ export const AppDataSource = new DataSource({
     Offer,
     MetalRate,
     ShopRate,
+    Enquiry,
+    UserDevice,
+    Notification,
   ],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
 });
