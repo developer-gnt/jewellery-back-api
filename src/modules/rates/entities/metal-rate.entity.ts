@@ -17,8 +17,26 @@ export class MetalRate {
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   gold22K: number;
 
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: true })
+  gold20K?: number;
+
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: true })
+  gold18K?: number;
+
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: true })
+  gold14K?: number;
+
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: true })
+  gold10K?: number;
+
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   silver: number;
+
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: true })
+  changeAmount?: number;
+
+  @Column({ type: 'numeric', precision: 6, scale: 2, nullable: true })
+  changePercentage?: number;
 
   @Column({ type: 'varchar', length: 20, default: 'gram' })
   unit: string;

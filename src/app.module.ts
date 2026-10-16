@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import appConfig from './config/app.config.js';
@@ -24,6 +25,9 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 
 @Module({
   imports: [
+    // Task Scheduling Cron Jobs
+    ScheduleModule.forRoot(),
+
     // Config
     ConfigModule.forRoot({
       isGlobal: true,

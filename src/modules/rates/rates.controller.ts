@@ -59,6 +59,14 @@ export class RatesController {
     return this.ratesService.getRateHistory(limit ? Number(limit) : 30);
   }
 
+  @Public()
+  @Get('rates/sync')
+  @ApiOperation({ summary: 'Trigger immediate synchronization of gold and silver rates with Google / market feeds' })
+  @ApiResponse({ status: 200, description: 'Rates synchronized successfully' })
+  syncRates() {
+    return this.ratesService.syncRates(true);
+  }
+
   @Get('admin/rates')
   @UseGuards(JwtAuthGuard, AdminGuard)
   @ApiBearerAuth('access-token')
