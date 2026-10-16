@@ -159,6 +159,9 @@ export class AuthService {
       name: user.name,
       email: user.email,
       avatar: user.avatar,
+      dateOfBirth: user.dateOfBirth,
+      gender: user.gender,
+      city: user.city,
       role: user.role,
       createdAt: user.createdAt,
       notificationPreferences: user.notificationPreferences
