@@ -8,8 +8,8 @@ export class VerifyOtpDto {
   })
   @IsNotEmpty({ message: 'Mobile number is required' })
   @IsString({ message: 'Mobile number must be a string' })
-  @Matches(/^[6-9]\d{9}$/, {
-    message: 'Mobile number must be a valid 10-digit Indian mobile number',
+  @Matches(/^[0-9]{10}$/, {
+    message: 'Mobile number must be a valid 10-digit mobile number',
   })
   mobile: string;
 

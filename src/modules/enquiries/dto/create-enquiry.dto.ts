@@ -18,7 +18,7 @@ export class CreateEnquiryDto {
 
   @ApiProperty({ example: '9876543210', description: '10-digit mobile number' })
   @IsNotEmpty({ message: 'Mobile number is required' })
-  @Matches(/^[6-9]\d{9}$/, { message: 'Must be a valid 10-digit mobile number' })
+  @Matches(/^[0-9]{10}$/, { message: 'Must be a valid 10-digit mobile number' })
   mobile: string;
 
   @ApiPropertyOptional({ example: 'rohan.sharma@example.com', description: 'Customer email' })
