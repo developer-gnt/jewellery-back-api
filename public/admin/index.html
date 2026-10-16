@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zewar Mahal — Admin Portal & CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0D0709;
+      --bg-surface: #170E12;
+      --bg-surface-elevated: #22151B;
+      --bg-card: rgba(34, 21, 27, 0.7);
+      --border-gold: rgba(212, 175, 55, 0.22);
+      --border-gold-bright: rgba(212, 175, 55, 0.6);
+      --gold-primary: #D4AF37;
+      --gold-light: #F6E29F;
+      --gold-dark: #9A7B1C;
+      --gold-gradient: linear-gradient(135deg, #F9E7B3 0%, #D4AF37 50%, #9A7B1C 100%);
+      --maroon-primary: #52111D;
+      --maroon-dark: #350A12;
+      --maroon-light: #7E1C2E;
+      --text-primary: #FFFFFF;
+      --text-secondary: #C8B8BE;
+      --text-muted: #8E7A82;
+      --success: #10B981;
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --warning: #F59E0B;
+      --warning-bg: rgba(245, 158, 11, 0.15);
+      --danger: #EF4444;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --info: #3B82F6;
+      --info-bg: rgba(59, 130, 246, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.15);
+      --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.45);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(82, 17, 29, 0.35) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.12) 0%, transparent 45%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Headings font */
+    h1, h2, h3, .font-cinzel, .brand-logo-text {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.04em;
+    }
+
+    /* Gold gradient text helper */
+    .text-gold-gradient {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* Utilities */
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .gap-4 { gap: 16px; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-surface); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-primary); }
+
+    /* ------------------------------------------------------------- */
+    /* TOAST NOTIFICATIONS */
+    /* ------------------------------------------------------------- */
+    #toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      pointer-events: auto;
+      min-width: 300px;
+      max-width: 420px;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      background: rgba(23, 14, 18, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-primary);
+      font-size: 14px;
+      animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--danger); }
+    .toast.info { border-color: var(--gold-primary); }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* ------------------------------------------------------------- */
+    /* LOGIN VIEW */
+    /* ------------------------------------------------------------- */
+    #login-view {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at center, #230D14 0%, #0D0709 100%);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(28, 16, 22, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 44px 36px;
+      box-shadow: var(--shadow-card), 0 0 50px rgba(212, 175, 55, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo-emblem {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(82, 17, 29, 0.4) 100%);
+      border: 1px solid var(--border-gold-bright);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .login-logo-emblem svg {
+      width: 34px;
+      height: 34px;
+      fill: var(--gold-primary);
+    }
+
+    .login-header h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .login-header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .quick-creds-box {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px dashed rgba(212, 175, 55, 0.35);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .quick-creds-info {
+      font-size: 12px;
+      color: var(--gold-light);
+    }
+    .quick-creds-info strong {
+      color: #FFF;
+      display: block;
+      font-size: 13px;
+    }
+
+    .btn-autofill {
+      background: var(--gold-gradient);
+      border: none;
+      color: #170E12;
+      font-weight: 700;
+      font-size: 11px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .btn-autofill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      background: rgba(15, 9, 12, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: #FFF;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+      background: rgba(15, 9, 12, 0.95);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--gold-gradient);
+      border: none;
+      color: #170E12;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(212, 175, 55, 0.4);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* ------------------------------------------------------------- */
+    /* ADMIN SHELL & LAYOUT */
+    /* ------------------------------------------------------------- */
+    #admin-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      background: rgba(20, 11, 15, 0.95);
+      border-right: 1px solid var(--border-gold);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    .brand-icon-wrapper {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(82, 17, 29, 0.5) 100%);
+      border: 1px solid var(--border-gold-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-gold);
+      flex-shrink: 0;
+    }
+
+    .brand-icon-wrapper svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--gold-primary);
+    }
+
+    .brand-title-wrap {
+      line-height: 1.2;
+    }
+    .brand-title-wrap h2 {
+      font-size: 16px;
+      color: #FFF;
+      letter-spacing: 0.05em;
+    }
+    .brand-title-wrap span {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .nav-menu {
+      flex: 1;
+      padding: 20px 14px;
+      list-style: none;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 10px 12px 4px;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      color: #FFF;
+      background: rgba(212, 175, 55, 0.08);
+      border-color: rgba(212, 175, 55, 0.15);
+    }
+
+    .nav-item.active {
+      color: #FFF;
+      background: linear-gradient(90deg, rgba(82, 17, 29, 0.8) 0%, rgba(212, 175, 55, 0.18) 100%);
+      border-color: var(--border-gold-bright);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-item.active svg {
+      fill: var(--gold-primary);
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-muted);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--gold-gradient);
+      color: #170E12;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .sidebar-footer {
+      padding: 16px 14px;
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      background: rgba(14, 8, 11, 0.8);
+    }
+
+    .admin-profile-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+    }
+
+    .admin-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      background: var(--maroon-primary);
+      border: 1px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--gold-light);
+      font-size: 14px;
+    }
+
+    .admin-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .admin-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #FFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-role {
+      font-size: 11px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .btn-logout:hover {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    /* MAIN CONTENT */
+    .main-wrapper {
+      margin-left: 270px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 100vh;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      height: 70px;
+      background: rgba(20, 11, 15, 0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-gold);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .live-ticker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(34, 21, 27, 0.6);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-full);
+      padding: 6px 16px;
+      font-size: 13px;
+    }
+
+    .ticker-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .ticker-item strong {
+      color: var(--gold-light);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-refresh {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .btn-refresh:hover {
+      background: var(--gold-primary);
+      color: #170E12;
+      font-weight: 600;
+    }
+
+    /* CONTENT CONTAINER */
+    .content-area {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* STATS GRID */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold-primary);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .stat-title {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .stat-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--gold-primary);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #FFF;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .stat-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* CARD / PANEL STYLES */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 28px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    .panel-title {
+      font-size: 18px;
+      color: #FFF;
+    }
+
+    /* TABLES */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    table.custom-table th {
+      padding: 14px 16px;
+      background: rgba(14, 8, 11, 0.7);
+      color: var(--gold-light);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    table.custom-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+
+    table.custom-table tbody tr {
+      transition: var(--transition);
+    }
+    table.custom-table tbody tr:hover {
+      background: rgba(212, 175, 55, 0.04);
+      color: #FFF;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge.badge-new { background: var(--info-bg); color: #60A5FA; border: 1px solid #3B82F6; }
+    .badge.badge-in-progress, .badge.badge-contacted { background: var(--warning-bg); color: #FBBF24; border: 1px solid #F59E0B; }
+    .badge.badge-converted, .badge.badge-published, .badge.badge-active { background: var(--success-bg); color: #34D399; border: 1px solid #10B981; }
+    .badge.badge-closed, .badge.badge-inactive { background: rgba(255, 255, 255, 0.08); color: #9CA3AF; border: 1px solid #6B7280; }
+
+    /* ACTION BUTTONS IN TABLES */
+    .btn-action {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-action:hover {
+      background: var(--gold-primary);
+      color: #170E12;
+      font-weight: 600;
+    }
+
+    /* RATES VIEW SPECIAL STYLING */
+    .rates-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .rate-bullion-card {
+      background: linear-gradient(145deg, rgba(34, 21, 27, 0.85) 0%, rgba(20, 11, 15, 0.95) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .rate-bullion-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gold-gradient);
+    }
+
+    .bullion-tag {
+      font-size: 12px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .bullion-price {
+      font-size: 34px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 6px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .bullion-unit {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .rates-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* SWITCH TOGGLE */
+    .switch-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      color: #FFF;
+      margin-bottom: 20px;
+    }
+
+    .switch-input {
+      appearance: none;
+      width: 44px;
+      height: 24px;
+      background: #37232B;
+      border-radius: var(--radius-full);
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      transition: var(--transition);
+    }
+    .switch-input:checked {
+      background: var(--gold-primary);
+      border-color: var(--gold-light);
+    }
+    .switch-input::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      background: #FFF;
+      transition: var(--transition);
+    }
+    .switch-input:checked::before {
+      left: 22px;
+      background: #170E12;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-gold-bright);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 560px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      animation: zoomIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: #FFF; }
+
+    /* LOADING SPINNER */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(23, 14, 18, 0.3);
+      border-top-color: #170E12;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { width: 70px; }
+      .brand-title-wrap, .nav-label, .nav-item span, .nav-badge, .admin-info { display: none; }
+      .main-wrapper { margin-left: 70px; }
+      .topbar { padding: 0 16px; }
+      .content-area { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- ============================================================= -->
+  <!-- 1. LOGIN SCREEN -->
+  <!-- ============================================================= -->
+  <div id="login-view">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo-emblem">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L4 8L12 14L20 8L12 2Z"/>
+            <path d="M4 12L12 18L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16L12 22L20 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="text-gold-gradient">ZEWAR MAHAL</h1>
+        <p>ROYAL JEWELLERS • ADMINISTRATIVE PORTAL</p>
+      </div>
+
+      <!-- Quick 1-Click Fill Credentials Box -->
+      <div class="quick-creds-box">
+        <div class="quick-creds-info">
+          <strong>Default Super Admin</strong>
+          <span>admin@zewarmahal.com • Admin@123456</span>
+        </div>
+        <button type="button" class="btn-autofill" id="btn-fill-creds">⚡ Auto Fill</button>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Admin Email</label>
+          <div class="input-wrapper">
+            <input type="email" id="login-email" required placeholder="admin@zewarmahal.com" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-wrapper">
+            <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-submit-login">
+          <span id="login-btn-text">Sign In To Admin Portal</span>
+          <div id="login-spinner" class="spinner hidden"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- 2. AUTHENTICATED DASHBOARD SHELL -->
+  <!-- ============================================================= -->
+  <div id="admin-shell" class="hidden">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L4 8L12 14L20 8L12 2Z"/>
+            <path d="M4 12L12 18L20 12" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 16L12 22L20 16" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <h2 class="text-gold-gradient">ZEWAR MAHAL</h2>
+          <span>CMS • Admin</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <div class="nav-label">Core Management</div>
+        <li>
+          <a class="nav-item active" data-section="dashboard">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="rates">
+            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <span>Bullion Rates</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="shop-rates">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+            <span>Shop Store Rates</span>
+          </a>
+        </li>
+
+        <div class="nav-label">Catalogue & Store</div>
+        <li>
+          <a class="nav-item" data-section="products">
+            <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/></svg>
+            <span>Jewellery Products</span>
+            <span class="nav-badge" id="badge-products-count">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="categories">
+            <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11zM7.5 13l-5.5 9h11zM16.5 13l-5.5 9h11z"/></svg>
+            <span>Categories</span>
+          </a>
+        </li>
+
+        <div class="nav-label">Customer CRM</div>
+        <li>
+          <a class="nav-item" data-section="enquiries">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+            <span>Enquiries</span>
+            <span class="nav-badge" id="badge-enquiries-count">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="offers">
+            <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+            <span>Offers & Banners</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="users">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <span>Customers</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="admin-profile-card">
+          <div class="admin-avatar" id="admin-avatar-initials">SA</div>
+          <div class="admin-info">
+            <div class="admin-name" id="admin-display-name">Super Admin</div>
+            <div class="admin-role" id="admin-display-role">super_admin</div>
+          </div>
+          <button class="btn-logout" id="btn-logout" title="Sign Out">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title" id="page-title-heading">Executive Dashboard</h1>
+          
+          <!-- Live Bullion Rate Ticker -->
+          <div class="live-ticker-wrap">
+            <div class="ticker-pulse"></div>
+            <div class="ticker-item">Gold 24K: <strong id="top-rate-gold24k">₹...</strong></div>
+            <div class="ticker-item">Gold 22K: <strong id="top-rate-gold22k">₹...</strong></div>
+            <div class="ticker-item">Silver: <strong id="top-rate-silver">₹...</strong></div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn-refresh" id="btn-manual-refresh">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+            <span>Sync Data</span>
+          </button>
+          <a href="/api" target="_blank" class="btn-refresh" style="text-decoration:none;" title="Open Swagger API documentation">
+            <span>Swagger API</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="content-area">
+
+        <!-- ========================================================= -->
+        <!-- SECTION 1: DASHBOARD -->
+        <!-- ========================================================= -->
+        <div id="section-dashboard" class="content-section">
+          
+          <!-- Quick Stat Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Active Catalogue</span>
+                <div class="stat-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+                </div>
+              </div>
+              <div class="stat-value text-gold-gradient" id="stat-products-count">...</div>
+              <div class="stat-subtitle">Handcrafted Jewellery Pieces</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Customer Enquiries</span>
+                <div class="stat-icon">
+                  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                </div>
+              </div>
+              <div class="stat-value text-gold-gradient" id="stat-enquiries-count">...</div>
+              <div class="stat-subtitle">Awaiting sales follow-up</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Active Offers</span>
+                <div class="stat-icon">
+                  <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4v7l9 9z"/></svg>
+                </div>
+              </div>
+              <div class="stat-value text-gold-gradient" id="stat-offers-count">...</div>
+              <div class="stat-subtitle">Festive & Making Charge Discounts</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Registered Customers</span>
+                <div class="stat-icon">
+                  <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
+                </div>
+              </div>
+              <div class="stat-value text-gold-gradient" id="stat-users-count">...</div>
+              <div class="stat-subtitle">Zewar Mahal Mobile App Users</div>
+            </div>
+          </div>
+
+          <!-- Recent Enquiries Panel -->
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title font-cinzel">Recent Customer Enquiries</h2>
+              <button class="btn-action" onclick="switchSection('enquiries')">View All Enquiries →</button>
+            </div>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Customer Name</th>
+                    <th>Mobile</th>
+                    <th>Subject / Note</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboard-recent-enquiries-tbody">
+                  <tr><td colspan="6" style="text-align:center; padding: 24px;">Loading recent enquiries...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 2: BULLION RATES -->
+        <!-- ========================================================= -->
+        <div id="section-rates" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Bullion Market Rates & Overrides</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Configure live benchmark bullion prices displayed to customers across the Mobile App & Store.
+                </p>
+              </div>
+              <div id="rates-override-status-badge">
+                <!-- Override status badge inserted dynamically -->
+              </div>
+            </div>
+
+            <!-- Current Rate Cards -->
+            <div class="rates-overview-grid">
+              <div class="rate-bullion-card">
+                <div class="bullion-tag">Gold 24K (999 Purity)</div>
+                <div class="bullion-price text-gold-gradient" id="card-rate-gold24k">₹...</div>
+                <div class="bullion-unit">Per 1 Gram Benchmark</div>
+              </div>
+              <div class="rate-bullion-card">
+                <div class="bullion-tag">Gold 22K (916 Hallmarked)</div>
+                <div class="bullion-price text-gold-gradient" id="card-rate-gold22k">₹...</div>
+                <div class="bullion-unit">Per 1 Gram Benchmark</div>
+              </div>
+              <div class="rate-bullion-card">
+                <div class="bullion-tag">Pure Silver (999 Purity)</div>
+                <div class="bullion-price text-gold-gradient" id="card-rate-silver">₹...</div>
+                <div class="bullion-unit">Per 1 Gram Benchmark</div>
+              </div>
+            </div>
+
+            <!-- Manual Override Form -->
+            <form id="form-update-rates" style="background: rgba(15, 9, 12, 0.7); border:1px solid var(--border-gold); padding:24px; border-radius:var(--radius-lg);">
+              <h3 style="font-size:16px; margin-bottom:16px; color:#FFF;">Update / Override Live Rates</h3>
+              
+              <label class="switch-label">
+                <input type="checkbox" id="rates-manual-override-checkbox" class="switch-input">
+                <span><strong>Enable Manual Rate Override</strong> (Check to freeze custom prices, uncheck for auto market feed)</span>
+              </label>
+
+              <div class="rates-form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="input-rate-gold24k">Gold 24K Rate (₹ / gram)</label>
+                  <div class="input-wrapper">
+                    <input type="number" step="0.01" id="input-rate-gold24k" placeholder="e.g. 7450.00" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="input-rate-gold22k">Gold 22K Rate (₹ / gram)</label>
+                  <div class="input-wrapper">
+                    <input type="number" step="0.01" id="input-rate-gold22k" placeholder="e.g. 6850.00" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="input-rate-silver">Silver Rate (₹ / gram)</label>
+                  <div class="input-wrapper">
+                    <input type="number" step="0.01" id="input-rate-silver" placeholder="e.g. 92.50" required>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" style="max-width:240px;" id="btn-save-rates">
+                Save Rates Changes
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 3: SHOP STORE RATES -->
+        <!-- ========================================================= -->
+        <div id="section-shop-rates" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Zewar Mahal Store Retail Rates</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Custom retail rates including making charge formulas shown to in-store customers.
+                </p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Metal</th>
+                    <th>Purity</th>
+                    <th>Store Rate (₹/g)</th>
+                    <th>Making Charges (₹/g)</th>
+                    <th>Notes</th>
+                    <th>Updated At</th>
+                  </tr>
+                </thead>
+                <tbody id="shop-rates-tbody">
+                  <tr><td colspan="6" style="text-align:center; padding: 24px;">Loading shop rates...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 4: PRODUCTS -->
+        <!-- ========================================================= -->
+        <div id="section-products" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Jewellery Catalogue</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Manage necklaces, bangles, rings, earrings and bridal sets.
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn-primary" style="padding:10px 18px; margin:0;" onclick="openAddProductModal()">
+                  + Add New Product
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Metal & Purity</th>
+                    <th>Gross / Net Wt</th>
+                    <th>Base Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody">
+                  <tr><td colspan="7" style="text-align:center; padding: 24px;">Loading products...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 5: CATEGORIES -->
+        <!-- ========================================================= -->
+        <div id="section-categories" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Jewellery Categories</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Collection classifications available in the customer app.
+                </p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="categories-tbody">
+                  <tr><td colspan="4" style="text-align:center; padding: 24px;">Loading categories...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 6: ENQUIRIES -->
+        <!-- ========================================================= -->
+        <div id="section-enquiries" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Customer Enquiries & Leads</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Real-time enquiries submitted from the customer mobile app with status management.
+                </p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Ref #</th>
+                    <th>Customer Name</th>
+                    <th>Mobile</th>
+                    <th>Message / Product</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="enquiries-tbody">
+                  <tr><td colspan="7" style="text-align:center; padding: 24px;">Loading enquiries...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 7: OFFERS & BANNERS -->
+        <!-- ========================================================= -->
+        <div id="section-offers" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title font-cinzel">Active Promotional Offers</h2>
+            </div>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Code</th>
+                    <th>Discount</th>
+                    <th>Valid Till</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="offers-tbody">
+                  <tr><td colspan="5" style="text-align:center; padding: 24px;">Loading offers...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title font-cinzel">App Showcase Banners</h2>
+            </div>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Banner Title</th>
+                    <th>Subtext</th>
+                    <th>Link Type</th>
+                    <th>Active</th>
+                  </tr>
+                </thead>
+                <tbody id="banners-tbody">
+                  <tr><td colspan="4" style="text-align:center; padding: 24px;">Loading banners...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SECTION 8: REGISTERED CUSTOMERS -->
+        <!-- ========================================================= -->
+        <div id="section-users" class="content-section hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title font-cinzel">Registered Customer Accounts</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
+                  Customers authenticated via OTP in the mobile application.
+                </p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody">
+                  <tr><td colspan="5" style="text-align:center; padding: 24px;">Loading customers...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ADD PRODUCT MODAL -->
+  <!-- ============================================================= -->
+  <div id="modal-add-product" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="font-cinzel text-gold-gradient" style="font-size:18px;">Add New Jewellery Piece</h3>
+        <button class="modal-close" onclick="closeAddProductModal()">&times;</button>
+      </div>
+
+      <form id="form-add-product">
+        <div class="form-group">
+          <label class="form-label">Product Title</label>
+          <div class="input-wrapper">
+            <input type="text" id="prod-name" placeholder="e.g. Royal Nizam Kundan Necklace" required>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label">SKU Code</label>
+            <div class="input-wrapper">
+              <input type="text" id="prod-sku" placeholder="ZM-NK-001" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <div class="input-wrapper">
+              <select id="prod-category-select" style="width:100%; background:rgba(15,9,12,0.85); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-md); padding:14px; color:#FFF;">
+                <!-- Populated via JS -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label">Metal</label>
+            <div class="input-wrapper">
+              <select id="prod-metal" style="width:100%; background:rgba(15,9,12,0.85); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-md); padding:14px; color:#FFF;">
+                <option value="gold">Gold</option>
+                <option value="silver">Silver</option>
+                <option value="platinum">Platinum</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Purity</label>
+            <div class="input-wrapper">
+              <input type="text" id="prod-purity" placeholder="22K" value="22K" required>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div class="form-group">
+            <label class="form-label">Gross Weight (grams)</label>
+            <div class="input-wrapper">
+              <input type="number" step="0.01" id="prod-gross-weight" placeholder="32.50" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Net Weight (grams)</label>
+            <div class="input-wrapper">
+              <input type="number" step="0.01" id="prod-net-weight" placeholder="30.20" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Base Price Estimate (₹)</label>
+          <div class="input-wrapper">
+            <input type="number" step="1" id="prod-base-price" placeholder="225000" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <div class="input-wrapper">
+            <textarea id="prod-description" rows="3" style="width:100%; background:rgba(15,9,12,0.85); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-md); padding:12px; color:#FFF; font-family:inherit;" placeholder="Artisanal 22K Hallmarked gold with antique finish."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top:16px;">
+          Create & Publish Product
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <!-- ============================================================= -->
+  <script>
+    // Configuration & State
+    const API_BASE = '/api/v1';
+    let token = localStorage.getItem('zm_admin_token') || '';
+    let currentUser = JSON.parse(localStorage.getItem('zm_admin_user') || 'null');
+    let categoriesList = [];
+
+    // Helper: Toast alerts
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span style="font-size:18px;">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Helper: Format currency
+    function formatINR(val) {
+      if (val === undefined || val === null || isNaN(val)) return '₹0';
+      return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(val);
+    }
+
+    // Helper: API Client
+    async function apiRequest(endpoint, method = 'GET', body = null) {
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      try {
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+          method,
+          headers,
+          body: body ? JSON.stringify(body) : null
+        });
+
+        if (response.status === 401) {
+          // Token expired or invalid
+          handleLogout();
+          throw new Error('Session expired. Please log in again.');
+        }
+
+        const json = await response.json();
+        if (!response.ok) {
+          throw new Error(json.message || `API error ${response.status}`);
+        }
+        return json.data !== undefined ? json.data : json;
+      } catch (err) {
+        console.error(`Request to ${endpoint} failed:`, err);
+        throw err;
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // AUTHENTICATION LOGIC
+    // -----------------------------------------------------------------
+    const loginView = document.getElementById('login-view');
+    const adminShell = document.getElementById('admin-shell');
+    const loginForm = document.getElementById('login-form');
+    const btnFillCreds = document.getElementById('btn-fill-creds');
+
+    btnFillCreds.addEventListener('click', () => {
+      document.getElementById('login-email').value = 'admin@zewarmahal.com';
+      document.getElementById('login-password').value = 'Admin@123456';
+      showToast('Autofilled credentials!', 'info');
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const btnText = document.getElementById('login-btn-text');
+      const spinner = document.getElementById('login-spinner');
+      const submitBtn = document.getElementById('btn-submit-login');
+
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verifying...';
+      spinner.classList.remove('hidden');
+
+      try {
+        const data = await apiRequest('/admin/auth/login', 'POST', { email, password });
+        token = data.accessToken;
+        currentUser = data.admin;
+        localStorage.setItem('zm_admin_token', token);
+        localStorage.setItem('zm_admin_user', JSON.stringify(currentUser));
+
+        showToast(`Welcome back, ${currentUser.name || 'Admin'}!`, 'success');
+        initDashboard();
+      } catch (err) {
+        showToast(err.message || 'Login failed. Invalid credentials.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Sign In To Admin Portal';
+        spinner.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', handleLogout);
+
+    function handleLogout() {
+      token = '';
+      currentUser = null;
+      localStorage.removeItem('zm_admin_token');
+      localStorage.removeItem('zm_admin_user');
+      adminShell.classList.add('hidden');
+      loginView.classList.remove('hidden');
+    }
+
+    // -----------------------------------------------------------------
+    // NAVIGATION
+    // -----------------------------------------------------------------
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = item.dataset.section;
+        switchSection(section);
+      });
+    });
+
+    function switchSection(sectionId) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      const activeNav = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+      if (activeNav) activeNav.classList.add('active');
+
+      document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+      const targetSec = document.getElementById(`section-${sectionId}`);
+      if (targetSec) targetSec.classList.remove('hidden');
+
+      // Update heading
+      const titles = {
+        'dashboard': 'Executive Dashboard',
+        'rates': 'Live Bullion Rates Management',
+        'shop-rates': 'Zewar Mahal Store Rates',
+        'products': 'Jewellery Catalogue',
+        'categories': 'Categories Overview',
+        'enquiries': 'Customer Enquiries & Sales Leads',
+        'offers': 'Promotions & Mobile Banners',
+        'users': 'Registered Mobile App Customers'
+      };
+      document.getElementById('page-title-heading').textContent = titles[sectionId] || 'Admin Portal';
+
+      // Load section data
+      if (sectionId === 'rates') loadBullionRates();
+      if (sectionId === 'shop-rates') loadShopRates();
+      if (sectionId === 'products') loadProducts();
+      if (sectionId === 'categories') loadCategories();
+      if (sectionId === 'enquiries') loadEnquiries();
+      if (sectionId === 'offers') loadOffersAndBanners();
+      if (sectionId === 'users') loadUsers();
+    }
+
+    document.getElementById('btn-manual-refresh').addEventListener('click', () => {
+      showToast('Refreshing all data...', 'info');
+      initDashboard();
+    });
+
+    // -----------------------------------------------------------------
+    // DATA LOADERS
+    // -----------------------------------------------------------------
+    async function initDashboard() {
+      if (!token) {
+        loginView.classList.remove('hidden');
+        adminShell.classList.add('hidden');
+        return;
+      }
+
+      loginView.classList.add('hidden');
+      adminShell.classList.remove('hidden');
+
+      // Setup user info in sidebar
+      if (currentUser) {
+        document.getElementById('admin-display-name').textContent = currentUser.name || 'Admin';
+        document.getElementById('admin-display-role').textContent = currentUser.role || 'super_admin';
+        const initials = (currentUser.name || 'SA').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        document.getElementById('admin-avatar-initials').textContent = initials;
+      }
+
+      await Promise.allSettled([
+        loadDashboardStats(),
+        loadLiveTicker(),
+        loadCategoriesForSelect()
+      ]);
+    }
+
+    // 1. Live Ticker
+    async function loadLiveTicker() {
+      try {
+        const rates = await apiRequest('/rates/current');
+        document.getElementById('top-rate-gold24k').textContent = formatINR(rates.gold24K);
+        document.getElementById('top-rate-gold22k').textContent = formatINR(rates.gold22K);
+        document.getElementById('top-rate-silver').textContent = formatINR(rates.silver);
+
+        // Also update cards if on rates tab
+        document.getElementById('card-rate-gold24k').textContent = formatINR(rates.gold24K);
+        document.getElementById('card-rate-gold22k').textContent = formatINR(rates.gold22K);
+        document.getElementById('card-rate-silver').textContent = formatINR(rates.silver);
+
+        document.getElementById('input-rate-gold24k').value = rates.gold24K;
+        document.getElementById('input-rate-gold22k').value = rates.gold22K;
+        document.getElementById('input-rate-silver').value = rates.silver;
+        document.getElementById('rates-manual-override-checkbox').checked = !!rates.isManualOverride;
+
+        const badgeWrap = document.getElementById('rates-override-status-badge');
+        if (rates.isManualOverride) {
+          badgeWrap.innerHTML = '<span class="badge badge-in-progress">Manual Override Active</span>';
+        } else {
+          badgeWrap.innerHTML = '<span class="badge badge-active">Live Automated Provider Feed</span>';
+        }
+      } catch (e) {
+        console.warn('Could not load current rates:', e);
+      }
+    }
+
+    // 2. Dashboard Stats
+    async function loadDashboardStats() {
+      try {
+        const stats = await apiRequest('/admin/dashboard');
+        const productsCount = stats.totalProducts ?? 0;
+        const enquiriesCount = stats.totalEnquiries ?? stats.pendingEnquiries ?? 0;
+        const offersCount = stats.activeOffers ?? 0;
+        const usersCount = stats.totalUsers ?? stats.registeredUsers ?? 0;
+
+        document.getElementById('stat-products-count').textContent = productsCount;
+        document.getElementById('stat-enquiries-count').textContent = enquiriesCount;
+        document.getElementById('stat-offers-count').textContent = offersCount;
+        document.getElementById('stat-users-count').textContent = usersCount;
+
+        document.getElementById('badge-products-count').textContent = productsCount;
+        document.getElementById('badge-enquiries-count').textContent = enquiriesCount;
+
+        // Render Recent Enquiries
+        const tbody = document.getElementById('dashboard-recent-enquiries-tbody');
+        if (stats.recentEnquiries && stats.recentEnquiries.length > 0) {
+          tbody.innerHTML = stats.recentEnquiries.map(enq => `
+            <tr>
+              <td><strong style="color:var(--gold-light); font-family:monospace;">${enq.referenceNumber || 'ZM-ENQ'}</strong></td>
+              <td>${enq.name || 'Guest'}</td>
+              <td>${enq.phone || enq.mobile || '-'}</td>
+              <td>${(enq.message || 'General Catalogue Enquiry').substring(0, 45)}...</td>
+              <td><span class="badge badge-${enq.status || 'new'}">${enq.status || 'new'}</span></td>
+              <td>${new Date(enq.createdAt).toLocaleDateString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 24px; color:var(--text-muted);">No enquiries submitted yet.</td></tr>';
+        }
+      } catch (err) {
+        console.error('Failed to load dashboard stats:', err);
+      }
+    }
+
+    // 3. Bullion Rates Save Form
+    document.getElementById('form-update-rates').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const gold24K = parseFloat(document.getElementById('input-rate-gold24k').value);
+      const gold22K = parseFloat(document.getElementById('input-rate-gold22k').value);
+      const silver = parseFloat(document.getElementById('input-rate-silver').value);
+      const isManualOverride = document.getElementById('rates-manual-override-checkbox').checked;
+
+      const btn = document.getElementById('btn-save-rates');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        await apiRequest('/admin/rates', 'PUT', { gold24K, gold22K, silver, isManualOverride });
+        showToast('Metal rates updated successfully!', 'success');
+        loadLiveTicker();
+      } catch (err) {
+        showToast(err.message || 'Failed to update rates', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Rates Changes';
+      }
+    });
+
+    async function loadBullionRates() {
+      loadLiveTicker();
+    }
+
+    // 4. Shop Rates
+    async function loadShopRates() {
+      const tbody = document.getElementById('shop-rates-tbody');
+      try {
+        const rates = await apiRequest('/shop/rates');
+        if (Array.isArray(rates) && rates.length > 0) {
+          tbody.innerHTML = rates.map(r => `
+            <tr>
+              <td style="text-transform:capitalize; font-weight:600; color:#FFF;">${r.metal}</td>
+              <td><strong style="color:var(--gold-light);">${r.purity}</strong></td>
+              <td>${formatINR(r.ratePerGram)}</td>
+              <td>${formatINR(r.makingChargePerGram)}</td>
+              <td style="color:var(--text-muted);">${r.notes || '-'}</td>
+              <td>${new Date(r.updatedAt).toLocaleDateString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:24px;">No shop rates found.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    // 5. Products Catalogue
+    async function loadProducts() {
+      const tbody = document.getElementById('products-tbody');
+      try {
+        const res = await apiRequest('/products?limit=50');
+        const items = Array.isArray(res) ? res : (res.data || res.items || []);
+        if (Array.isArray(items) && items.length > 0) {
+          tbody.innerHTML = items.map(p => `
+            <tr>
+              <td>
+                <div style="font-weight:600; color:#FFF;">${p.name}</div>
+                <div style="font-size:11px; color:var(--text-muted); font-family:monospace;">SKU: ${p.sku || '-'}</div>
+              </td>
+              <td>${p.category ? p.category.name : '-'}</td>
+              <td><strong style="color:var(--gold-light); text-transform:uppercase;">${p.metal || 'Gold'} ${p.purity || ''}</strong></td>
+              <td>${p.grossWeight || 0}g / ${p.netWeight || 0}g</td>
+              <td><strong style="color:#FFF;">${formatINR(p.basePrice)}</strong></td>
+              <td>
+                <span class="badge ${p.isPublished ? 'badge-published' : 'badge-inactive'}">
+                  ${p.isPublished ? 'Published' : 'Draft'}
+                </span>
+              </td>
+              <td>
+                <button class="btn-action" onclick="toggleProductStatus('${p.id}', ${!p.isPublished})">
+                  ${p.isPublished ? 'Unpublish' : 'Publish'}
+                </button>
+              </td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">No products found in catalogue. Click "+ Add New Product" to create one.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    window.toggleProductStatus = async function(id, isPublished) {
+      try {
+        await apiRequest(`/admin/products/${id}/status`, 'PATCH', { isPublished });
+        showToast(`Product ${isPublished ? 'published' : 'unpublished'} successfully!`, 'success');
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    };
+
+    // 6. Categories
+    async function loadCategories() {
+      const tbody = document.getElementById('categories-tbody');
+      try {
+        const items = await apiRequest('/categories?all=true');
+        if (Array.isArray(items) && items.length > 0) {
+          tbody.innerHTML = items.map(c => `
+            <tr>
+              <td style="font-weight:600; color:#FFF;">${c.name}</td>
+              <td style="font-family:monospace; color:var(--gold-light);">${c.slug}</td>
+              <td style="color:var(--text-muted);">${c.description || '-'}</td>
+              <td><span class="badge ${c.isActive ? 'badge-active' : 'badge-inactive'}">${c.isActive ? 'Active' : 'Inactive'}</span></td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:24px;">No categories configured.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function loadCategoriesForSelect() {
+      try {
+        categoriesList = await apiRequest('/categories');
+        const sel = document.getElementById('prod-category-select');
+        if (sel && Array.isArray(categoriesList)) {
+          sel.innerHTML = categoriesList.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+      } catch (e) {}
+    }
+
+    // 7. Enquiries
+    async function loadEnquiries() {
+      const tbody = document.getElementById('enquiries-tbody');
+      try {
+        const res = await apiRequest('/admin/enquiries');
+        const items = Array.isArray(res) ? res : (res.data || res.items || []);
+        if (Array.isArray(items) && items.length > 0) {
+          tbody.innerHTML = items.map(enq => `
+            <tr>
+              <td><strong style="color:var(--gold-light); font-family:monospace;">${enq.referenceNumber}</strong></td>
+              <td style="font-weight:600; color:#FFF;">${enq.name || 'Guest'}</td>
+              <td><a href="tel:${enq.phone || enq.mobile || ''}" style="color:var(--text-secondary); text-decoration:none;">${enq.phone || enq.mobile || '-'}</a></td>
+              <td>${enq.message || (enq.product ? enq.product.name : 'Catalogue Enquiry')}</td>
+              <td><span class="badge badge-${enq.status}">${enq.status}</span></td>
+              <td>
+                <select onchange="updateEnquiryStatus('${enq.id}', this.value)" style="background:rgba(15,9,12,0.85); border:1px solid var(--border-gold); color:var(--gold-light); border-radius:var(--radius-sm); padding:4px 8px; font-size:12px;">
+                  <option value="new" ${enq.status === 'new' ? 'selected' : ''}>New</option>
+                  <option value="contacted" ${enq.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                  <option value="converted" ${enq.status === 'converted' ? 'selected' : ''}>Converted</option>
+                  <option value="closed" ${enq.status === 'closed' ? 'selected' : ''}>Closed</option>
+                </select>
+              </td>
+              <td>${new Date(enq.createdAt).toLocaleDateString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">No enquiries submitted yet.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    window.updateEnquiryStatus = async function(id, status) {
+      try {
+        await apiRequest(`/admin/enquiries/${id}/status`, 'PATCH', { status });
+        showToast(`Enquiry marked as "${status}"`, 'success');
+        loadEnquiries();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    };
+
+    // 8. Offers & Banners
+    async function loadOffersAndBanners() {
+      const offersTbody = document.getElementById('offers-tbody');
+      const bannersTbody = document.getElementById('banners-tbody');
+      try {
+        const offers = await apiRequest('/offers');
+        if (Array.isArray(offers) && offers.length > 0) {
+          offersTbody.innerHTML = offers.map(o => `
+            <tr>
+              <td style="font-weight:600; color:#FFF;">${o.title}</td>
+              <td><strong style="color:var(--gold-light); font-family:monospace;">${o.code || '-'}</strong></td>
+              <td>${o.discountType === 'percentage' ? o.discountValue + '%' : formatINR(o.discountValue)}</td>
+              <td>${o.validUntil ? new Date(o.validUntil).toLocaleDateString() : 'Ongoing'}</td>
+              <td><span class="badge ${o.isActive ? 'badge-active' : 'badge-inactive'}">${o.isActive ? 'Active' : 'Expired'}</span></td>
+            </tr>
+          `).join('');
+        } else {
+          offersTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No promotional offers currently.</td></tr>';
+        }
+
+        const banners = await apiRequest('/banners');
+        if (Array.isArray(banners) && banners.length > 0) {
+          bannersTbody.innerHTML = banners.map(b => `
+            <tr>
+              <td style="font-weight:600; color:#FFF;">${b.title}</td>
+              <td style="color:var(--text-muted);">${b.subtitle || '-'}</td>
+              <td><span class="badge badge-active">${b.linkType || 'home'}</span></td>
+              <td><span class="badge ${b.isActive ? 'badge-active' : 'badge-inactive'}">${b.isActive ? 'Active' : 'Inactive'}</span></td>
+            </tr>
+          `).join('');
+        } else {
+          bannersTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">No banners configured.</td></tr>';
+        }
+      } catch (e) {}
+    }
+
+    // 9. Users
+    async function loadUsers() {
+      const tbody = document.getElementById('users-tbody');
+      try {
+        const res = await apiRequest('/admin/users');
+        const items = Array.isArray(res) ? res : (res.data || res.items || []);
+        if (Array.isArray(items) && items.length > 0) {
+          tbody.innerHTML = items.map(u => `
+            <tr>
+              <td style="font-weight:600; color:#FFF;">${u.name || 'App Customer'}</td>
+              <td><a href="tel:${u.mobile || u.phone || ''}" style="color:var(--gold-light); text-decoration:none;">${u.mobile || u.phone || '-'}</a></td>
+              <td>${u.email || '-'}</td>
+              <td><span class="badge ${u.isActive !== false ? 'badge-active' : 'badge-inactive'}">${u.isActive !== false ? 'Active' : 'Inactive'}</span></td>
+              <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--text-muted);">No customer accounts registered yet.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+      }
+    }
+
+    // Modal Add Product
+    window.openAddProductModal = function() {
+      document.getElementById('modal-add-product').classList.remove('hidden');
+    };
+    window.closeAddProductModal = function() {
+      document.getElementById('modal-add-product').classList.add('hidden');
+    };
+
+    document.getElementById('form-add-product').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('prod-name').value.trim();
+      const sku = document.getElementById('prod-sku').value.trim();
+      const categoryId = document.getElementById('prod-category-select').value;
+      const metal = document.getElementById('prod-metal').value;
+      const purity = document.getElementById('prod-purity').value.trim();
+      const grossWeight = parseFloat(document.getElementById('prod-gross-weight').value);
+      const netWeight = parseFloat(document.getElementById('prod-net-weight').value);
+      const basePrice = parseFloat(document.getElementById('prod-base-price').value);
+      const description = document.getElementById('prod-description').value.trim();
+
+      try {
+        await apiRequest('/admin/products', 'POST', {
+          name,
+          sku,
+          categoryId,
+          metal,
+          purity,
+          grossWeight,
+          netWeight,
+          basePrice,
+          description,
+          isPublished: true
+        });
+        showToast('Jewellery piece added and published!', 'success');
+        closeAddProductModal();
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+
+    // Auto-bootstrap on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initDashboard();
+    });
+  </script>
+</body>
+</html>

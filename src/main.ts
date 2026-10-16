@@ -7,6 +7,8 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter.js';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor.js';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfig } from './config/winston.config.js';
+import express from 'express';
+import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -72,6 +74,16 @@ async function bootstrap() {
     swaggerOptions: { persistAuthorization: true },
   });
 
+  // Serve Admin CMS Portal UI
+  const adminStaticDir = path.join(process.cwd(), 'public', 'admin');
+  app.use('/admin', express.static(adminStaticDir));
+  (app.getHttpAdapter().getInstance() as any).get(
+    '/admin',
+    (_req: any, res: any) => {
+      res.sendFile(path.join(adminStaticDir, 'index.html'));
+    },
+  );
+
   const port = configService.get<number>('app.port', 3000);
   await app.listen(port);
 
@@ -79,6 +91,7 @@ async function bootstrap() {
     `🚀 Zewar Mahal API running on: http://localhost:${port}/${apiPrefix}`,
   );
   console.log(`📚 Swagger docs: http://localhost:${port}/api`);
+  console.log(`👑 Admin CMS UI: http://localhost:${port}/admin`);
 }
 
 await bootstrap();
