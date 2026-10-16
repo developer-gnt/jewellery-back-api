@@ -49,9 +49,16 @@ export class ProductsService {
     }
 
     if (query.category) {
-      qb.andWhere('product.categoryId = :categoryId', {
-        categoryId: query.category,
-      });
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(query.category);
+      if (isUuid) {
+        qb.andWhere('product.categoryId = :categoryId', {
+          categoryId: query.category,
+        });
+      } else {
+        qb.andWhere('(category.slug = :categorySlug OR LOWER(category.name) = LOWER(:categorySlug))', {
+          categorySlug: query.category,
+        });
+      }
     }
 
     if (query.metal) {
