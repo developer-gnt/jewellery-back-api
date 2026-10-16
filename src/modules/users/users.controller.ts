@@ -1,9 +1,12 @@
 import {
   Controller,
   Get,
+  Post,
   Put,
+  Patch,
   Delete,
   Body,
+  Param,
   UseGuards,
   HttpCode,
   HttpStatus,
@@ -17,6 +20,8 @@ import {
 import { UsersService } from './users.service.js';
 import { UpdateProfileDto } from './dto/update-profile.dto.js';
 import { UpdateNotificationPreferencesDto } from './dto/update-preferences.dto.js';
+import { CreateAddressDto } from './dto/create-address.dto.js';
+import { AddWishlistDto } from './dto/add-wishlist.dto.js';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 
@@ -121,5 +126,76 @@ export class UsersController {
     @Body() dto: UpdateNotificationPreferencesDto,
   ) {
     return this.usersService.updateNotificationPreferences(userId, dto);
+  }
+
+  @Get('stats')
+  @ApiOperation({ summary: 'Retrieve dynamic account stats (savedItems, activeOffers, addresses)' })
+  @ApiResponse({ status: 200, description: 'Account statistics' })
+  getProfileStats(@CurrentUser('sub') userId: string) {
+    return this.usersService.getProfileStats(userId);
+  }
+
+  @Get('addresses')
+  @ApiOperation({ summary: 'Retrieve customer saved addresses' })
+  @ApiResponse({ status: 200, description: 'List of customer addresses' })
+  getAddresses(@CurrentUser('sub') userId: string) {
+    return this.usersService.getAddresses(userId);
+  }
+
+  @Post('addresses')
+  @ApiOperation({ summary: 'Add a new customer address' })
+  @ApiResponse({ status: 201, description: 'Address created' })
+  addAddress(
+    @CurrentUser('sub') userId: string,
+    @Body() dto: CreateAddressDto,
+  ) {
+    return this.usersService.addAddress(userId, dto);
+  }
+
+  @Patch('addresses/:id/default')
+  @ApiOperation({ summary: 'Set address as default' })
+  @ApiResponse({ status: 200, description: 'Default address updated' })
+  setDefaultAddress(
+    @CurrentUser('sub') userId: string,
+    @Param('id') addressId: string,
+  ) {
+    return this.usersService.setDefaultAddress(userId, addressId);
+  }
+
+  @Delete('addresses/:id')
+  @ApiOperation({ summary: 'Delete an address' })
+  @ApiResponse({ status: 200, description: 'Address deleted' })
+  deleteAddress(
+    @CurrentUser('sub') userId: string,
+    @Param('id') addressId: string,
+  ) {
+    return this.usersService.deleteAddress(userId, addressId);
+  }
+
+  @Get('wishlist')
+  @ApiOperation({ summary: 'Retrieve customer saved wishlist items' })
+  @ApiResponse({ status: 200, description: 'List of saved items' })
+  getWishlist(@CurrentUser('sub') userId: string) {
+    return this.usersService.getWishlist(userId);
+  }
+
+  @Post('wishlist')
+  @ApiOperation({ summary: 'Save an item to wishlist' })
+  @ApiResponse({ status: 201, description: 'Item saved to wishlist' })
+  addToWishlist(
+    @CurrentUser('sub') userId: string,
+    @Body() dto: AddWishlistDto,
+  ) {
+    return this.usersService.addToWishlist(userId, dto);
+  }
+
+  @Delete('wishlist/:id')
+  @ApiOperation({ summary: 'Remove an item from wishlist' })
+  @ApiResponse({ status: 200, description: 'Item removed from wishlist' })
+  removeFromWishlist(
+    @CurrentUser('sub') userId: string,
+    @Param('id') id: string,
+  ) {
+    return this.usersService.removeFromWishlist(userId, id);
   }
 }
