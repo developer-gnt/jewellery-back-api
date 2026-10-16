@@ -4,9 +4,9 @@ import { Type } from 'class-transformer';
 import { PaginationDto } from '../../../common/dto/pagination.dto.js';
 
 export class QueryProductsDto extends PaginationDto {
-  @ApiPropertyOptional({ description: 'Filter by category UUID' })
+  @ApiPropertyOptional({ description: 'Filter by category UUID or slug' })
   @IsOptional()
-  @IsUUID('4')
+  @IsString()
   category?: string;
 
   @ApiPropertyOptional({ example: 'gold', description: 'Filter by metal type' })
