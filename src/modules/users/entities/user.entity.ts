@@ -26,6 +26,15 @@ export class User {
   @Column({ type: 'text', nullable: true })
   avatar: string | null;
 
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  dateOfBirth: string | null;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  gender: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  city: string | null;
+
   @Column({ type: 'varchar', length: 20, default: 'customer' })
   role: string;
 

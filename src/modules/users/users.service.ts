@@ -35,6 +35,9 @@ export class UsersService {
       mobile: user.mobile,
       email: user.email,
       avatar: user.avatar,
+      dateOfBirth: user.dateOfBirth,
+      gender: user.gender,
+      city: user.city,
       role: user.role,
       createdAt: user.createdAt,
       notificationPreferences: user.notificationPreferences
@@ -76,6 +79,18 @@ export class UsersService {
       user.avatar = dto.avatar;
     }
 
+    if (dto.dateOfBirth !== undefined) {
+      user.dateOfBirth = dto.dateOfBirth;
+    }
+
+    if (dto.gender !== undefined) {
+      user.gender = dto.gender;
+    }
+
+    if (dto.city !== undefined) {
+      user.city = dto.city;
+    }
+
     await this.userRepository.save(user);
 
     return {
@@ -84,6 +99,9 @@ export class UsersService {
       mobile: user.mobile,
       email: user.email,
       avatar: user.avatar,
+      dateOfBirth: user.dateOfBirth,
+      gender: user.gender,
+      city: user.city,
       role: user.role,
       updatedAt: user.updatedAt,
     };
