@@ -597,7 +597,7 @@
 
     /* CONTENT CONTAINER */
     .content-area {
-      padding: 32px;
+      padding: 32px 32px 110px 32px;
       flex: 1;
     }
 
@@ -937,13 +937,147 @@
       to { transform: rotate(360deg); }
     }
 
+    /* TOPBAR TOGGLE BUTTON */
+    .btn-sidebar-toggle {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 7px 9px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .btn-sidebar-toggle:hover {
+      background: var(--gold-primary);
+      color: #170E12;
+    }
+
+    /* FOOTER NAVIGATION BAR */
+    .admin-footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 270px;
+      right: 0;
+      height: 74px;
+      background: rgba(18, 9, 13, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid var(--border-gold);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.65);
+      z-index: 95;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      transition: var(--transition);
+    }
+
+    .footer-nav-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      width: 100%;
+      max-width: 660px;
+    }
+
+    .footer-nav-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      position: relative;
+      outline: none;
+      user-select: none;
+    }
+
+    .footer-nav-item:hover {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: rgba(212, 175, 55, 0.45);
+      color: #FFF;
+      transform: translateY(-2px);
+    }
+
+    .footer-nav-item.active {
+      background: linear-gradient(180deg, rgba(82, 17, 29, 0.85) 0%, rgba(212, 175, 55, 0.22) 100%);
+      border-color: var(--border-gold-bright);
+      color: #FFF;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-nav-item.active svg {
+      fill: var(--gold-primary);
+      filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.4));
+    }
+
+    .footer-nav-item.active span {
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .footer-icon-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-nav-item svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .footer-nav-item span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+
+    .footer-nav-badge {
+      position: absolute;
+      top: -6px;
+      right: -12px;
+      background: var(--gold-gradient);
+      color: #170E12;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      line-height: 1.2;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      .sidebar { width: 70px; }
-      .brand-title-wrap, .nav-label, .nav-item span, .nav-badge, .admin-info { display: none; }
-      .main-wrapper { margin-left: 70px; }
+      .btn-sidebar-toggle { display: flex; }
+      .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.8);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper { margin-left: 0; }
+      .admin-footer-bar { left: 0; padding: 0 12px; }
+      .footer-nav-inner { gap: 8px; }
+      .footer-nav-item { padding: 6px 6px; }
+      .footer-nav-item span { font-size: 10px; }
       .topbar { padding: 0 16px; }
-      .content-area { padding: 16px; }
+      .content-area { padding: 18px 16px 110px 16px; }
+      .live-ticker-wrap { display: none; }
     }
   </style>
 </head>
@@ -1023,34 +1157,7 @@
       </div>
 
       <ul class="nav-menu">
-        <div class="nav-label">Core Management</div>
-        <li>
-          <a class="nav-item active" data-section="dashboard">
-            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-section="rates">
-            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
-            <span>Bullion Rates</span>
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-section="shop-rates">
-            <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
-            <span>Shop Store Rates</span>
-          </a>
-        </li>
-
         <div class="nav-label">Catalogue & Store</div>
-        <li>
-          <a class="nav-item" data-section="products">
-            <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/></svg>
-            <span>Jewellery Products</span>
-            <span class="nav-badge" id="badge-products-count">0</span>
-          </a>
-        </li>
         <li>
           <a class="nav-item" data-section="categories">
             <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11zM7.5 13l-5.5 9h11zM16.5 13l-5.5 9h11z"/></svg>
@@ -1102,6 +1209,11 @@
       <!-- TOPBAR -->
       <header class="topbar">
         <div class="topbar-left">
+          <button class="btn-sidebar-toggle" id="btn-toggle-sidebar" title="Toggle Sidebar Menu">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+          </button>
           <h1 class="page-title" id="page-title-heading">Executive Dashboard</h1>
           
           <!-- Live Bullion Rate Ticker -->
@@ -1506,6 +1618,40 @@
         </div>
 
       </main>
+
+      <!-- FOOTER NAVIGATION BAR (The 4 core modules) -->
+      <footer class="admin-footer-bar">
+        <div class="footer-nav-inner">
+          <button class="footer-nav-item active" data-section="dashboard" title="Dashboard">
+            <div class="footer-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            </div>
+            <span>Dashboard</span>
+          </button>
+
+          <button class="footer-nav-item" data-section="rates" title="Bullion Rates">
+            <div class="footer-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            </div>
+            <span>Bullion Rates</span>
+          </button>
+
+          <button class="footer-nav-item" data-section="shop-rates" title="Shop Store Rates">
+            <div class="footer-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/></svg>
+            </div>
+            <span>Shop Rates</span>
+          </button>
+
+          <button class="footer-nav-item" data-section="products" title="Jewellery Products">
+            <div class="footer-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/></svg>
+              <span class="footer-nav-badge" id="footer-badge-products-count">0</span>
+            </div>
+            <span>Catalogue</span>
+          </button>
+        </div>
+      </footer>
     </div>
   </div>
 
@@ -1718,20 +1864,31 @@
     }
 
     // -----------------------------------------------------------------
-    // NAVIGATION
+    // NAVIGATION (SIDEBAR + FOOTER)
     // -----------------------------------------------------------------
-    document.querySelectorAll('.nav-item').forEach(item => {
+    const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
+    const sidebarEl = document.querySelector('.sidebar');
+    if (btnToggleSidebar && sidebarEl) {
+      btnToggleSidebar.addEventListener('click', () => {
+        sidebarEl.classList.toggle('open');
+      });
+    }
+
+    document.querySelectorAll('.nav-item, .footer-nav-item').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const section = item.dataset.section;
         switchSection(section);
+        if (sidebarEl && sidebarEl.classList.contains('open')) {
+          sidebarEl.classList.remove('open');
+        }
       });
     });
 
     function switchSection(sectionId) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      const activeNav = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
-      if (activeNav) activeNav.classList.add('active');
+      document.querySelectorAll('.nav-item, .footer-nav-item').forEach(i => i.classList.remove('active'));
+      const activeElements = document.querySelectorAll(`[data-section="${sectionId}"]`);
+      activeElements.forEach(i => i.classList.add('active'));
 
       document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
       const targetSec = document.getElementById(`section-${sectionId}`);
@@ -1837,6 +1994,8 @@
         document.getElementById('stat-users-count').textContent = usersCount;
 
         document.getElementById('badge-products-count').textContent = productsCount;
+        const footerBadge = document.getElementById('footer-badge-products-count');
+        if (footerBadge) footerBadge.textContent = productsCount;
         document.getElementById('badge-enquiries-count').textContent = enquiriesCount;
 
         // Render Recent Enquiries
