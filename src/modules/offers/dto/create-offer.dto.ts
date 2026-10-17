@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsBoolean, IsDate } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsBoolean, IsDate, IsNumber, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateOfferDto {
@@ -7,6 +7,11 @@ export class CreateOfferDto {
   @IsNotEmpty({ message: 'Title is required' })
   @IsString()
   title: string;
+
+  @ApiPropertyOptional({ example: 'offer', description: 'Item type: offer or announcement', default: 'offer' })
+  @IsOptional()
+  @IsString()
+  type?: string;
 
   @ApiPropertyOptional({ example: 'ZEROMAKE', description: 'Promo coupon code' })
   @IsOptional()
@@ -22,6 +27,32 @@ export class CreateOfferDto {
   @IsOptional()
   @IsString()
   discount?: string;
+
+  @ApiPropertyOptional({ example: 'Making Charges', description: 'Specific offer category type' })
+  @IsOptional()
+  @IsString()
+  offerType?: string;
+
+  @ApiPropertyOptional({ example: 'All Jewellery', description: 'Applicability target' })
+  @IsOptional()
+  @IsString()
+  applicableOn?: string;
+
+  @ApiPropertyOptional({ example: '0281b37b-8ff8-4545-bb7c-2b28c25785a8', description: 'Category UUID' })
+  @IsOptional()
+  @IsUUID()
+  categoryId?: string;
+
+  @ApiPropertyOptional({ example: 'percentage', description: 'Discount type: percentage or fixed' })
+  @IsOptional()
+  @IsString()
+  discountType?: string;
+
+  @ApiPropertyOptional({ example: 20, description: 'Discount numeric value' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  discountValue?: number;
 
   @ApiPropertyOptional({ example: 'https://cdn.zewarmahal.com/offers/festive.jpg', description: 'Banner promo image URL' })
   @IsOptional()
@@ -39,6 +70,11 @@ export class CreateOfferDto {
   @Type(() => Date)
   @IsDate()
   endDate?: Date;
+
+  @ApiPropertyOptional({ example: false, description: 'Draft state - drafts are hidden from customers' })
+  @IsOptional()
+  @IsBoolean()
+  isDraft?: boolean;
 
   @ApiPropertyOptional({ example: true, description: 'Active state' })
   @IsOptional()
