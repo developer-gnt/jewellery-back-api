@@ -15,14 +15,21 @@ export class OffersService {
     private readonly notificationsService?: NotificationsService,
   ) {}
 
-  async findAll(onlyActive = true) {
-    const qb = this.offerRepository.createQueryBuilder('offer');
+  async findAll(onlyActive = true, type?: string) {
+    const qb = this.offerRepository
+      .createQueryBuilder('offer')
+      .leftJoinAndSelect('offer.category', 'category');
 
     if (onlyActive) {
       const now = new Date();
       qb.where('offer.isActive = true')
+        .andWhere('offer.isDraft = false')
         .andWhere('(offer.startDate IS NULL OR offer.startDate <= :now)', { now })
         .andWhere('(offer.endDate IS NULL OR offer.endDate >= :now)', { now });
+    }
+
+    if (type) {
+      qb.andWhere('offer.type = :type', { type });
     }
 
     qb.orderBy('offer.createdAt', 'DESC');
@@ -31,7 +38,11 @@ export class OffersService {
   }
 
   async findOne(id: string) {
-    const offer = await this.offerRepository.findOne({ where: { id } });
+    const offer = await this.offerRepository
+      .createQueryBuilder('offer')
+      .leftJoinAndSelect('offer.category', 'category')
+      .where('offer.id = :id', { id })
+      .getOne();
 
     if (!offer) {
       throw new NotFoundException(`Offer with ID "${id}" not found`);
@@ -40,15 +51,60 @@ export class OffersService {
     return offer;
   }
 
+  async getSummary(type?: string) {
+    const now = new Date();
+
+    const qb = this.offerRepository.createQueryBuilder('offer');
+    if (type) {
+      qb.where('offer.type = :type', { type });
+    }
+
+    const allRecords = await qb.getMany();
+
+    let total = allRecords.length;
+    let active = 0;
+    let upcoming = 0;
+    let expired = 0;
+    let draft = 0;
+
+    for (const record of allRecords) {
+      if (record.isDraft) {
+        draft++;
+        continue;
+      }
+
+      const start = record.startDate ? new Date(record.startDate) : null;
+      const end = record.endDate ? new Date(record.endDate) : null;
+
+      if (end && end < now) {
+        expired++;
+      } else if (start && start > now) {
+        upcoming++;
+      } else if (record.isActive) {
+        active++;
+      }
+    }
+
+    return {
+      total,
+      active,
+      upcoming,
+      expired,
+      draft,
+    };
+  }
+
   async create(dto: CreateOfferDto) {
     const offer = this.offerRepository.create({
-       ...dto,
-       isActive: dto.isActive ?? true,
+      ...dto,
+      type: dto.type || 'offer',
+      isDraft: dto.isDraft ?? false,
+      isActive: dto.isActive ?? true,
     });
 
     const saved = await this.offerRepository.save(offer);
 
-    if (saved.isActive && this.notificationsService) {
+    if (!saved.isDraft && saved.isActive && this.notificationsService) {
       this.notificationsService
         .broadcast(
           'offers',
@@ -59,7 +115,7 @@ export class OffersService {
         .catch(() => {});
     }
 
-    return saved;
+    return this.findOne(saved.id);
   }
 
   async update(id: string, dto: UpdateOfferDto) {
@@ -67,7 +123,8 @@ export class OffersService {
 
     Object.assign(offer, dto);
 
-    return this.offerRepository.save(offer);
+    await this.offerRepository.save(offer);
+    return this.findOne(id);
   }
 
   async toggleStatus(id: string, isActive: boolean) {
@@ -75,7 +132,7 @@ export class OffersService {
     offer.isActive = isActive;
     const saved = await this.offerRepository.save(offer);
 
-    if (isActive && this.notificationsService) {
+    if (!saved.isDraft && isActive && this.notificationsService) {
       this.notificationsService
         .broadcast(
           'offers',

@@ -34,12 +34,25 @@ export class OffersController {
 
   @Public()
   @Get('offers')
-  @ApiOperation({ summary: 'Retrieve promotional offers' })
+  @ApiOperation({ summary: 'Retrieve promotional offers and announcements' })
   @ApiQuery({ name: 'all', required: false, type: Boolean, description: 'Include inactive/expired offers' })
+  @ApiQuery({ name: 'type', required: false, type: String, description: 'Filter by type: offer or announcement' })
   @ApiResponse({ status: 200, description: 'List of offers' })
-  findAll(@Query('all') all?: boolean) {
+  findAll(
+    @Query('all') all?: boolean,
+    @Query('type') type?: string,
+  ) {
     const onlyActive = all !== true && all !== ('true' as any);
-    return this.offersService.findAll(onlyActive);
+    return this.offersService.findAll(onlyActive, type);
+  }
+
+  @Public()
+  @Get('offers/summary')
+  @ApiOperation({ summary: 'Retrieve summary counts for offers/announcements' })
+  @ApiQuery({ name: 'type', required: false, type: String, description: 'Filter by type: offer or announcement' })
+  @ApiResponse({ status: 200, description: 'Summary counts' })
+  getSummary(@Query('type') type?: string) {
+    return this.offersService.getSummary(type);
   }
 
   @Public()
@@ -54,7 +67,7 @@ export class OffersController {
   @Post('admin/offers')
   @UseGuards(JwtAuthGuard, AdminGuard)
   @ApiBearerAuth('access-token')
-  @ApiOperation({ summary: 'Create a new promotional offer (Admin)' })
+  @ApiOperation({ summary: 'Create a new promotional offer or announcement (Admin)' })
   @ApiResponse({ status: 201, description: 'Offer created successfully' })
   create(@Body() dto: CreateOfferDto) {
     return this.offersService.create(dto);
@@ -63,7 +76,7 @@ export class OffersController {
   @Put('admin/offers/:id')
   @UseGuards(JwtAuthGuard, AdminGuard)
   @ApiBearerAuth('access-token')
-  @ApiOperation({ summary: 'Update promotional offer (Admin)' })
+  @ApiOperation({ summary: 'Update promotional offer or announcement (Admin)' })
   @ApiResponse({ status: 200, description: 'Offer updated successfully' })
   @ApiResponse({ status: 404, description: 'Offer not found' })
   update(@Param('id') id: string, @Body() dto: UpdateOfferDto) {
