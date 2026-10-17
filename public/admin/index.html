@@ -1582,7 +1582,7 @@
     .enquiries-table td {
       padding: 16px 18px;
       border-bottom: 1px solid #F3EDE3;
-      vertical-align: middle;
+      vertical-align: top;
       font-size: 13.5px;
       color: #2B231D;
     }
@@ -1598,6 +1598,7 @@
     /* TABLES */
     .table-responsive {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     table.custom-table {
@@ -1622,7 +1623,7 @@
       padding: 16px;
       border-bottom: 1px solid #F0EBE0;
       color: var(--text-secondary);
-      vertical-align: middle;
+      vertical-align: top;
     }
 
     table.custom-table tbody tr {
@@ -3227,6 +3228,12 @@
       font-size: 9.5px;
     }
 
+    .panel {
+      padding: 18px 14px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+    }
+
     .panel-enquiries {
       padding: 20px 16px;
       border-radius: 20px;
@@ -4044,6 +4051,598 @@
       border-radius: 12px;
       margin: 16px 0;
       font-size: 13px;
+    }
+
+    /* ========================================================
+       ENQUIRIES & SALES LEADS MODULE (EXECUTIVE LUXURY CRM)
+       ======================================================== */
+    .enquiries-module-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4px 0 48px;
+    }
+
+    .enquiries-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .enquiries-header-titles h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .enquiries-header-titles p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .enquiries-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .enquiries-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #F3FBF5;
+      border: 1px solid #D1E7DD;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      color: #0F5132;
+      letter-spacing: 0.04em;
+    }
+
+    .enquiries-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #198754;
+      animation: spin 1.8s infinite;
+    }
+
+    .btn-refresh-enquiries {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-gold);
+      color: var(--gold-dark);
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-refresh-enquiries:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-primary);
+      transform: translateY(-1px);
+    }
+
+    /* 4 Luxury Stat Cards */
+    .enquiries-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .enquiries-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .enq-stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(70, 50, 20, 0.03);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .enq-stat-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .enq-stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .enq-stat-total { background: #FDF3E7; color: #D97706; }
+    .enq-stat-new { background: #FEF3C7; color: #B45309; }
+    .enq-stat-contacted { background: #E0F2FE; color: #0284C7; }
+    .enq-stat-closed { background: #DCFCE7; color: #16A34A; }
+
+    .enq-stat-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .enq-stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .enq-stat-label {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Filter & Search Bar */
+    .enquiries-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(70, 50, 20, 0.02);
+      flex-wrap: wrap;
+    }
+
+    .enquiries-filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      max-width: 100%;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .enquiry-filter-btn {
+      padding: 7px 14px;
+      border-radius: 9999px;
+      border: 1px solid #EAE3D9;
+      background: #FAF8F5;
+      color: #5C4E42;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .enquiry-filter-btn:hover {
+      background: #F3ECE2;
+      border-color: #D6C7B2;
+      color: #2B2118;
+    }
+
+    .enquiry-filter-btn.active {
+      background: var(--gold-gradient);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 2px 8px rgba(181, 134, 52, 0.28);
+    }
+
+    .enquiry-filter-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1px 6px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.07);
+    }
+
+    .enquiry-filter-btn.active .enquiry-filter-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
+    .enquiries-search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 380px;
+    }
+
+    .enquiries-search-input {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #E6DED4;
+      border-radius: 9999px;
+      padding: 0 34px 0 36px;
+      font-size: 12.5px;
+      background: #FAF8F5;
+      color: #211A16;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .enquiries-search-input:focus {
+      border-color: var(--gold-primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.12);
+    }
+
+    .enquiries-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9C8F82;
+      pointer-events: none;
+    }
+
+    .enquiries-search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #9C8F82;
+      cursor: pointer;
+      font-size: 16px;
+      display: none;
+    }
+
+    /* Mobile vs Desktop View Toggles */
+    .enquiries-mobile-cards {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .enquiries-desktop-table-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (max-width: 768px) {
+      .enquiries-mobile-cards {
+        display: flex;
+      }
+      .enquiries-desktop-table-card {
+        display: none !important;
+      }
+    }
+
+    /* Luxury Executive Mobile Enquiry Card */
+    .enquiry-card-mobile {
+      background: #FFFFFF;
+      border: 1px solid #ECE4D8;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(50, 35, 20, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .enquiry-card-mobile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .enquiry-card-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .enquiry-ref-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      background: #FDF6E9;
+      border: 1px solid #F3E0BE;
+      color: #935B10;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+
+    .enquiry-ref-badge:hover {
+      background: #FCEFD8;
+    }
+
+    .enquiry-date-text {
+      font-size: 11.5px;
+      color: #8C8074;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .enquiry-customer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .enquiry-customer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .enquiry-avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F9F1E2 0%, #EFE1C9 100%);
+      border: 1.5px solid #DFC9A7;
+      color: #7A4F16;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(122, 79, 22, 0.1);
+    }
+
+    .enquiry-customer-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .enquiry-customer-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1A1412;
+      line-height: 1.25;
+    }
+
+    .enquiry-customer-phone-link {
+      font-size: 12.5px;
+      color: #8C7C6D;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .enquiry-contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-enq-call {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #F4EFEB;
+      color: #4A3E31;
+      text-decoration: none;
+      border: 1px solid #E2D7C8;
+      transition: var(--transition);
+    }
+
+    .btn-enq-call:hover {
+      background: #EAE1D3;
+      transform: scale(1.05);
+    }
+
+    .btn-enq-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #25D366;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.28);
+      transition: var(--transition);
+      border: none;
+    }
+
+    .btn-enq-whatsapp:hover {
+      background: #20BA5A;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.38);
+    }
+
+    .enquiry-message-card {
+      background: #FAF7F2;
+      border: 1px solid #EFE6D9;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .enquiry-message-body {
+      font-size: 13px;
+      color: #382D24;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .enquiry-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #EDE5DA;
+      flex-wrap: wrap;
+    }
+
+    .enquiry-status-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .enquiry-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge-new {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FDE68A;
+    }
+
+    .status-badge-contacted {
+      background: #E0F2FE;
+      color: #0369A1;
+      border: 1px solid #BAE6FD;
+    }
+
+    .status-badge-in_progress {
+      background: #F3E8FF;
+      color: #6B21A8;
+      border: 1px solid #E9D5FF;
+    }
+
+    .status-badge-closed {
+      background: #DCFCE7;
+      color: #15803D;
+      border: 1px solid #BBF7D0;
+    }
+
+    .enquiry-select-status {
+      background: #FFFFFF;
+      border: 1.5px solid #D6C4AD;
+      color: #5C4733;
+      border-radius: 10px;
+      padding: 6px 28px 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C7150' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      transition: var(--transition);
+    }
+
+    .enquiry-select-status:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.15);
+    }
+
+    /* Desktop Table */
+    .enquiries-desktop-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .enquiries-desktop-table th {
+      padding: 12px 14px;
+      background: #FAF7F2;
+      color: #7D6F61;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid #EFE8DE;
+    }
+
+    .enquiries-desktop-table th:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    .enquiries-desktop-table th:last-child {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .enquiries-desktop-table td {
+      padding: 16px 14px;
+      border-bottom: 1px solid #F3EDE4;
+      vertical-align: top;
+      color: #2D231A;
+      font-size: 13px;
+    }
+
+    .enquiries-desktop-table tbody tr:hover td {
+      background: #FDFBF8;
     }
   </style>
 </head>
@@ -4865,36 +5464,129 @@
         <!-- SECTION 6: ENQUIRIES -->
         <!-- ========================================================= -->
         <div id="section-enquiries" class="content-section hidden">
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <h2 class="panel-title">Customer Enquiries & Leads</h2>
-                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
-                  Real-time enquiries submitted from the customer mobile app with status management.
-                </p>
+          <div class="enquiries-module-wrapper">
+            
+            <!-- 1. Enquiries Header Banner -->
+            <div class="enquiries-header-row">
+              <div class="enquiries-header-titles">
+                <h1>Customer Enquiries &amp; Leads</h1>
+                <p>Real-time customer purchase enquiries, bridal consultations, and sales leads.</p>
+              </div>
+              <div class="enquiries-header-actions">
+                <div class="enquiries-live-badge">
+                  <span class="enquiries-live-dot"></span>
+                  <span>LIVE SYNC ACTIVE</span>
+                </div>
+                <button type="button" class="btn-refresh-enquiries" id="btn-refresh-enquiries" onclick="loadEnquiries()" title="Refresh Enquiries">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                  <span>Sync</span>
+                </button>
               </div>
             </div>
 
-            <div class="table-responsive">
-              <table class="custom-table">
-                <thead>
-                  <tr>
-                    <th>Ref #</th>
-                    <th>Customer Name</th>
-                    <th>Mobile</th>
-                    <th>Message / Product</th>
-                    <th>Status</th>
-                    <th>Update Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody id="enquiries-tbody">
-                  <tr>
-                    <td colspan="7" style="text-align:center; padding: 24px;">Loading enquiries...</td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- 2. Four Luxury Summary Stat Cards -->
+            <div class="enquiries-stats-grid">
+              <div class="enq-stat-card" onclick="filterEnquiriesByStatus('all')">
+                <div class="enq-stat-icon enq-stat-total">📋</div>
+                <div class="enq-stat-info">
+                  <div class="enq-stat-value" id="enq-stat-total">0</div>
+                  <div class="enq-stat-label">Total Leads</div>
+                </div>
+              </div>
+              <div class="enq-stat-card" onclick="filterEnquiriesByStatus('new')">
+                <div class="enq-stat-icon enq-stat-new">🔔</div>
+                <div class="enq-stat-info">
+                  <div class="enq-stat-value" id="enq-stat-new">0</div>
+                  <div class="enq-stat-label">New Enquiries</div>
+                </div>
+              </div>
+              <div class="enq-stat-card" onclick="filterEnquiriesByStatus('contacted')">
+                <div class="enq-stat-icon enq-stat-contacted">📞</div>
+                <div class="enq-stat-info">
+                  <div class="enq-stat-value" id="enq-stat-contacted">0</div>
+                  <div class="enq-stat-label">Contacted</div>
+                </div>
+              </div>
+              <div class="enq-stat-card" onclick="filterEnquiriesByStatus('closed')">
+                <div class="enq-stat-icon enq-stat-closed">✨</div>
+                <div class="enq-stat-info">
+                  <div class="enq-stat-value" id="enq-stat-closed">0</div>
+                  <div class="enq-stat-label">In Progress / Done</div>
+                </div>
+              </div>
             </div>
+
+            <!-- 3. Filter Tabs & Search Bar -->
+            <div class="enquiries-controls-bar">
+              <div class="enquiries-filter-pills">
+                <button type="button" class="enquiry-filter-btn active" data-status="all" onclick="filterEnquiriesByStatus('all')">
+                  <span>All</span>
+                  <span class="enquiry-filter-count" id="filter-count-all">0</span>
+                </button>
+                <button type="button" class="enquiry-filter-btn" data-status="new" onclick="filterEnquiriesByStatus('new')">
+                  <span>New</span>
+                  <span class="enquiry-filter-count" id="filter-count-new">0</span>
+                </button>
+                <button type="button" class="enquiry-filter-btn" data-status="contacted" onclick="filterEnquiriesByStatus('contacted')">
+                  <span>Contacted</span>
+                  <span class="enquiry-filter-count" id="filter-count-contacted">0</span>
+                </button>
+                <button type="button" class="enquiry-filter-btn" data-status="in_progress" onclick="filterEnquiriesByStatus('in_progress')">
+                  <span>In Progress</span>
+                  <span class="enquiry-filter-count" id="filter-count-in_progress">0</span>
+                </button>
+                <button type="button" class="enquiry-filter-btn" data-status="closed" onclick="filterEnquiriesByStatus('closed')">
+                  <span>Closed</span>
+                  <span class="enquiry-filter-count" id="filter-count-closed">0</span>
+                </button>
+              </div>
+
+              <div class="enquiries-search-wrap">
+                <svg class="enquiries-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="enquiries-search-input" id="enquiries-search-input" placeholder="Search customer, phone, ref #..." oninput="handleEnquiriesSearch(this.value)">
+                <button type="button" class="enquiries-search-clear" id="enquiries-search-clear" onclick="clearEnquiriesSearch()" title="Clear search">&times;</button>
+              </div>
+            </div>
+
+            <!-- 4. Mobile View: Responsive Luxury Cards (Displayed on <= 768px) -->
+            <div class="enquiries-mobile-cards" id="enquiries-mobile-cards">
+              <div style="text-align:center; padding:32px 16px; color:#8C8074;">
+                <div class="spinner" style="margin: 0 auto 12px; border-color: rgba(181, 134, 52, 0.2); border-top-color: var(--gold-primary);"></div>
+                Loading customer enquiries...
+              </div>
+            </div>
+
+            <!-- 5. Desktop View: High-End Executive Table (Displayed on > 768px) -->
+            <div class="enquiries-desktop-table-card">
+              <div class="table-responsive">
+                <table class="enquiries-desktop-table">
+                  <thead>
+                    <tr>
+                      <th style="width:145px;">Ref #</th>
+                      <th style="width:170px;">Customer</th>
+                      <th style="width:160px;">Connect</th>
+                      <th>Message / Product Details</th>
+                      <th style="width:115px;">Status</th>
+                      <th style="width:145px;">Update Status</th>
+                      <th style="width:130px;">Date &amp; Time</th>
+                    </tr>
+                  </thead>
+                  <tbody id="enquiries-tbody">
+                    <tr>
+                      <td colspan="7" style="text-align:center; padding: 36px 16px; color:#8C8074;">Loading enquiries...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -5953,10 +6645,10 @@
         btnHeaderAddCat.style.display = (sectionId === 'categories') ? 'inline-flex' : 'none';
       }
 
-      // Hide page-section-header when on rates or offers because they have their own dedicated luxury headers
+      // Hide page-section-header when on rates, offers or enquiries because they have their own dedicated luxury headers
       const pageHeader = document.querySelector('.page-section-header');
       if (pageHeader) {
-        pageHeader.style.display = (sectionId === 'rates' || sectionId === 'offers') ? 'none' : 'flex';
+        pageHeader.style.display = (sectionId === 'rates' || sectionId === 'offers' || sectionId === 'enquiries') ? 'none' : 'flex';
       }
 
       // Load section data
@@ -7017,71 +7709,277 @@
       } catch (e) { }
     }
 
-    // 7. Enquiries
+    // 7. Enquiries (Luxury Executive CRM Controller)
+    let allEnquiriesList = [];
+    let currentEnquiriesFilter = 'all';
+    let currentEnquiriesSearch = '';
+
+    window.filterEnquiriesByStatus = function (status) {
+      currentEnquiriesFilter = status;
+      document.querySelectorAll('.enquiry-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === status);
+      });
+      renderEnquiriesUI();
+    };
+
+    window.handleEnquiriesSearch = function (val) {
+      currentEnquiriesSearch = (val || '').toLowerCase().trim();
+      const clearBtn = document.getElementById('enquiries-search-clear');
+      if (clearBtn) clearBtn.style.display = currentEnquiriesSearch ? 'block' : 'none';
+      renderEnquiriesUI();
+    };
+
+    window.clearEnquiriesSearch = function () {
+      const input = document.getElementById('enquiries-search-input');
+      if (input) input.value = '';
+      currentEnquiriesSearch = '';
+      const clearBtn = document.getElementById('enquiries-search-clear');
+      if (clearBtn) clearBtn.style.display = 'none';
+      renderEnquiriesUI();
+    };
+
+    window.copyEnquiryRef = function (ref, evt) {
+      if (evt) evt.stopPropagation();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ref).then(() => {
+          showToast(`Reference ${ref} copied!`, 'info');
+        }).catch(() => {
+          prompt('Copy Reference #:', ref);
+        });
+      } else {
+        prompt('Copy Reference #:', ref);
+      }
+    };
+
     async function loadEnquiries() {
       const tbody = document.getElementById('enquiries-tbody');
+      const mobileCards = document.getElementById('enquiries-mobile-cards');
       try {
         const res = await apiRequest('/admin/enquiries');
-        const items = Array.isArray(res) ? res : (res.data || res.items || []);
-        if (Array.isArray(items) && items.length > 0) {
-          const badge = document.getElementById('badge-enquiries-count');
-          if (badge) badge.textContent = items.length;
-          const bellDot = document.getElementById('header-bell-dot');
-          if (bellDot) bellDot.style.display = items.length > 0 ? 'block' : 'none';
+        const items = Array.isArray(res) ? res : (res?.items || res?.data?.items || res?.data || []);
+        allEnquiriesList = Array.isArray(items) ? items : [];
 
-          tbody.innerHTML = items.map(enq => {
-            const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
-            const formattedDate = new Date(enq.createdAt).toLocaleDateString('en-IN', {
-              day: '2-digit',
-              month: 'short',
-              year: 'numeric'
-            }) + ', ' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // Calculate KPI stats
+        const totalCount = allEnquiriesList.length;
+        const newCount = allEnquiriesList.filter(e => (e.status || 'new').toLowerCase() === 'new').length;
+        const contactedCount = allEnquiriesList.filter(e => (e.status || '').toLowerCase() === 'contacted').length;
+        const inProgressCount = allEnquiriesList.filter(e => (e.status || '').toLowerCase() === 'in_progress').length;
+        const closedCount = allEnquiriesList.filter(e => (e.status || '').toLowerCase() === 'closed').length;
 
-            return `
+        // Notification Badges in Topbar & Sidebar
+        const badge = document.getElementById('badge-enquiries-count');
+        if (badge) badge.textContent = totalCount;
+        const bellDot = document.getElementById('header-bell-dot');
+        if (bellDot) bellDot.style.display = newCount > 0 ? 'block' : 'none';
+
+        // Update KPI Cards
+        const statTotal = document.getElementById('enq-stat-total');
+        if (statTotal) statTotal.textContent = totalCount;
+        const statNew = document.getElementById('enq-stat-new');
+        if (statNew) statNew.textContent = newCount;
+        const statContacted = document.getElementById('enq-stat-contacted');
+        if (statContacted) statContacted.textContent = contactedCount;
+        const statClosed = document.getElementById('enq-stat-closed');
+        if (statClosed) statClosed.textContent = inProgressCount + closedCount;
+
+        // Update Filter button pills
+        const fcAll = document.getElementById('filter-count-all');
+        if (fcAll) fcAll.textContent = totalCount;
+        const fcNew = document.getElementById('filter-count-new');
+        if (fcNew) fcNew.textContent = newCount;
+        const fcContacted = document.getElementById('filter-count-contacted');
+        if (fcContacted) fcContacted.textContent = contactedCount;
+        const fcInProgress = document.getElementById('filter-count-in_progress');
+        if (fcInProgress) fcInProgress.textContent = inProgressCount;
+        const fcClosed = document.getElementById('filter-count-closed');
+        if (fcClosed) fcClosed.textContent = closedCount;
+
+        renderEnquiriesUI();
+      } catch (err) {
+        if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:28px;">Error: ${err.message}</td></tr>`;
+        if (mobileCards) mobileCards.innerHTML = `<div style="text-align:center; color:var(--danger); padding:28px;">Error loading enquiries: ${err.message}</div>`;
+      }
+    }
+
+    function renderEnquiriesUI() {
+      const tbody = document.getElementById('enquiries-tbody');
+      const mobileCards = document.getElementById('enquiries-mobile-cards');
+      if (!tbody && !mobileCards) return;
+
+      // Filter list
+      let filtered = allEnquiriesList;
+      if (currentEnquiriesFilter !== 'all') {
+        filtered = filtered.filter(e => (e.status || 'new').toLowerCase() === currentEnquiriesFilter);
+      }
+      if (currentEnquiriesSearch) {
+        filtered = filtered.filter(e => {
+          const name = (e.name || '').toLowerCase();
+          const phone = (e.mobile || e.phone || '').toLowerCase();
+          const ref = (e.referenceNumber || '').toLowerCase();
+          const msg = (e.message || '').toLowerCase();
+          return name.includes(currentEnquiriesSearch) || phone.includes(currentEnquiriesSearch) || ref.includes(currentEnquiriesSearch) || msg.includes(currentEnquiriesSearch);
+        });
+      }
+
+      if (filtered.length === 0) {
+        const emptyMsg = allEnquiriesList.length === 0
+          ? 'No customer enquiries received yet.'
+          : 'No enquiries found matching your selected criteria.';
+        const emptyHtml = `
+          <div style="text-align:center; padding: 48px 16px; background:#FFFFFF; border:1px solid #EFE8DE; border-radius:18px;">
+            <div style="font-size:36px; margin-bottom:10px;">💎</div>
+            <div style="font-size:16px; font-weight:700; color:#211A16; margin-bottom:4px;">No Enquiries Found</div>
+            <div style="font-size:13px; color:#8C8074;">${emptyMsg}</div>
+          </div>
+        `;
+        if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px 16px; color:#8C8074;">${emptyMsg}</td></tr>`;
+        if (mobileCards) mobileCards.innerHTML = emptyHtml;
+        return;
+      }
+
+      // Render Desktop Rows
+      if (tbody) {
+        tbody.innerHTML = filtered.map(enq => {
+          const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
+          const formattedDate = new Date(enq.createdAt).toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          }) + '<br><span style="font-size:11px; color:#9E9184;">' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + '</span>';
+
+          const status = (enq.status || 'new').toLowerCase();
+          const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
+          const whatsappUrl = cleanPhone
+            ? `https://api.whatsapp.com/send?phone=91${cleanPhone}&text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
+            : '#';
+
+          return `
             <tr>
               <td>
-                <strong style="color:var(--gold-primary); font-family:monospace; font-size:12px;">${enq.referenceNumber}</strong>
-              </td>
-              <td style="font-weight:600; color:var(--text-primary);">${enq.name || 'Customer'}</td>
-              <td>
-                <div style="display:flex; align-items:center; gap:6px;">
-                  <a href="tel:${cleanPhone}" style="color:var(--text-primary); text-decoration:none; font-weight:600;">+91 ${cleanPhone}</a>
-                  ${cleanPhone ? `
-                    <a href="https://api.whatsapp.com/send?phone=91${cleanPhone}&text=Hello%20${encodeURIComponent(enq.name || '')}%2C%20thank%20you%20for%20contacting%20Zewar%20Mahal%20regarding%20your%20enquiry%20(${enq.referenceNumber})." 
-                       target="_blank" 
-                       style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:#25D366; color:#FFFFFF; text-decoration:none; font-size:12px;"
-                       title="Open WhatsApp chat with customer">💬</a>
-                  ` : ''}
+                <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
+                  <span>${enq.referenceNumber}</span>
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
               </td>
               <td>
-                <div style="white-space: pre-wrap; font-size: 12.5px; line-height: 1.45; max-width: 320px; color: var(--text-primary);">${enq.message || 'General Catalogue Enquiry'}</div>
+                <div style="font-weight:700; color:#1C1510; font-size:13.5px;">${enq.name || 'Valued Customer'}</div>
+                ${cleanPhone ? `<div style="font-size:12px; color:#8C7E72; margin-top:2px;">+91 ${cleanPhone}</div>` : ''}
               </td>
-              <td><span class="badge badge-${enq.status}">${enq.status}</span></td>
               <td>
-                <select onchange="updateEnquiryStatus('${enq.id}', this.value)" style="background:#FFFFFF; border:1px solid var(--border-gold); color:var(--gold-primary); border-radius:var(--radius-sm); padding:5px 8px; font-size:12px; font-weight:600;">
-                  <option value="new" ${enq.status === 'new' ? 'selected' : ''}>New</option>
-                  <option value="contacted" ${enq.status === 'contacted' ? 'selected' : ''}>Contacted</option>
-                  <option value="converted" ${enq.status === 'converted' ? 'selected' : ''}>Converted</option>
-                  <option value="closed" ${enq.status === 'closed' ? 'selected' : ''}>Closed</option>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  ${cleanPhone ? `
+                    <a href="tel:${cleanPhone}" class="btn-enq-call" title="Call Customer">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </a>
+                    <a href="${whatsappUrl}" target="_blank" class="btn-enq-whatsapp" title="Open WhatsApp Chat">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
+                      <span>Chat</span>
+                    </a>
+                  ` : '<span style="color:#9E9184; font-size:12px;">No phone</span>'}
+                </div>
+              </td>
+              <td>
+                <div style="font-size: 13px; line-height: 1.5; max-width: 380px; color: #2B221B; white-space: pre-wrap; word-break: break-word;">
+                  ${enq.message ? enq.message : '<em style="color:#9E9184;">General Catalogue Enquiry</em>'}
+                </div>
+              </td>
+              <td>
+                <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
+              </td>
+              <td>
+                <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
+                  <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
+                  <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
+                  <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
+                  <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
                 </select>
               </td>
-              <td style="font-size:12px; color:var(--text-secondary); white-space:nowrap;">${formattedDate}</td>
+              <td style="font-size:12px; color:#5C4E42; white-space:nowrap; line-height:1.35;">${formattedDate}</td>
             </tr>
           `;
-          }).join('');
-        } else {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">No enquiries submitted yet.</td></tr>';
-        }
-      } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
+        }).join('');
+      }
+
+      // Render Mobile Luxury Cards
+      if (mobileCards) {
+        mobileCards.innerHTML = filtered.map(enq => {
+          const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
+          const initials = (enq.name || 'Customer').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'CU';
+          const formattedDate = new Date(enq.createdAt).toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'short'
+          }) + ', ' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          const status = (enq.status || 'new').toLowerCase();
+          const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
+          const whatsappUrl = cleanPhone
+            ? `https://api.whatsapp.com/send?phone=91${cleanPhone}&text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
+            : '#';
+
+          return `
+            <div class="enquiry-card-mobile">
+              <!-- Top Row: Ref Badge & Date -->
+              <div class="enquiry-card-topbar">
+                <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
+                  <span>${enq.referenceNumber}</span>
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </div>
+                <div class="enquiry-date-text">${formattedDate}</div>
+              </div>
+
+              <!-- Customer Details & Quick Contact Row -->
+              <div class="enquiry-customer-row">
+                <div class="enquiry-customer-left">
+                  <div class="enquiry-avatar-circle">${initials}</div>
+                  <div class="enquiry-customer-meta">
+                    <div class="enquiry-customer-name">${enq.name || 'Valued Customer'}</div>
+                    ${cleanPhone ? `<a href="tel:${cleanPhone}" class="enquiry-customer-phone-link"><span>+91 ${cleanPhone}</span></a>` : '<span style="font-size:12px; color:#8C8074;">No phone provided</span>'}
+                  </div>
+                </div>
+
+                <div class="enquiry-contact-actions">
+                  ${cleanPhone ? `
+                    <a href="tel:${cleanPhone}" class="btn-enq-call" title="Call Customer">
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </a>
+                    <a href="${whatsappUrl}" target="_blank" class="btn-enq-whatsapp" title="WhatsApp Customer">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
+                      <span>WhatsApp</span>
+                    </a>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Message Card -->
+              <div class="enquiry-message-card">
+                <div class="enquiry-message-body">${enq.message ? enq.message : 'General Catalogue Enquiry'}</div>
+              </div>
+
+              <!-- Card Footer: Status Badge & Status Changer -->
+              <div class="enquiry-card-footer">
+                <div class="enquiry-status-group">
+                  <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="font-size:11.5px; color:#8C8074; font-weight:600;">Status:</span>
+                    <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
+                      <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
+                      <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
+                      <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
+                      <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
       }
     }
 
     window.updateEnquiryStatus = async function (id, status) {
       try {
         await apiRequest(`/admin/enquiries/${id}/status`, 'PATCH', { status });
-        showToast(`Enquiry marked as "${status}"`, 'success');
+        showToast(`Status updated to "${status.replace('_', ' ')}"`, 'success');
         loadEnquiries();
       } catch (err) {
         showToast(err.message, 'error');
