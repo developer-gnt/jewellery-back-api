@@ -7870,7 +7870,7 @@
       // Render Desktop Rows
       if (tbody) {
         tbody.innerHTML = filtered.map(enq => {
-          const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
+          const cleanPhone = (enq.mobile || (enq.user && enq.user.mobile) || enq.phone || '').replace(/\D/g, '').slice(-10);
           const formattedDate = new Date(enq.createdAt).toLocaleDateString('en-IN', {
             day: '2-digit',
             month: 'short',
@@ -7881,7 +7881,7 @@
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
             ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
-            : '#';
+            : '';
 
           return `
             <tr>
@@ -7893,7 +7893,10 @@
               </td>
               <td>
                 <div style="font-weight:700; color:#1C1510; font-size:13.5px;">${enq.name || 'Valued Customer'}</div>
-                ${cleanPhone ? `<div style="font-size:12px; color:#8C7E72; margin-top:2px;">+91 ${cleanPhone}</div>` : ''}
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  ${cleanPhone ? `<div style="font-size:12px; color:#8C7E72; font-weight:600;">+91 ${cleanPhone}</div>` : '<span style="font-size:12px; color:#A89C8F;">No phone</span>'}
+                  <button type="button" onclick="editEnquiryPhone('${enq.id}', '${cleanPhone}', event)" title="Edit customer phone number" style="background:none; border:none; padding:1px 4px; cursor:pointer; color:#B38E46; font-size:12px; line-height:1; opacity:0.8; transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">✏️</button>
+                </div>
               </td>
               <td>
                 <div style="display:flex; align-items:center; gap:8px;">
@@ -7901,11 +7904,15 @@
                     <a href="tel:${cleanPhone}" class="btn-enq-call" title="Call Customer">
                       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     </a>
-                    <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-enq-whatsapp" title="Open WhatsApp Chat">
+                    <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-enq-whatsapp" title="Open WhatsApp Chat with Customer">
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
                       <span>Chat</span>
                     </a>
-                  ` : '<span style="color:#9E9184; font-size:12px;">No phone</span>'}
+                  ` : `
+                    <button type="button" onclick="editEnquiryPhone('${enq.id}', '', event)" class="btn-enq-whatsapp" style="opacity:0.65; cursor:pointer;" title="Add Phone Number">
+                      <span>Add Phone</span>
+                    </button>
+                  `}
                 </div>
               </td>
               <td>
@@ -7933,7 +7940,7 @@
       // Render Mobile Luxury Cards
       if (mobileCards) {
         mobileCards.innerHTML = filtered.map(enq => {
-          const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
+          const cleanPhone = (enq.mobile || (enq.user && enq.user.mobile) || enq.phone || '').replace(/\D/g, '').slice(-10);
           const initials = (enq.name || 'Customer').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'CU';
           const formattedDate = new Date(enq.createdAt).toLocaleDateString('en-IN', {
             day: 'numeric',
@@ -7944,7 +7951,7 @@
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
             ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
-            : '#';
+            : '';
 
           return `
             <div class="enquiry-card-mobile">
@@ -7963,7 +7970,10 @@
                   <div class="enquiry-avatar-circle">${initials}</div>
                   <div class="enquiry-customer-meta">
                     <div class="enquiry-customer-name">${enq.name || 'Valued Customer'}</div>
-                    ${cleanPhone ? `<a href="tel:${cleanPhone}" class="enquiry-customer-phone-link"><span>+91 ${cleanPhone}</span></a>` : '<span style="font-size:12px; color:#8C8074;">No phone provided</span>'}
+                    <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                      ${cleanPhone ? `<a href="tel:${cleanPhone}" class="enquiry-customer-phone-link"><span>+91 ${cleanPhone}</span></a>` : '<span style="font-size:12px; color:#8C8074;">No phone provided</span>'}
+                      <button type="button" onclick="editEnquiryPhone('${enq.id}', '${cleanPhone}', event)" title="Edit customer phone number" style="background:none; border:none; padding:1px 4px; cursor:pointer; color:#B38E46; font-size:12px; line-height:1;">✏️</button>
+                    </div>
                   </div>
                 </div>
 
@@ -7976,7 +7986,11 @@
                       <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
                       <span>WhatsApp</span>
                     </a>
-                  ` : ''}
+                  ` : `
+                    <button type="button" onclick="editEnquiryPhone('${enq.id}', '', event)" class="btn-enq-whatsapp" style="opacity:0.65; cursor:pointer;" title="Add Phone Number">
+                      <span>Add Phone</span>
+                    </button>
+                  `}
                 </div>
               </div>
 
@@ -8013,6 +8027,27 @@
         loadEnquiries();
       } catch (err) {
         showToast(err.message, 'error');
+      }
+    };
+
+    window.editEnquiryPhone = async function (id, currentPhone, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      const input = prompt('Enter customer contact number (10 digits):', currentPhone || '');
+      if (input === null) return;
+      const clean = input.replace(/\D/g, '').slice(-10);
+      if (clean.length < 10) {
+        showToast('Please enter a valid 10-digit mobile number', 'error');
+        return;
+      }
+      try {
+        await apiRequest(`/admin/enquiries/${id}`, 'PATCH', { mobile: clean });
+        showToast(`Customer phone updated to +91 ${clean}! WhatsApp is now linked to this number.`, 'success');
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to update phone: ' + (err.message || 'Server error'), 'error');
       }
     };
 

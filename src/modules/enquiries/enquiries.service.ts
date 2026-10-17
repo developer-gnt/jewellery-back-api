@@ -11,6 +11,7 @@ import { Product } from '../products/entities/product.entity.js';
 import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto.js';
 import { UpdateEnquiryStatusDto } from './dto/update-enquiry-status.dto.js';
+import { UpdateEnquiryDto } from './dto/update-enquiry.dto.js';
 import { QueryEnquiriesDto } from './dto/query-enquiries.dto.js';
 import { paginate } from '../../common/dto/pagination.dto.js';
 
@@ -175,5 +176,38 @@ export class EnquiriesService {
       adminNotes: enquiry.adminNotes,
       updatedAt: enquiry.updatedAt,
     };
+  }
+
+  async updateEnquiry(id: string, dto: UpdateEnquiryDto) {
+    const enquiry = await this.findOne(id);
+
+    if (dto.name !== undefined) {
+      enquiry.name = dto.name;
+    }
+    if (dto.mobile !== undefined) {
+      const cleanMobile = dto.mobile.replace(/\D/g, '').slice(-10);
+      enquiry.mobile = cleanMobile;
+      if (enquiry.userId) {
+        await this.enquiryRepository.query(
+          'UPDATE users SET mobile = $1 WHERE id = $2',
+          [cleanMobile, enquiry.userId],
+        ).catch(() => {});
+      }
+    }
+    if (dto.email !== undefined) {
+      enquiry.email = dto.email || null;
+    }
+    if (dto.message !== undefined) {
+      enquiry.message = dto.message;
+    }
+    if (dto.status !== undefined) {
+      enquiry.status = dto.status;
+    }
+    if (dto.adminNotes !== undefined) {
+      enquiry.adminNotes = dto.adminNotes;
+    }
+
+    await this.enquiryRepository.save(enquiry);
+    return enquiry;
   }
 }
