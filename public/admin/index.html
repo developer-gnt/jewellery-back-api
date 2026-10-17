@@ -669,11 +669,13 @@
       background: var(--bg-page);
     }
 
-    /* TOPBAR (EXACT LUXURY BRAND HEADER MATCHING CUSTOMER APP) */
+    /* TOPBAR (EXECUTIVE LUXURY ADMIN HEADER) */
     .topbar {
-      height: 58px;
-      background: #FBF7F2;
-      border-bottom: 1px solid var(--border-subtle);
+      height: 64px;
+      background: rgba(251, 247, 242, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(222, 197, 152, 0.45);
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -681,42 +683,47 @@
       position: sticky;
       top: 0;
       z-index: 90;
-      box-shadow: 0 1px 6px rgba(100, 75, 40, 0.03);
+      box-shadow: 0 2px 10px rgba(100, 75, 40, 0.04);
     }
 
     .topbar-left {
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
 
     .btn-sidebar-toggle {
       background: #FFFFFF;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-sm);
+      border: 1px solid rgba(222, 197, 152, 0.6);
+      color: var(--gold-primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       cursor: pointer;
       display: none;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 6px rgba(100, 75, 40, 0.04);
+      outline: none;
+      flex-shrink: 0;
     }
 
     .btn-sidebar-toggle:hover {
       border-color: var(--gold-primary);
-      color: var(--gold-primary);
-      background: var(--bg-surface-elevated);
+      background: var(--gold-light);
+      transform: translateY(-1px);
     }
 
     .header-brand-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       user-select: none;
       text-decoration: none;
+      cursor: pointer;
+      min-width: 0;
     }
 
     .header-brand-logo {
@@ -724,76 +731,159 @@
       height: 36px;
       object-fit: contain;
       display: block;
-      filter: drop-shadow(0 1px 2px rgba(140, 95, 30, 0.1));
+      filter: drop-shadow(0 2px 6px rgba(184, 121, 37, 0.22));
+      flex-shrink: 0;
     }
 
     .header-brand-text {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 0;
+    }
+
+    .header-brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .header-brand-title {
       font-family: 'Cinzel', 'Playfair Display', serif;
-      font-size: 16.5px;
+      font-size: 16px;
       font-weight: 700;
-      color: #B87925;
-      letter-spacing: 3.2px;
-      line-height: 1.15;
+      color: #9E6B28;
+      letter-spacing: 2.2px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .header-admin-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(184, 139, 50, 0.12);
+      border: 1px solid rgba(184, 139, 50, 0.35);
+      color: #9E6B28;
+      text-transform: uppercase;
+      line-height: 1;
+      white-space: nowrap;
     }
 
     .header-brand-tagline {
       font-family: 'Outfit', sans-serif;
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 600;
       color: #8F581B;
-      letter-spacing: 1.3px;
+      letter-spacing: 1.1px;
       text-transform: uppercase;
-      margin-top: 1px;
+      margin-top: 2px;
       line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .topbar-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #FFFFFF;
+      border: 1px solid rgba(222, 197, 152, 0.5);
+      border-radius: var(--radius-full);
+      box-shadow: 0 1px 4px rgba(100, 75, 40, 0.04);
+    }
+
+    .header-live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #1E824C;
+      box-shadow: 0 0 0 3px rgba(30, 130, 76, 0.2);
+      animation: pulseGreen 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulseGreen {
+      0% { box-shadow: 0 0 0 0 rgba(30, 130, 76, 0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(30, 130, 76, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(30, 130, 76, 0); }
+    }
+
+    .header-live-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      color: #5B4E41;
+      text-transform: uppercase;
     }
 
     .topbar-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
-    .header-bell-button {
-      background: transparent;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-full);
+    .header-icon-btn {
+      background: #FFFFFF;
+      border: 1px solid rgba(222, 197, 152, 0.6);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       position: relative;
       transition: var(--transition);
-      padding: 0;
-      color: #211A16;
+      color: #6B5E4D;
       outline: none;
+      box-shadow: 0 1px 4px rgba(100, 75, 40, 0.04);
+      flex-shrink: 0;
+      padding: 0;
     }
 
-    .header-bell-button:hover {
-      background: rgba(184, 121, 37, 0.08);
-      transform: scale(1.05);
+    .header-icon-btn:hover {
+      background: #FAF3E8;
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(158, 107, 40, 0.12);
+    }
+
+    .header-icon-btn:active {
+      transform: translateY(0);
+    }
+
+    .header-logout-btn:hover {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: var(--danger);
+      box-shadow: 0 3px 8px rgba(192, 57, 43, 0.15);
     }
 
     .bell-icon-wrapper {
       position: relative;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .header-bell-svg {
-      width: 22px;
-      height: 22px;
-      stroke: #211A16;
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
       stroke-width: 1.9;
       fill: none;
       stroke-linecap: round;
@@ -803,14 +893,64 @@
 
     .red-badge-dot {
       position: absolute;
-      top: 1px;
-      right: 1px;
-      width: 7.5px;
-      height: 7.5px;
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #B3261E;
-      border: 1.5px solid #FBF7F2;
-      box-shadow: 0 0 4px rgba(179, 38, 30, 0.4);
+      border: 1.5px solid #FFFFFF;
+      box-shadow: 0 0 6px rgba(179, 38, 30, 0.6);
+    }
+
+    .header-admin-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 4px 12px 4px 5px;
+      background: #FFFFFF;
+      border: 1px solid rgba(222, 197, 152, 0.6);
+      border-radius: var(--radius-full);
+      box-shadow: 0 1px 4px rgba(100, 75, 40, 0.04);
+      user-select: none;
+    }
+
+    .header-admin-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(158, 107, 40, 0.25);
+      flex-shrink: 0;
+    }
+
+    .header-admin-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      text-align: left;
+    }
+
+    .header-admin-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .header-admin-role {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--gold-primary);
+      text-transform: capitalize;
+      white-space: nowrap;
     }
 
     /* SECTION HEADER BANNER (INSIDE CONTENT AREA) */
@@ -2896,28 +3036,48 @@
     }
 
     .topbar {
-      padding: 0 14px;
+      padding: 0 12px;
       height: 56px;
     }
 
+    .topbar-center {
+      display: none;
+    }
+
     .header-brand-title {
-      font-size: 14.5px;
-      letter-spacing: 2.2px;
+      font-size: 13.5px;
+      letter-spacing: 1.8px;
+    }
+
+    .header-admin-badge {
+      font-size: 8px;
+      padding: 1px 5px;
     }
 
     .header-brand-tagline {
-      font-size: 7.5px;
-      letter-spacing: 1px;
+      font-size: 7px;
+      letter-spacing: 0.8px;
     }
 
     .header-brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
     }
 
-    .header-bell-button {
-      width: 38px;
-      height: 38px;
+    .header-admin-info {
+      display: none;
+    }
+
+    .header-admin-pill {
+      padding: 2px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .header-icon-btn {
+      width: 36px;
+      height: 36px;
     }
 
     .content-area {
@@ -3331,43 +3491,48 @@
     <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
-      <!-- TOPBAR (MATCHES CUSTOMER APP BRAND HEADER ACROSS ALL PAGES) -->
+      <!-- TOPBAR (EXECUTIVE LUXURY ADMIN HEADER) -->
       <header class="topbar">
         <div class="topbar-left">
           <button class="btn-sidebar-toggle" id="btn-toggle-sidebar" title="Toggle Navigation Menu">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
           </button>
 
-          <div class="header-brand-wrap">
+          <div class="header-brand-wrap" title="Zewar Mahal Administration">
             <img src="/admin/brand-logo.png" alt="Zewar Mahal Brand Logo" class="header-brand-logo">
             <div class="header-brand-text">
-              <div class="header-brand-title">ZEWAR MAHAL</div>
-              <div class="header-brand-tagline">TIMELESS JEWELLERY FOR YOU</div>
+              <div class="header-brand-title-row">
+                <span class="header-brand-title">ZEWAR MAHAL</span>
+                <span class="header-admin-badge">ADMIN</span>
+              </div>
+              <div class="header-brand-tagline">EXECUTIVE PORTAL & CMS</div>
             </div>
           </div>
         </div>
 
-        <div class="topbar-right" style="display: flex; align-items: center; gap: 10px;">
-          <!-- Customer App Link -->
-          <a href="http://localhost:8080" target="_self" style="display:inline-flex; align-items:center; gap:6px; background:#F4EFE6; color:#9E6B28; font-weight:700; font-size:12px; padding:7px 14px; border-radius:20px; text-decoration:none; border:1px solid #D8CFC0; transition:all 0.2s;" title="Open Customer App">
-            <span>📱 View Customer App</span>
-          </a>
+        <div class="topbar-center">
+          <div class="header-live-badge" title="Automated Bullion Feeds & Database Synchronized">
+            <span class="header-live-dot"></span>
+            <span class="header-live-label">LIVE BENCHMARKS ACTIVE</span>
+          </div>
+        </div>
 
-          <!-- Heart / Wishlist button with count 2 -->
-          <button class="header-heart-button" title="Wishlist / Customer Favorites">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#211A16" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
+        <div class="topbar-right">
+          <!-- Refresh Dashboard Data Button -->
+          <button class="header-icon-btn" id="btn-header-refresh" title="Refresh Dashboard & Bullion Rates">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
             </svg>
-            <span class="heart-badge-count">2</span>
           </button>
 
-          <!-- Notification Bell with Red Badge Dot matching customer app -->
-          <button class="header-bell-button" id="btn-header-bell" title="Notifications & Customer Enquiries">
+          <!-- Customer Enquiries Notification Bell Button -->
+          <button class="header-icon-btn header-bell-btn" id="btn-header-bell" title="Customer Enquiries">
             <div class="bell-icon-wrapper">
               <svg viewBox="0 0 24 24" class="header-bell-svg">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -3375,6 +3540,24 @@
               </svg>
               <span class="red-badge-dot" id="header-bell-dot"></span>
             </div>
+          </button>
+
+          <!-- Admin Profile Badge -->
+          <div class="header-admin-pill" id="header-admin-pill" title="Administrator Account">
+            <div class="header-admin-avatar" id="header-admin-initials">AD</div>
+            <div class="header-admin-info">
+              <span class="header-admin-name" id="header-admin-name">Admin</span>
+              <span class="header-admin-role">Super Admin</span>
+            </div>
+          </div>
+
+          <!-- Direct Sign Out Icon Button -->
+          <button class="header-icon-btn header-logout-btn" id="btn-header-logout" title="Sign Out">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
           </button>
         </div>
       </header>
@@ -4961,7 +5144,26 @@
       });
     }
 
+    // Header refresh dashboard button
+    const btnHeaderRefresh = document.getElementById('btn-header-refresh');
+    if (btnHeaderRefresh) {
+      btnHeaderRefresh.addEventListener('click', async () => {
+        btnHeaderRefresh.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        btnHeaderRefresh.style.transform = 'rotate(360deg)';
+        await initDashboard();
+        setTimeout(() => {
+          btnHeaderRefresh.style.transition = 'none';
+          btnHeaderRefresh.style.transform = 'none';
+        }, 650);
+        showToast('Dashboard data refreshed', 'success');
+      });
+    }
 
+    // Header direct sign out button
+    const btnHeaderLogout = document.getElementById('btn-header-logout');
+    if (btnHeaderLogout) {
+      btnHeaderLogout.addEventListener('click', handleLogout);
+    }
 
     // -----------------------------------------------------------------
     // DATA LOADERS
@@ -4976,12 +5178,23 @@
       loginView.classList.add('hidden');
       adminShell.classList.remove('hidden');
 
-      // Setup user info in sidebar
+      // Setup user info in sidebar & topbar
       if (currentUser) {
-        document.getElementById('admin-display-name').textContent = currentUser.name || 'Admin';
-        document.getElementById('admin-display-role').textContent = currentUser.role || 'admin';
-        const initials = (currentUser.name || 'SA').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        document.getElementById('admin-avatar-initials').textContent = initials;
+        const adminName = currentUser.name || 'Admin';
+        const adminRole = currentUser.role || 'Super Admin';
+        const initials = adminName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AD';
+
+        const sName = document.getElementById('admin-display-name');
+        if (sName) sName.textContent = adminName;
+        const sRole = document.getElementById('admin-display-role');
+        if (sRole) sRole.textContent = adminRole;
+        const sInitials = document.getElementById('admin-avatar-initials');
+        if (sInitials) sInitials.textContent = initials;
+
+        const hName = document.getElementById('header-admin-name');
+        if (hName) hName.textContent = adminName;
+        const hInitials = document.getElementById('header-admin-initials');
+        if (hInitials) hInitials.textContent = initials;
       }
 
       await Promise.allSettled([
