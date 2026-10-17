@@ -7,6 +7,7 @@ import {
   Matches,
   MaxLength,
   IsEmail,
+  ValidateIf,
 } from 'class-validator';
 
 export class CreateEnquiryDto {
@@ -23,6 +24,7 @@ export class CreateEnquiryDto {
 
   @ApiPropertyOptional({ example: 'rohan.sharma@example.com', description: 'Customer email' })
   @IsOptional()
+  @ValidateIf((o) => typeof o.email === 'string' && o.email.trim().length > 0)
   @IsEmail({}, { message: 'Must be a valid email' })
   @MaxLength(150)
   email?: string;
@@ -42,4 +44,14 @@ export class CreateEnquiryDto {
   @IsNotEmpty({ message: 'Enquiry message is required' })
   @IsString()
   message: string;
+
+  @ApiPropertyOptional({ example: 'Any time', description: 'Preferred time to contact' })
+  @IsOptional()
+  @IsString()
+  preferredContactTime?: string;
+
+  @ApiPropertyOptional({ example: 'Mumbai', description: 'Customer location' })
+  @IsOptional()
+  @IsString()
+  location?: string;
 }

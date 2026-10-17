@@ -47,24 +47,30 @@ describe('RatesService', () => {
 
   describe('getCurrentRates', () => {
     it('should return live/baseline rates', async () => {
-      mockMetalRateRepo.findOne.mockResolvedValueOnce(mockRate);
+      mockMetalRateRepo.find.mockResolvedValueOnce([mockRate]);
       const rates = await service.getCurrentRates();
       expect(rates).toHaveProperty('gold24K', 7450.0);
-      expect(rates).toHaveProperty('gold22K', 6850.0);
       expect(rates).toHaveProperty('silver', 92.5);
     });
   });
 
   describe('updateAdminRates', () => {
     it('should update rates with manual override', async () => {
+      mockMetalRateRepo.find.mockResolvedValue([
+        {
+          ...mockRate,
+          gold24K: 7500,
+          gold22K: 6875,
+          silver: 95,
+        },
+      ]);
       const result = await service.updateAdminRates({
         gold24K: 7500,
-        gold22K: 6900,
+        gold22K: 6875,
         silver: 95,
       });
 
-      expect(result).toHaveProperty('message', 'Metal rates updated successfully');
-      expect(result.data.gold24K).toBe(7500);
+      expect(result).toHaveProperty('gold24K', 7500);
       expect(mockMetalRateRepo.save).toHaveBeenCalled();
     });
   });

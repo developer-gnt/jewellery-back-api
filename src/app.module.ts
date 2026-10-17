@@ -22,6 +22,7 @@ import { OffersModule } from './modules/offers/offers.module.js';
 import { BannersModule } from './modules/banners/banners.module.js';
 import { EnquiriesModule } from './modules/enquiries/enquiries.module.js';
 import { NotificationsModule } from './modules/notifications/notifications.module.js';
+import { SettingsModule } from './modules/settings/settings.module.js';
 
 @Module({
   imports: [
@@ -89,6 +90,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     BannersModule,
     EnquiriesModule,
     NotificationsModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

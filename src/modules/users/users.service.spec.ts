@@ -4,6 +4,10 @@ import { UsersService } from './users.service.js';
 import { User } from './entities/user.entity.js';
 import { NotificationPreference } from './entities/notification-preference.entity.js';
 
+import { UserAddress } from './entities/user-address.entity.js';
+import { UserWishlist } from './entities/user-wishlist.entity.js';
+import { Offer } from '../offers/entities/offer.entity.js';
+
 describe('UsersService', () => {
   let service: UsersService;
 
@@ -40,12 +44,36 @@ describe('UsersService', () => {
     save: vi.fn().mockImplementation((pref) => Promise.resolve(pref)),
   };
 
+  const mockAddressRepository = {
+    find: vi.fn().mockResolvedValue([]),
+    findOne: vi.fn(),
+    create: vi.fn().mockImplementation((dto) => dto),
+    save: vi.fn().mockImplementation((item) => Promise.resolve(item)),
+    remove: vi.fn().mockResolvedValue(true),
+    update: vi.fn().mockResolvedValue(true),
+  };
+
+  const mockWishlistRepository = {
+    find: vi.fn().mockResolvedValue([]),
+    findOne: vi.fn(),
+    create: vi.fn().mockImplementation((dto) => dto),
+    save: vi.fn().mockImplementation((item) => Promise.resolve(item)),
+    delete: vi.fn().mockResolvedValue({ affected: 1 }),
+  };
+
+  const mockOfferRepository = {
+    find: vi.fn().mockResolvedValue([]),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
         { provide: getRepositoryToken(User), useValue: mockUserRepository },
         { provide: getRepositoryToken(NotificationPreference), useValue: mockPrefRepository },
+        { provide: getRepositoryToken(UserAddress), useValue: mockAddressRepository },
+        { provide: getRepositoryToken(UserWishlist), useValue: mockWishlistRepository },
+        { provide: getRepositoryToken(Offer), useValue: mockOfferRepository },
       ],
     }).compile();
 
