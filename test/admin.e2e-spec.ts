@@ -64,8 +64,8 @@ describe('Admin CMS APIs (e2e)', () => {
       expect(res.body.data).toHaveProperty('refreshToken');
       expect(res.body.data.admin).toMatchObject({
         email: 'admin@zewarmahal.com',
-        role: 'super_admin',
-        name: 'Super Admin',
+        role: 'admin',
+        name: 'Admin',
       });
 
       accessToken = res.body.data.accessToken;
@@ -90,7 +90,7 @@ describe('Admin CMS APIs (e2e)', () => {
 
       expect(res.body.data).toMatchObject({
         email: 'admin@zewarmahal.com',
-        role: 'super_admin',
+        role: 'admin',
         isActive: true,
       });
       expect(res.body.data).not.toHaveProperty('password');

@@ -52,9 +52,9 @@ describe('AdminController', () => {
   it('should return admin profile on getMe', async () => {
     const mockAdmin = {
       id: 'uuid-1',
-      name: 'Super Admin',
+      name: 'Admin',
       email: 'admin@zewarmahal.com',
-      role: AdminRole.SUPER_ADMIN,
+      role: AdminRole.ADMIN,
     };
     service.getMe.mockResolvedValue(mockAdmin);
 

@@ -29,6 +29,7 @@ export class EnquiriesController {
   constructor(private readonly enquiriesService: EnquiriesService) {}
 
   @Public()
+  @UseGuards(JwtAuthGuard)
   @Post('enquiries')
   @ApiOperation({ summary: 'Submit a product or general enquiry (Customer or Guest)' })
   @ApiResponse({

@@ -32,19 +32,37 @@ export class EnquiriesService {
   }
 
   async submit(dto: CreateEnquiryDto, userId?: string) {
+    let validProductId: string | null = null;
     if (dto.productId) {
       const product = await this.productRepository.findOne({
         where: { id: dto.productId },
       });
-      if (!product) {
-        throw new BadRequestException(`Product with ID "${dto.productId}" not found`);
+      if (product) {
+        validProductId = product.id;
       }
     }
 
     const referenceNumber = this.generateReferenceNumber();
 
+    // Enrich message with preferred contact time and location if provided
+    let fullMessage = dto.message;
+    const extraDetails: string[] = [];
+    if (dto.preferredContactTime && dto.preferredContactTime !== 'Any time') {
+      extraDetails.push(`Preferred Contact Time: ${dto.preferredContactTime}`);
+    }
+    if (dto.location) {
+      extraDetails.push(`Location: ${dto.location}`);
+    }
+    if (extraDetails.length > 0 && !fullMessage.includes(extraDetails[0])) {
+      fullMessage = `${fullMessage}\n\n[Customer Preferences]\n${extraDetails.join('\n')}`;
+    }
+
     const enquiry = this.enquiryRepository.create({
-      ...dto,
+      name: dto.name,
+      mobile: dto.mobile,
+      email: dto.email || null,
+      message: fullMessage,
+      productId: validProductId,
       userId: userId ?? null,
       referenceNumber,
       status: 'new',

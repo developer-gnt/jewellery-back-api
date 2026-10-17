@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 
 export const AdminRole = {
-  SUPER_ADMIN: 'super_admin',
   ADMIN: 'admin',
 } as const;
 
