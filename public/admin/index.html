@@ -4980,8 +4980,25 @@
       await Promise.allSettled([
         loadDashboardStats(),
         loadLiveTicker(),
-        loadCategoriesForSelect()
+        loadCategoriesForSelect(),
+        loadEnquiries()
       ]);
+
+      // Auto-refresh enquiries and dashboard stats so new customer submissions appear live
+      if (!window.__adminRefreshInterval) {
+        window.__adminRefreshInterval = setInterval(() => {
+          loadDashboardStats();
+          const activeSec = document.querySelector('.content-section:not(.hidden)');
+          if (activeSec && activeSec.id === 'section-enquiries') {
+            loadEnquiries();
+          }
+        }, 10000);
+
+        window.addEventListener('focus', () => {
+          loadDashboardStats();
+          loadEnquiries();
+        });
+      }
     }
 
     // 1. Live Ticker
@@ -5089,18 +5106,24 @@
         const offersCount = stats.activeOffers ?? 0;
         const usersCount = stats.totalUsers ?? stats.registeredUsers ?? 0;
 
-        document.getElementById('stat-products-count').textContent = productsCount;
-        document.getElementById('stat-enquiries-count').textContent = enquiriesCount;
-        document.getElementById('stat-offers-count').textContent = offersCount;
-        document.getElementById('stat-users-count').textContent = usersCount;
+        const elProd = document.getElementById('stat-products-count');
+        if (elProd) elProd.textContent = productsCount;
+        const elEnq = document.getElementById('stat-enquiries-count');
+        if (elEnq) elEnq.textContent = enquiriesCount;
+        const elOff = document.getElementById('stat-offers-count');
+        if (elOff) elOff.textContent = offersCount;
+        const elUsers = document.getElementById('stat-users-count');
+        if (elUsers) elUsers.textContent = usersCount;
 
-        document.getElementById('badge-products-count').textContent = productsCount;
+        const prodBadge = document.getElementById('badge-products-count');
+        if (prodBadge) prodBadge.textContent = productsCount;
         const footerBadge = document.getElementById('footer-badge-products-count');
         if (footerBadge) {
           footerBadge.textContent = productsCount;
           footerBadge.style.display = productsCount > 0 ? 'flex' : 'none';
         }
-        document.getElementById('badge-enquiries-count').textContent = enquiriesCount;
+        const enqBadge = document.getElementById('badge-enquiries-count');
+        if (enqBadge) enqBadge.textContent = enquiriesCount;
         const bellDot = document.getElementById('header-bell-dot');
         if (bellDot) {
           bellDot.style.display = enquiriesCount > 0 ? 'block' : 'none';
@@ -5108,37 +5131,51 @@
 
         // Render Recent Enquiries (5-Column Layout: ID, CUSTOMER, SUBJECT, DATE, STATUS)
         const tbody = document.getElementById('dashboard-recent-enquiries-tbody');
-        if (stats.recentEnquiries && stats.recentEnquiries.length > 0) {
-          tbody.innerHTML = stats.recentEnquiries.map(enq => {
-            const dateStr = enq.createdAt
-              ? new Date(enq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
-              : 'Recent';
-            const statusStr = (enq.status || 'new').toUpperCase();
-            const statusClass = (enq.status || 'new').toLowerCase().replace(/\s+/g, '-');
-            const refId = enq.referenceNumber || (enq.id ? `#${enq.id.toString().slice(-4)}` : '#ZM-ENQ');
-            const customerName = enq.name || 'Guest User';
-            const phoneStr = enq.phone || enq.mobile || '';
-            const subjectStr = enq.subject || enq.message || 'General Catalogue Enquiry';
+        if (tbody) {
+          let recentList = stats.recentEnquiries;
+          if (!recentList || recentList.length === 0) {
+            try {
+              const enqRes = await apiRequest('/admin/enquiries');
+              recentList = Array.isArray(enqRes) ? enqRes : (enqRes?.items || enqRes?.data || []);
+            } catch (e) {
+              console.warn('Fallback enquiries fetch:', e);
+            }
+          }
 
-            return `
-              <tr>
-                <td><strong style="color:#A67634; font-family:monospace; font-size:12.5px;">${refId}</strong></td>
-                <td>
-                  <div style="font-weight:650; color:#211A16;">${customerName}</div>
-                  ${phoneStr ? `<div style="font-size:11.5px; color:#8E8278; margin-top:2px;">${phoneStr}</div>` : ''}
-                </td>
-                <td>
-                  <div style="color:#4A4036; font-size:13px; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${subjectStr}">
-                    ${subjectStr}
-                  </div>
-                </td>
-                <td><span style="color:#7F7368; font-size:12.5px; font-weight:500;">${dateStr}</span></td>
-                <td><span class="badge badge-${statusClass}">${statusStr}</span></td>
-              </tr>
-            `;
-          }).join('');
-        } else {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 32px 16px; color:#8E8278;">No customer enquiries yet.</td></tr>';
+          if (recentList && recentList.length > 0) {
+            tbody.innerHTML = recentList.slice(0, 8).map(enq => {
+              const dateStr = enq.createdAt
+                ? new Date(enq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+                : 'Recent';
+              const statusStr = (enq.status || 'new').toUpperCase();
+              const statusClass = (enq.status || 'new').toLowerCase().replace(/\s+/g, '-');
+              const refId = enq.referenceNumber || (enq.id ? `#${enq.id.toString().slice(-4)}` : '#ZM-ENQ');
+              const customerName = enq.name || 'Guest User';
+              const cleanPhone = (enq.mobile || enq.phone || '').replace(/\D/g, '').slice(-10);
+              const phoneStr = cleanPhone ? `+91 ${cleanPhone}` : '';
+              const rawSubject = enq.subject || enq.message || 'General Catalogue Enquiry';
+              const subjectStr = rawSubject.split('\n')[0].substring(0, 40) + (rawSubject.length > 40 ? '...' : '');
+
+              return `
+                <tr style="cursor:pointer;" onclick="switchSection('enquiries')" title="Click to view all enquiry details">
+                  <td><strong style="color:#A67634; font-family:monospace; font-size:12.5px;">${refId}</strong></td>
+                  <td>
+                    <div style="font-weight:650; color:#211A16;">${customerName}</div>
+                    ${phoneStr ? `<div style="font-size:11.5px; color:#8E8278; margin-top:2px;">${phoneStr}</div>` : ''}
+                  </td>
+                  <td>
+                    <div style="color:#4A4036; font-size:13px; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${rawSubject.replace(/"/g, '&quot;')}">
+                      ${subjectStr}
+                    </div>
+                  </td>
+                  <td><span style="color:#7F7368; font-size:12.5px; font-weight:500;">${dateStr}</span></td>
+                  <td><span class="badge badge-${statusClass}">${statusStr}</span></td>
+                </tr>
+              `;
+            }).join('');
+          } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 32px 16px; color:#8E8278;">No customer enquiries yet.</td></tr>';
+          }
         }
       } catch (err) {
         console.error('Failed to load dashboard stats:', err);

@@ -34,6 +34,7 @@ export interface DashboardStats {
   totalEnquiries: number;
   activeOffers: number;
   todayEnquiries: number;
+  recentEnquiries?: any[];
 }
 
 @Injectable()
@@ -231,6 +232,7 @@ export class AdminService implements OnModuleInit {
     let totalEnquiries = 0;
     let activeOffers = 0;
     let todayEnquiries = 0;
+    let recentEnquiries: any[] = [];
 
     // Check optional tables dynamically so query won't fail before later phases are created
     try {
@@ -253,6 +255,10 @@ export class AdminService implements OnModuleInit {
           'SELECT COUNT(*) as count FROM enquiries WHERE "createdAt" >= CURRENT_DATE',
         );
         todayEnquiries = parseInt(todayResult[0]?.count || '0', 10);
+
+        recentEnquiries = await this.dataSource.query(
+          'SELECT id, "referenceNumber", name, mobile, email, message, status, "createdAt" FROM enquiries ORDER BY "createdAt" DESC LIMIT 10',
+        );
       }
 
       const hasOffersTable = await this.checkTableExists('offers');
@@ -274,6 +280,7 @@ export class AdminService implements OnModuleInit {
       totalEnquiries,
       activeOffers,
       todayEnquiries,
+      recentEnquiries,
     };
   }
 
