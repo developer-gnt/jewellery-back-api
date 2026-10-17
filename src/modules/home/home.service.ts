@@ -15,7 +15,7 @@ interface CacheItem<T> {
 export class HomeService {
   private readonly logger = new Logger(HomeService.name);
   private homeCache: CacheItem<any> | null = null;
-  private readonly CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+  private readonly CACHE_TTL_MS = 2000; // 2 seconds (ensures newly added products show up immediately)
 
   constructor(
     @InjectRepository(Banner)

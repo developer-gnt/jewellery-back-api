@@ -28,6 +28,15 @@ export class CreateProductDto {
   slug?: string;
 
   @ApiPropertyOptional({
+    example: 'mub-001',
+    description: 'Unique product SKU',
+  })
+  @IsOptional()
+  @IsString({ message: 'SKU must be a string' })
+  @MaxLength(100, { message: 'SKU cannot exceed 100 characters' })
+  sku?: string;
+
+  @ApiPropertyOptional({
     example: 'Handmade 22K gold choker necklace with certified uncut polki diamonds.',
     description: 'Detailed description and craftmanship info',
   })
