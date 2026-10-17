@@ -4995,9 +4995,12 @@
     async function loadLiveTicker() {
       try {
         const rates = await apiRequest('/rates/current');
-        document.getElementById('top-rate-gold24k').textContent = formatINR(rates.gold24K);
-        document.getElementById('top-rate-gold22k').textContent = formatINR(rates.gold22K);
-        document.getElementById('top-rate-silver').textContent = formatINR(rates.silver);
+        const tG24 = document.getElementById('top-rate-gold24k');
+        if (tG24) tG24.textContent = formatINR(rates.gold24K);
+        const tG22 = document.getElementById('top-rate-gold22k');
+        if (tG22) tG22.textContent = formatINR(rates.gold22K);
+        const tSil = document.getElementById('top-rate-silver');
+        if (tSil) tSil.textContent = formatINR(rates.silver);
 
         // Also update cards if on rates tab
         const cG24 = document.getElementById('card-rate-gold24k');
@@ -5096,18 +5099,24 @@
         const offersCount = stats.activeOffers ?? 0;
         const usersCount = stats.totalUsers ?? stats.registeredUsers ?? 0;
 
-        document.getElementById('stat-products-count').textContent = productsCount;
-        document.getElementById('stat-enquiries-count').textContent = enquiriesCount;
-        document.getElementById('stat-offers-count').textContent = offersCount;
-        document.getElementById('stat-users-count').textContent = usersCount;
+        const elProd = document.getElementById('stat-products-count');
+        if (elProd) elProd.textContent = productsCount;
+        const elEnq = document.getElementById('stat-enquiries-count');
+        if (elEnq) elEnq.textContent = enquiriesCount;
+        const elOff = document.getElementById('stat-offers-count');
+        if (elOff) elOff.textContent = offersCount;
+        const elUsr = document.getElementById('stat-users-count');
+        if (elUsr) elUsr.textContent = usersCount;
 
-        document.getElementById('badge-products-count').textContent = productsCount;
+        const elBadgeProd = document.getElementById('badge-products-count');
+        if (elBadgeProd) elBadgeProd.textContent = productsCount;
         const footerBadge = document.getElementById('footer-badge-products-count');
         if (footerBadge) {
           footerBadge.textContent = productsCount;
           footerBadge.style.display = productsCount > 0 ? 'flex' : 'none';
         }
-        document.getElementById('badge-enquiries-count').textContent = enquiriesCount;
+        const elBadgeEnq = document.getElementById('badge-enquiries-count');
+        if (elBadgeEnq) elBadgeEnq.textContent = enquiriesCount;
         const bellDot = document.getElementById('header-bell-dot');
         if (bellDot) {
           bellDot.style.display = enquiriesCount > 0 ? 'block' : 'none';
