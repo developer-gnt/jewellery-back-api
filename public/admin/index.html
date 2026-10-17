@@ -1715,22 +1715,31 @@
       padding-bottom: 30px;
     }
 
-    /* 1. HERO BANNER - SEAMLESS ON PAGE BACKGROUND (NO ENCLOSED CARD BOX) */
+    /* 1. HERO BANNER - LUXURY BACKGROUND WITH BULLION BARS & SILK */
     .rates-hero-banner {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 6px 2px 14px 2px;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 18px 24px 22px 4px;
       position: relative;
-      background: transparent;
-      border: none;
-      box-shadow: none;
+      background-color: transparent;
+      background-image: 
+        linear-gradient(90deg, rgba(251, 249, 245, 0.92) 0%, rgba(251, 249, 245, 0.50) 44%, rgba(251, 249, 245, 0) 72%),
+        url('/admin/images/rates/bullion-hero-bg-trans.png');
+      background-repeat: no-repeat;
+      background-position: left center, right center;
+      background-size: 100% 100%, auto 100%;
+      border-radius: 20px;
+      min-height: 165px;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .rates-hero-left {
       flex: 1;
-      max-width: 540px;
+      max-width: 560px;
+      position: relative;
+      z-index: 2;
     }
 
     .rates-hero-title {
@@ -1809,21 +1818,6 @@
       color: #7D6B55;
     }
 
-    .rates-hero-right {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .rates-hero-art-img {
-      width: 155px;
-      height: 112px;
-      object-fit: contain;
-      border-radius: 14px;
-      filter: drop-shadow(0 4px 14px rgba(70, 48, 20, 0.12));
-    }
-
     /* 2. SECTION HEADERS */
     .rates-section-block {
       display: flex;
@@ -1852,16 +1846,19 @@
     .rates-live-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
     .rates-live-card {
-      border-radius: 16px;
-      padding: 14px 14px 10px 14px;
+      border-radius: 20px;
+      padding: 18px 16px 14px 16px;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      min-height: 195px;
+      box-sizing: border-box;
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     }
 
@@ -1871,43 +1868,93 @@
 
     /* Gold Card Specifics */
     .rates-live-card.gold-card {
-      background: linear-gradient(145deg, #FFFDF8 0%, #FFF5E6 45%, #FEEFD7 100%);
-      border: 1px solid rgba(230, 205, 165, 0.65);
-      box-shadow: 0 4px 14px rgba(184, 121, 37, 0.06);
+      background: linear-gradient(150deg, #FFFDF8 0%, #FFF7EC 40%, #FEEDD7 100%);
+      border: 1px solid #F1E3CB;
+      box-shadow: 0 4px 16px rgba(184, 121, 37, 0.05);
+    }
+
+    .rates-live-card.gold-card::after {
+      content: '';
+      position: absolute;
+      right: -25px;
+      top: 30%;
+      width: 130px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(238, 195, 120, 0.25) 0%, rgba(254, 237, 215, 0) 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: rotate(-15deg);
     }
 
     .rates-live-card.gold-card:hover {
-      box-shadow: 0 8px 22px rgba(184, 121, 37, 0.12);
+      box-shadow: 0 8px 24px rgba(184, 121, 37, 0.12);
       border-color: #DAB97F;
     }
 
     /* Silver Card Specifics */
     .rates-live-card.silver-card {
-      background: linear-gradient(145deg, #FFFFFF 0%, #F7F9FC 45%, #ECF0F6 100%);
-      border: 1px solid rgba(210, 218, 228, 0.8);
-      box-shadow: 0 4px 14px rgba(71, 85, 105, 0.06);
+      background: linear-gradient(150deg, #FFFFFF 0%, #F6F8FB 40%, #EBF0F7 100%);
+      border: 1px solid #E1E8F0;
+      box-shadow: 0 4px 16px rgba(71, 85, 105, 0.05);
+    }
+
+    .rates-live-card.silver-card::after {
+      content: '';
+      position: absolute;
+      right: -25px;
+      top: 30%;
+      width: 130px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(185, 200, 220, 0.26) 0%, rgba(235, 240, 247, 0) 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: rotate(-15deg);
     }
 
     .rates-live-card.silver-card:hover {
-      box-shadow: 0 8px 22px rgba(71, 85, 105, 0.12);
+      box-shadow: 0 8px 24px rgba(71, 85, 105, 0.12);
       border-color: #B8C5D6;
     }
 
-    /* Card Top Row */
-    .rate-card-top-row {
+    /* 3D Ingot Artwork - Sits elegantly in top-right */
+    .rate-card-illustration {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 76px;
+      height: 72px;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
     }
 
+    .rate-card-ingot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
+      transition: transform 0.25s ease;
+    }
+
+    .rates-live-card:hover .rate-card-ingot-img {
+      transform: scale(1.05);
+    }
+
+    /* Card Meta */
     .rate-card-meta {
       display: flex;
       flex-direction: column;
+      position: relative;
+      z-index: 3;
     }
 
     .rate-card-tag {
-      font-size: 13px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
       font-weight: 800;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -1915,45 +1962,28 @@
     }
 
     .gold-card .rate-card-tag {
-      color: #A0671B;
+      color: #A4691E;
     }
 
     .silver-card .rate-card-tag {
-      color: #536072;
+      color: #4C5768;
     }
 
     .rate-card-purity {
-      font-size: 10.5px;
-      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .gold-card .rate-card-purity {
-      color: #8E7658;
+      color: #8A7761;
     }
 
     .silver-card .rate-card-purity {
-      color: #778598;
-    }
-
-    .rate-card-thumb-wrap {
-      width: 48px;
-      height: 36px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-    }
-
-    .rate-card-thumb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      mix-blend-mode: multiply;
+      color: #7B8797;
     }
 
     /* Card Main Price */
@@ -1961,43 +1991,54 @@
       display: flex;
       align-items: baseline;
       gap: 4px;
+      margin-top: 18px;
       margin-bottom: 0;
+      position: relative;
+      z-index: 3;
     }
 
     .rate-card-currency {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #1F1A14;
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #1E1A16;
     }
 
     .rate-card-amount {
       font-family: 'Outfit', sans-serif;
       font-size: 26px;
-      font-weight: 700;
-      color: #1F1A14;
+      font-weight: 800;
+      color: #1E1A16;
       letter-spacing: -0.02em;
+      line-height: 1.1;
     }
 
     .rate-card-unit {
+      font-family: 'Outfit', sans-serif;
       font-size: 12px;
-      color: #7C7064;
+      color: #786C5E;
       font-weight: 500;
-      margin-bottom: 6px;
+      margin-top: 3px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 3;
     }
 
     /* Card Movement Indicator */
     .rate-card-trend {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 12px;
+      gap: 5px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 3;
     }
 
     .rate-card-trend.trend-positive {
-      color: #16A34A;
+      color: #0E9F6E;
     }
 
     .rate-card-trend.trend-negative {
@@ -2005,28 +2046,34 @@
     }
 
     .rate-card-trend svg {
-      width: 13px;
-      height: 13px;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
     }
 
     /* Card Footer */
     .rate-card-footer {
       border-top: 1px solid;
-      padding-top: 8px;
+      padding-top: 10px;
       margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-family: 'Outfit', sans-serif;
       font-size: 11px;
-      color: #84776B;
+      font-weight: 500;
+      position: relative;
+      z-index: 3;
     }
 
     .gold-card .rate-card-footer {
-      border-color: rgba(225, 205, 175, 0.45);
+      border-color: rgba(228, 212, 188, 0.75);
+      color: #8C7F70;
     }
 
     .silver-card .rate-card-footer {
-      border-color: rgba(210, 218, 228, 0.6);
+      border-color: rgba(220, 228, 238, 0.85);
+      color: #798596;
     }
 
     .rate-info-icon-btn {
@@ -2034,15 +2081,26 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      color: #9E9183;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: color 0.15s ease;
     }
 
-    .rate-info-icon-btn:hover {
+    .gold-card .rate-info-icon-btn {
+      color: #A69888;
+    }
+
+    .gold-card .rate-info-icon-btn:hover {
       color: #4D4034;
+    }
+
+    .silver-card .rate-info-icon-btn {
+      color: #99A6B6;
+    }
+
+    .silver-card .rate-info-icon-btn:hover {
+      color: #334155;
     }
 
     .rate-info-icon-btn svg {
@@ -2063,20 +2121,31 @@
     .history-metal-toggles {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .history-metal-pill {
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 9999px;
-      font-size: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       border: 1px solid #E5DACB;
       background: #FFFFFF;
-      color: #5C4F40;
+      color: #2D2218;
       user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+
+    .history-metal-pill:hover:not(.active) {
+      border-color: #D2C2AE;
+      background: #FDFBF8;
     }
 
     .history-metal-pill.active {
@@ -2269,45 +2338,40 @@
 
     @media (max-width: 768px) {
       .rates-hero-banner {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 4px 0 14px 0;
-        gap: 10px;
+        padding: 14px 14px 16px 14px;
+        min-height: 160px;
+        background-size: auto 100%;
+        background-position: right center;
       }
 
-      .rates-hero-right {
-        flex-shrink: 0;
-        display: flex;
-        justify-content: flex-end;
-      }
-
-      .rates-hero-art-img {
-        width: 130px;
-        height: 95px;
-        object-fit: contain;
+      .rates-hero-left {
+        max-width: 70%;
       }
 
       .rates-hero-title {
-        font-size: 23px;
+        font-size: 22px;
       }
 
       .rates-live-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 12px;
       }
 
       .rates-live-card {
-        padding: 12px 10px 10px 10px;
+        padding: 14px 12px 12px 12px;
+        border-radius: 18px;
+        min-height: 175px;
       }
 
-      .rate-card-thumb-wrap {
-        width: 42px;
-        height: 32px;
+      .rate-card-illustration {
+        width: 60px;
+        height: 54px;
+        top: 10px;
+        right: 10px;
       }
 
       .rate-card-amount {
-        font-size: 22px;
+        font-size: 23px;
       }
 
       .rate-card-currency {
@@ -3862,18 +3926,22 @@
               <div class="rates-hero-left">
                 <h1 class="rates-hero-title">Bullion Market Rates<br>&amp; Overrides</h1>
                 <p class="rates-hero-subtitle">
-                  Live bullion market pricing and manual system overrides for accurate rate display across the app and store.
+                  Live bullion market pricing and manual system overrides for accurate rate display across the app and
+                  store.
                 </p>
                 <div class="rates-hero-pills">
                   <div class="rates-hero-pill">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
                     <span id="hero-rates-updated-text">Last updated: Today, 1:29 PM IST</span>
                   </div>
-                  <button type="button" class="rates-hero-pill-btn" id="btn-hero-refresh-rates" onclick="refreshRatesFromFeed()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <button type="button" class="rates-hero-pill-btn" id="btn-hero-refresh-rates"
+                    onclick="refreshRatesFromFeed()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                      stroke-linejoin="round">
                       <polyline points="23 4 23 10 17 10"></polyline>
                       <polyline points="1 20 1 14 7 14"></polyline>
                       <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -3881,9 +3949,6 @@
                     <span id="btn-hero-refresh-text">Refresh Rates</span>
                   </button>
                 </div>
-              </div>
-              <div class="rates-hero-right">
-                <img src="/admin/images/rates/bullion-hero-bars.jpg" alt="Bullion Gold and Silver Bars" class="rates-hero-art-img">
               </div>
             </div>
 
@@ -3897,14 +3962,14 @@
               <div class="rates-live-grid">
                 <!-- GOLD 24K CARD -->
                 <div class="rates-live-card gold-card">
-                  <div class="rate-card-top-row">
-                    <div class="rate-card-meta">
-                      <span class="rate-card-tag">GOLD 24K</span>
-                      <span class="rate-card-purity">(999 PURITY)</span>
-                    </div>
-                    <div class="rate-card-thumb-wrap">
-                      <img src="/admin/images/rates/gold-ingot-card.jpg" alt="Gold 24K Ingot" class="rate-card-thumb-img">
-                    </div>
+                  <!-- 3D Gold Ingot Artwork -->
+                  <div class="rate-card-illustration">
+                    <img src="/admin/images/rates/gold-ingot-card.png" alt="Gold 24K Ingot" class="rate-card-ingot-img">
+                  </div>
+
+                  <div class="rate-card-meta">
+                    <span class="rate-card-tag">GOLD 24K</span>
+                    <span class="rate-card-purity">(999 PURITY)</span>
                   </div>
 
                   <div class="rate-card-price-row">
@@ -3914,20 +3979,23 @@
                   <div class="rate-card-unit">/ gram</div>
 
                   <div class="rate-card-trend trend-positive" id="live-card-gold-trend">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
                     </svg>
                     <span class="trend-text">+ ₹ 35 (0.56%)</span>
                   </div>
 
                   <div class="rate-card-footer">
                     <span>Per 1 Gram Benchmark</span>
-                    <button type="button" class="rate-info-icon-btn" title="Live 24K (999 Purity) Per 1 Gram Gold benchmark pricing">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button type="button" class="rate-info-icon-btn"
+                      title="Live 24K (999 Purity) Per 1 Gram Gold benchmark pricing">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <circle cx="12" cy="8" r="0.5" fill="currentColor"></circle>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
                       </svg>
                     </button>
                   </div>
@@ -3935,37 +4003,40 @@
 
                 <!-- SILVER CARD -->
                 <div class="rates-live-card silver-card">
-                  <div class="rate-card-top-row">
-                    <div class="rate-card-meta">
-                      <span class="rate-card-tag">SILVER</span>
-                      <span class="rate-card-purity">(999 PURITY)</span>
-                    </div>
-                    <div class="rate-card-thumb-wrap">
-                      <img src="/admin/images/rates/silver-ingot-card.jpg" alt="Silver Ingot" class="rate-card-thumb-img">
-                    </div>
+                  <!-- 3D Silver Ingot Artwork -->
+                  <div class="rate-card-illustration">
+                    <img src="/admin/images/rates/silver-ingot-card.png" alt="Silver Ingot" class="rate-card-ingot-img">
+                  </div>
+
+                  <div class="rate-card-meta">
+                    <span class="rate-card-tag">SILVER</span>
+                    <span class="rate-card-purity">(999 PURITY)</span>
                   </div>
 
                   <div class="rate-card-price-row">
                     <span class="rate-card-currency">₹</span>
                     <span class="rate-card-amount" id="live-card-silver-val">92.50</span>
                   </div>
-                  <div class="rate-card-unit">/ gram</div>
+                  <div class="rate-card-unit">/ Kg</div>
 
                   <div class="rate-card-trend trend-positive" id="live-card-silver-trend">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
                     </svg>
                     <span class="trend-text">+ ₹ 0.45 (0.48%)</span>
                   </div>
 
                   <div class="rate-card-footer">
                     <span>Per 1 Gram Benchmark</span>
-                    <button type="button" class="rate-info-icon-btn" title="Live Pure Silver (999 Purity) Per 1 Gram benchmark pricing">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button type="button" class="rate-info-icon-btn"
+                      title="Live Pure Silver (999 Purity) Per 1 Gram benchmark pricing">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <circle cx="12" cy="8" r="0.5" fill="currentColor"></circle>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
                       </svg>
                     </button>
                   </div>
@@ -3980,26 +4051,21 @@
                 <p class="rates-section-subtitle">View recent price trends from the live market feed.</p>
               </div>
 
-              <!-- Filter Bar (Gold 24K, Silver 1Kg, Last 7 Days) -->
+              <!-- Filter Bar (Gold 24K, Gold 22K, Silver 1Kg) -->
               <div class="rates-history-controls-bar">
                 <div class="history-metal-toggles">
-                  <button type="button" class="history-metal-pill active" id="btn-hist-gold" onclick="setHistoryMetal('gold')">
+                  <button type="button" class="history-metal-pill active" id="btn-hist-gold"
+                    onclick="setHistoryMetal('gold')">
                     Gold (24K)
                   </button>
-                  <button type="button" class="history-metal-pill" id="btn-hist-silver" onclick="setHistoryMetal('silver')">
+                  <button type="button" class="history-metal-pill" id="btn-hist-gold22k"
+                    onclick="setHistoryMetal('gold22k')">
+                    Gold (22K)
+                  </button>
+                  <button type="button" class="history-metal-pill" id="btn-hist-silver"
+                    onclick="setHistoryMetal('silver')">
                     Silver (1Kg)
                   </button>
-                </div>
-
-                <div class="history-timeframe-wrap">
-                  <select id="select-history-timeframe" class="history-timeframe-select" onchange="changeHistoryTimeframe(this.value)">
-                    <option value="7">Last 7 Days</option>
-                    <option value="15">Last 15 Days</option>
-                    <option value="30">Last 30 Days</option>
-                  </select>
-                  <svg class="timeframe-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
                 </div>
               </div>
 
@@ -4014,7 +4080,8 @@
 
                 <!-- SVG Chart Graphic -->
                 <div class="chart-svg-wrapper" id="chart-svg-wrapper">
-                  <svg id="bullion-chart-svg" viewBox="0 0 360 160" preserveAspectRatio="none" class="bullion-chart-svg">
+                  <svg id="bullion-chart-svg" viewBox="0 0 360 160" preserveAspectRatio="none"
+                    class="bullion-chart-svg">
                     <defs>
                       <linearGradient id="goldChartGrad" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="#C68A35" stop-opacity="0.32" />
@@ -4046,7 +4113,8 @@
                     <path id="chart-area-path" d="" fill="url(#goldChartGrad)" />
 
                     <!-- Trend Line Path -->
-                    <path id="chart-line-path" d="" fill="none" stroke="#C68A35" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path id="chart-line-path" d="" fill="none" stroke="#C68A35" stroke-width="2.6"
+                      stroke-linecap="round" stroke-linejoin="round" />
 
                     <!-- Data Nodes Group -->
                     <g id="chart-points-group"></g>
@@ -4061,73 +4129,6 @@
                   <span>17 Oct</span>
                 </div>
               </div>
-            </div>
-
-            <!-- 4. MANUAL SYSTEM OVERRIDES PANEL -->
-            <div class="rates-override-container">
-              <div class="panel-header" style="border-bottom: 1px solid #EFE8DC; padding-bottom: 14px; margin-bottom: 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                <div>
-                  <h3 class="panel-title" style="font-size: 18px;">Bullion System Overrides & Freeze</h3>
-                  <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">
-                    Set custom benchmark rates to override automated market price updates across the customer app.
-                  </p>
-                </div>
-                <div id="rates-override-status-badge">
-                  <span class="badge badge-active">Live Automated Market Feed</span>
-                </div>
-              </div>
-
-              <!-- Manual Override Form -->
-              <form id="form-update-rates" class="rates-override-box" style="background:transparent; border:none; padding:0;">
-                <label class="switch-label">
-                  <input type="checkbox" id="rates-manual-override-checkbox" class="switch-input">
-                  <span><strong>Enable Manual Rate Override</strong> (Check to freeze rates at custom values below, uncheck for automated market feed)</span>
-                </label>
-
-                <div class="rates-form-grid">
-                  <div class="form-group">
-                    <label class="form-label" for="input-rate-gold24k">Gold 24K Rate (₹ / gram)</label>
-                    <div class="input-wrapper">
-                      <input type="number" step="0.01" id="input-rate-gold24k" placeholder="e.g. 7450.00" required>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="input-rate-gold22k">Gold 22K Rate (₹ / gram)</label>
-                    <div class="input-wrapper">
-                      <input type="number" step="0.01" id="input-rate-gold22k" placeholder="e.g. 6850.00" required>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="input-rate-silver">Silver Rate (₹ / gram)</label>
-                    <div class="input-wrapper">
-                      <input type="number" step="0.01" id="input-rate-silver" placeholder="e.g. 92.50" required>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Hidden fallback element IDs so existing code references work seamlessly -->
-                <div style="display:none;" aria-hidden="true">
-                  <span id="card-rate-gold24k">₹...</span>
-                  <span id="card-rate-gold22k">₹...</span>
-                  <span id="card-rate-silver">₹...</span>
-                </div>
-
-                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:8px;">
-                  <button type="submit" class="btn-primary" style="max-width:240px;" id="btn-save-rates">
-                    Save Rates Changes
-                  </button>
-                  <button type="button" class="btn-secondary" style="max-width:200px; height:44px; display:inline-flex; align-items:center; justify-content:center; gap:8px;" onclick="refreshRatesFromFeed()">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="23 4 23 10 17 10"></polyline>
-                      <polyline points="1 20 1 14 7 14"></polyline>
-                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-                    </svg>
-                    Sync Live Feed Now
-                  </button>
-                </div>
-              </form>
             </div>
 
           </div>
@@ -4601,14 +4602,19 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="font-size:14px; font-weight:600; color:#2D251E; margin-bottom:8px; display:block;">Upload Product Image</label>
+          <label class="form-label"
+            style="font-size:14px; font-weight:600; color:#2D251E; margin-bottom:8px; display:block;">Upload Product
+            Image</label>
           <input type="hidden" id="cat-form-image">
-          <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp" style="display:none;" onchange="handleCatFileSelect(this.files)">
+          <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
+            style="display:none;" onchange="handleCatFileSelect(this.files)">
 
-          <div class="image-dropzone" id="cat-image-dropzone" onclick="document.getElementById('cat-file-input').click()">
+          <div class="image-dropzone" id="cat-image-dropzone"
+            onclick="document.getElementById('cat-file-input').click()">
             <div id="dropzone-empty-state">
               <div class="dropzone-icon-wrap">
-                <svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="#7E5F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="#7E5F3D" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M36 24V14a4 4 0 0 0-4-4H12a4 4 0 0 0-4 4v20a4 4 0 0 0 4 4h12"></path>
                   <circle cx="18" cy="18" r="2.2" fill="#7E5F3D"></circle>
                   <path d="M9 31l8-8 7 7 4-4 4 4"></path>
@@ -4618,7 +4624,8 @@
               </div>
               <div class="dropzone-main-text">Choose image or drag and drop</div>
               <div class="dropzone-sub-text">PNG, JPG or WEBP (max. 5 MB)</div>
-              <button type="button" class="btn-browse-files" onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
+              <button type="button" class="btn-browse-files"
+                onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
                 Browse Files
               </button>
             </div>
@@ -4631,8 +4638,10 @@
                 <span class="preview-filesize" id="cat-preview-size">Selected</span>
               </div>
               <div class="dropzone-preview-actions">
-                <button type="button" class="btn-preview-change" onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
-                <button type="button" class="btn-preview-remove" onclick="event.stopPropagation(); removeCatImage();">&times;</button>
+                <button type="button" class="btn-preview-change"
+                  onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
+                <button type="button" class="btn-preview-remove"
+                  onclick="event.stopPropagation(); removeCatImage();">&times;</button>
               </div>
             </div>
           </div>
@@ -5387,29 +5396,40 @@
     }
 
     // 3. Bullion Rates Save Form
-    document.getElementById('form-update-rates').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const gold24K = parseFloat(document.getElementById('input-rate-gold24k').value);
-      const gold22K = parseFloat(document.getElementById('input-rate-gold22k').value);
-      const silver = parseFloat(document.getElementById('input-rate-silver').value);
-      const isManualOverride = document.getElementById('rates-manual-override-checkbox').checked;
+    const formUpdateRates = document.getElementById('form-update-rates');
+    if (formUpdateRates) {
+      formUpdateRates.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const inG24 = document.getElementById('input-rate-gold24k');
+        const inG22 = document.getElementById('input-rate-gold22k');
+        const inSil = document.getElementById('input-rate-silver');
+        const chkOverride = document.getElementById('rates-manual-override-checkbox');
+        const gold24K = inG24 ? parseFloat(inG24.value) : 0;
+        const gold22K = inG22 ? parseFloat(inG22.value) : 0;
+        const silver = inSil ? parseFloat(inSil.value) : 0;
+        const isManualOverride = chkOverride ? chkOverride.checked : false;
 
-      const btn = document.getElementById('btn-save-rates');
-      btn.disabled = true;
-      btn.textContent = 'Saving...';
+        const btn = document.getElementById('btn-save-rates');
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Saving...';
+        }
 
-      try {
-        await apiRequest('/admin/rates', 'PUT', { gold24K, gold22K, silver, isManualOverride });
-        showToast('Metal rates updated successfully!', 'success');
-        await loadBullionRates();
-        loadLiveTicker();
-      } catch (err) {
-        showToast(err.message || 'Failed to update rates', 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Save Rates Changes';
-      }
-    });
+        try {
+          await apiRequest('/admin/rates', 'PUT', { gold24K, gold22K, silver, isManualOverride });
+          showToast('Metal rates updated successfully!', 'success');
+          await loadBullionRates();
+          loadLiveTicker();
+        } catch (err) {
+          showToast(err.message || 'Failed to update rates', 'error');
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Save Rates Changes';
+          }
+        }
+      });
+    }
 
     async function refreshRatesFromFeed() {
       const btn = document.getElementById('btn-hero-refresh-rates');
@@ -5465,8 +5485,8 @@
           goldTrendEl.innerHTML = `
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               ${gPos
-                ? '<line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>'
-                : '<line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 7 17 17 7 17"></polyline>'}
+              ? '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline>'
+              : '<polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline>'}
             </svg>
             <span class="trend-text">${gPos ? '+ ' : '- '}₹ ${Math.abs(gChange).toLocaleString('en-IN')} (${Math.abs(gPct)}%)</span>
           `;
@@ -5495,8 +5515,8 @@
           silverTrendEl.innerHTML = `
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               ${sPos
-                ? '<line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>'
-                : '<line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 7 17 17 7 17"></polyline>'}
+              ? '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline>'
+              : '<polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline>'}
             </svg>
             <span class="trend-text">${sPos ? '+ ' : '- '}₹ ${Math.abs(sChange).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${Math.abs(sPct)}%)</span>
           `;
@@ -5538,8 +5558,10 @@
     function setHistoryMetal(metal) {
       currentHistoryMetal = metal;
       const btnGold = document.getElementById('btn-hist-gold');
+      const btnGold22k = document.getElementById('btn-hist-gold22k');
       const btnSilver = document.getElementById('btn-hist-silver');
       if (btnGold) btnGold.className = `history-metal-pill ${metal === 'gold' ? 'active' : ''}`;
+      if (btnGold22k) btnGold22k.className = `history-metal-pill ${metal === 'gold22k' ? 'active' : ''}`;
       if (btnSilver) btnSilver.className = `history-metal-pill ${metal === 'silver' ? 'active' : ''}`;
       renderPriceHistoryChart();
     }
@@ -5567,31 +5589,37 @@
       if (!svg) return;
 
       // Use cached history or fallback to realistic benchmark history matching current live rates
-      let data = Array.isArray(cachedHistoryData) && cachedHistoryData.length > 0 
-        ? [...cachedHistoryData].reverse() 
+      let data = Array.isArray(cachedHistoryData) && cachedHistoryData.length > 0
+        ? [...cachedHistoryData].reverse()
         : [];
 
       if (data.length === 0) {
         const liveGold = 14718;
+        const liveGold22k = 13492;
         const liveSilver = 211690;
         data = [
-          { gold24K: 14680, silver1Kg: 210500, dateLabel: '11 Oct', fullDate: '11 Oct 2026' },
-          { gold24K: 14695, silver1Kg: 210800, dateLabel: '12 Oct', fullDate: '12 Oct 2026' },
-          { gold24K: 14705, silver1Kg: 211100, dateLabel: '13 Oct', fullDate: '13 Oct 2026' },
-          { gold24K: 14725, silver1Kg: 211800, dateLabel: '14 Oct', fullDate: '14 Oct 2026' },
-          { gold24K: 14710, silver1Kg: 211400, dateLabel: '15 Oct', fullDate: '15 Oct 2026' },
-          { gold24K: 14730, silver1Kg: 212100, dateLabel: '16 Oct', fullDate: '16 Oct 2026' },
-          { gold24K: liveGold, silver1Kg: liveSilver, dateLabel: '17 Oct', fullDate: '17 Oct 2026' },
+          { gold24K: 14680, gold22K: 13450, silver1Kg: 210500, dateLabel: '11 Oct', fullDate: '11 Oct 2026' },
+          { gold24K: 14695, gold22K: 13465, silver1Kg: 210800, dateLabel: '12 Oct', fullDate: '12 Oct 2026' },
+          { gold24K: 14705, gold22K: 13475, silver1Kg: 211100, dateLabel: '13 Oct', fullDate: '13 Oct 2026' },
+          { gold24K: 14725, gold22K: 13495, silver1Kg: 211800, dateLabel: '14 Oct', fullDate: '14 Oct 2026' },
+          { gold24K: 14710, gold22K: 13480, silver1Kg: 211400, dateLabel: '15 Oct', fullDate: '15 Oct 2026' },
+          { gold24K: 14730, gold22K: 13500, silver1Kg: 212100, dateLabel: '16 Oct', fullDate: '16 Oct 2026' },
+          { gold24K: liveGold, gold22K: liveGold22k, silver1Kg: liveSilver, dateLabel: '17 Oct', fullDate: '17 Oct 2026' },
         ];
       }
 
-      const isGold = currentHistoryMetal === 'gold';
-      const color = isGold ? '#C68A35' : '#64748B';
-      const areaGrad = isGold ? 'url(#goldChartGrad)' : 'url(#silverChartGrad)';
+      const isGold24k = currentHistoryMetal === 'gold';
+      const isGold22k = currentHistoryMetal === 'gold22k';
+      const isSilver = currentHistoryMetal === 'silver';
+
+      const color = isSilver ? '#64748B' : (isGold22k ? '#B87A2B' : '#C68A35');
+      const areaGrad = isSilver ? 'url(#silverChartGrad)' : 'url(#goldChartGrad)';
 
       const values = data.map(item => {
-        if (isGold) {
+        if (isGold24k) {
           return Number(item.gold24K) || 14718;
+        } else if (isGold22k) {
+          return Number(item.gold22K) || Math.round((Number(item.gold24K) || 14718) * 0.916);
         } else {
           const s1k = item.silver1Kg ?? (Number(item.silver) > 1000 ? Number(item.silver) : Math.round(Number(item.silver) * 1000));
           return s1k || 211690;
@@ -5700,8 +5728,10 @@
       tickVals.forEach((tv, i) => {
         const lbl = document.getElementById(`chart-y-${i}`);
         if (lbl) {
-          if (isGold) {
+          if (isGold24k) {
             lbl.textContent = '15k';
+          } else if (isGold22k) {
+            lbl.textContent = '14k';
           } else {
             lbl.textContent = `${Math.round(tv / 1000)}k`;
           }
@@ -6084,6 +6114,13 @@
 
     async function handleCategoryFormSubmit(e) {
       e.preventDefault();
+      const saveBtn = document.getElementById('btn-cat-save');
+      const origText = saveBtn ? saveBtn.textContent : 'Save Category';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving to Database...';
+      }
+
       const editId = document.getElementById('cat-edit-id').value;
       const name = document.getElementById('cat-form-name').value.trim();
       let slug = document.getElementById('cat-form-slug').value.trim();
@@ -6099,16 +6136,21 @@
       try {
         if (editId) {
           await apiRequest(`/admin/categories/${editId}`, 'PUT', payload);
-          showToast('Category updated successfully!', 'success');
+          showToast('Category updated in database!', 'success');
         } else {
           await apiRequest('/admin/categories', 'POST', payload);
-          showToast('Category created successfully!', 'success');
+          showToast('Category saved to database successfully!', 'success');
         }
         closeCategoryModal();
         await loadCategories();
         loadCategoriesForSelect();
       } catch (err) {
-        showToast(err.message, 'error');
+        showToast(err.message || 'Failed to save category', 'error');
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = origText;
+        }
       }
     }
 
