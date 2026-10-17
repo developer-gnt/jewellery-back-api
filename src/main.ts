@@ -12,8 +12,13 @@ import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
+    bodyParser: false,
     logger: WinstonModule.createLogger(winstonConfig),
   });
+
+  // Body parser with 25MB limit for image uploads
+  app.use(express.json({ limit: '25mb' }));
+  app.use(express.urlencoded({ limit: '25mb', extended: true }));
 
   const configService = app.get(ConfigService);
 
