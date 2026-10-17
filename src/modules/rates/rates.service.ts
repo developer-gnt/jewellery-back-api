@@ -29,7 +29,7 @@ export interface SilverDenominationBreakdown {
 export class RatesService implements OnModuleInit {
   private readonly logger = new Logger(RatesService.name);
   private cache: CachedRate | null = null;
-  private readonly CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+  private readonly CACHE_TTL_MS = 10 * 1000; // 10 seconds
 
   constructor(
     @InjectRepository(MetalRate)
