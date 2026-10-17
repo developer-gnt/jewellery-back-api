@@ -3367,99 +3367,9 @@
   <div id="toast-container"></div>
 
   <!-- ============================================================= -->
-  <!-- 1. LOGIN SCREEN -->
+  <!-- AUTHENTICATED DASHBOARD SHELL (LOGIN BYPASSED) -->
   <!-- ============================================================= -->
-  <div id="login-view">
-    <div class="login-card">
-      <div class="login-header">
-        <div class="login-logo-emblem"
-          style="background: transparent; border: none; box-shadow: none; margin-bottom: 8px;">
-          <img src="/admin/brand-logo.png" alt="Zewar Mahal Logo"
-            style="width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 4px 14px rgba(184, 121, 37, 0.22));">
-        </div>
-        <h1>ZEWAR MAHAL</h1>
-        <p>ROYAL JEWELLERS • ADMINISTRATIVE PORTAL</p>
-      </div>
-
-      <!-- Login Method Tabs -->
-      <div class="auth-tabs" style="display:flex; gap:8px; margin-bottom:20px; background:#F4EFE6; padding:4px; border-radius:10px;">
-        <button type="button" id="tab-btn-phone" class="auth-tab active" style="flex:1; padding:9px 12px; border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; background:#FFFFFF; color:#9E6B28; box-shadow:0 2px 6px rgba(0,0,0,0.06); transition:all 0.2s;">📱 Phone OTP</button>
-        <button type="button" id="tab-btn-email" class="auth-tab" style="flex:1; padding:9px 12px; border:none; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; background:transparent; color:#6B5E4D; transition:all 0.2s;">✉️ Email & Pass</button>
-      </div>
-
-      <!-- Quick 1-Click Fill Phone Credentials Box -->
-      <div class="quick-creds-box" id="quick-creds-phone">
-        <div class="quick-creds-info">
-          <strong>Designated Admin Mobile</strong>
-          <span>+91 9930942947 • Dev OTP: 123456</span>
-        </div>
-        <button type="button" class="btn-autofill" id="btn-fill-phone">⚡ Auto Fill</button>
-      </div>
-
-      <!-- Phone OTP Form -->
-      <form id="phone-login-form">
-        <div class="form-group">
-          <label class="form-label" for="login-phone">Mobile Number</label>
-          <div class="input-wrapper" style="display:flex; gap:8px;">
-            <input type="tel" id="login-phone" required placeholder="9930942947" maxlength="10" autocomplete="tel" style="flex:1;">
-            <button type="button" id="btn-send-otp" class="btn-primary" style="width:auto; padding:0 16px; font-size:12px; white-space:nowrap;">
-              <span id="send-otp-btn-text">Send OTP</span>
-              <div id="send-otp-spinner" class="spinner hidden"></div>
-            </button>
-          </div>
-          <div id="otp-sent-status" style="font-size:12px; color:#2E7D32; margin-top:6px; display:none;"></div>
-        </div>
-
-        <div class="form-group" id="otp-input-group" style="display:none;">
-          <label class="form-label" for="login-otp">Enter 6-Digit OTP</label>
-          <div class="input-wrapper">
-            <input type="text" id="login-otp" placeholder="123456" maxlength="6" autocomplete="one-time-code">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary" id="btn-submit-phone-login" style="display:none;">
-          <span id="phone-login-btn-text">Verify & Enter Admin Portal</span>
-          <div id="phone-login-spinner" class="spinner hidden"></div>
-        </button>
-      </form>
-
-      <!-- Quick 1-Click Fill Credentials Box (Email) -->
-      <div class="quick-creds-box" id="quick-creds-email" style="display:none;">
-        <div class="quick-creds-info">
-          <strong>Default Admin Account</strong>
-          <span>admin@zewarmahal.com • Admin@123456</span>
-        </div>
-        <button type="button" class="btn-autofill" id="btn-fill-creds">⚡ Auto Fill</button>
-      </div>
-
-      <!-- Email / Password Form -->
-      <form id="login-form" style="display:none;">
-        <div class="form-group">
-          <label class="form-label" for="login-email">Admin Email</label>
-          <div class="input-wrapper">
-            <input type="email" id="login-email" placeholder="admin@zewarmahal.com" autocomplete="username">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="login-password">Password</label>
-          <div class="input-wrapper">
-            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary" id="btn-submit-login">
-          <span id="login-btn-text">Sign In To Admin Portal</span>
-          <div id="login-spinner" class="spinner hidden"></div>
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ============================================================= -->
-  <!-- 2. AUTHENTICATED DASHBOARD SHELL -->
-  <!-- ============================================================= -->
-  <div id="admin-shell" class="hidden">
+  <div id="admin-shell">
 
     <!-- SIDEBAR BACKDROP OVERLAY (FOR MOBILE / DRAWER MODE) -->
     <div class="sidebar-backdrop" id="sidebar-backdrop" title="Click to close sidebar"></div>
@@ -4831,16 +4741,12 @@
           body: body ? JSON.stringify(body) : null
         });
 
-        if (response.status === 401) {
-          // Token expired or invalid
-          handleLogout();
-          throw new Error('Session expired. Please log in again.');
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.message || `API error ${response.status}`);
         }
 
         const json = await response.json();
-        if (!response.ok) {
-          throw new Error(json.message || `API error ${response.status}`);
-        }
         return json.data !== undefined ? json.data : json;
       } catch (err) {
         console.error(`Request to ${endpoint} failed:`, err);
@@ -4849,179 +4755,28 @@
     }
 
     // -----------------------------------------------------------------
-    // AUTHENTICATION LOGIC
+    // ADMIN DASHBOARD SETUP & LOGOUT
     // -----------------------------------------------------------------
-    const loginView = document.getElementById('login-view');
     const adminShell = document.getElementById('admin-shell');
-    const loginForm = document.getElementById('login-form');
-    const btnFillCreds = document.getElementById('btn-fill-creds');
 
-    // Tab switching (Phone OTP vs Email)
-    const tabBtnPhone = document.getElementById('tab-btn-phone');
-    const tabBtnEmail = document.getElementById('tab-btn-email');
-    const phoneForm = document.getElementById('phone-login-form');
-    const emailForm = document.getElementById('login-form');
-    const quickCredsPhone = document.getElementById('quick-creds-phone');
-    const quickCredsEmail = document.getElementById('quick-creds-email');
+    // Default admin user state
+    if (!currentUser) {
+      currentUser = {
+        name: 'Zewar Mahal Admin',
+        role: 'Super Admin',
+        email: 'admin@zewarmahal.com',
+        mobile: '9930942947'
+      };
+    }
 
-    tabBtnPhone.addEventListener('click', () => {
-      tabBtnPhone.style.background = '#FFFFFF';
-      tabBtnPhone.style.color = '#9E6B28';
-      tabBtnPhone.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
-      tabBtnEmail.style.background = 'transparent';
-      tabBtnEmail.style.color = '#6B5E4D';
-      tabBtnEmail.style.boxShadow = 'none';
-      phoneForm.style.display = 'block';
-      quickCredsPhone.style.display = 'flex';
-      emailForm.style.display = 'none';
-      quickCredsEmail.style.display = 'none';
-    });
-
-    tabBtnEmail.addEventListener('click', () => {
-      tabBtnEmail.style.background = '#FFFFFF';
-      tabBtnEmail.style.color = '#9E6B28';
-      tabBtnEmail.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
-      tabBtnPhone.style.background = 'transparent';
-      tabBtnPhone.style.color = '#6B5E4D';
-      tabBtnPhone.style.boxShadow = 'none';
-      phoneForm.style.display = 'none';
-      quickCredsPhone.style.display = 'none';
-      emailForm.style.display = 'block';
-      quickCredsEmail.style.display = 'flex';
-    });
-
-    // Autofill phone number
-    document.getElementById('btn-fill-phone').addEventListener('click', () => {
-      document.getElementById('login-phone').value = '9930942947';
-      showToast('Autofilled admin phone 9930942947!', 'info');
-    });
-
-    // Send OTP logic
-    const btnSendOtp = document.getElementById('btn-send-otp');
-    btnSendOtp.addEventListener('click', async () => {
-      const mobile = document.getElementById('login-phone').value.trim();
-      if (!mobile || mobile.length !== 10) {
-        showToast('Please enter a valid 10-digit mobile number', 'error');
-        return;
-      }
-
-      const btnText = document.getElementById('send-otp-btn-text');
-      const spinner = document.getElementById('send-otp-spinner');
-      btnSendOtp.disabled = true;
-      btnText.textContent = 'Sending...';
-      spinner.classList.remove('hidden');
-
-      try {
-        const res = await apiRequest('/auth/send-otp', 'POST', { mobile });
-        const devOtpNotice = res.devOtp ? ` (Dev OTP: ${res.devOtp})` : ' (Dev OTP: 123456)';
-        const statusEl = document.getElementById('otp-sent-status');
-        statusEl.textContent = `✓ OTP sent to +91 ${mobile}${devOtpNotice}`;
-        statusEl.style.display = 'block';
-
-        document.getElementById('otp-input-group').style.display = 'block';
-        document.getElementById('btn-submit-phone-login').style.display = 'flex';
-        document.getElementById('login-otp').value = res.devOtp || '123456';
-        showToast('OTP sent successfully! Enter code below.', 'success');
-      } catch (err) {
-        showToast(err.message || 'Failed to send OTP', 'error');
-      } finally {
-        btnSendOtp.disabled = false;
-        btnText.textContent = 'Resend OTP';
-        spinner.classList.add('hidden');
-      }
-    });
-
-    // Verify OTP & Phone Login
-    phoneForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const mobile = document.getElementById('login-phone').value.trim();
-      const otp = document.getElementById('login-otp').value.trim();
-
-      if (!mobile || !otp) {
-        showToast('Please enter both mobile and OTP', 'error');
-        return;
-      }
-
-      const submitBtn = document.getElementById('btn-submit-phone-login');
-      const btnText = document.getElementById('phone-login-btn-text');
-      const spinner = document.getElementById('phone-login-spinner');
-      submitBtn.disabled = true;
-      btnText.textContent = 'Verifying OTP...';
-      spinner.classList.remove('hidden');
-
-      try {
-        const data = await apiRequest('/auth/verify-otp', 'POST', { mobile, otp });
-        if (data.user.role !== 'admin') {
-          throw new Error('Access denied. This phone number does not have Admin privileges.');
-        }
-
-        token = data.accessToken;
-        currentUser = {
-          id: data.user.id,
-          name: data.user.name || 'Admin',
-          role: data.user.role,
-          mobile: data.user.mobile,
-          email: data.user.email,
-        };
-        localStorage.setItem('zm_admin_token', token);
-        localStorage.setItem('zm_admin_user', JSON.stringify(currentUser));
-
-        showToast(`Welcome Admin (${currentUser.mobile})!`, 'success');
-        initDashboard();
-      } catch (err) {
-        showToast(err.message || 'Verification failed.', 'error');
-      } finally {
-        submitBtn.disabled = false;
-        btnText.textContent = 'Verify & Enter Admin Portal';
-        spinner.classList.add('hidden');
-      }
-    });
-
-    btnFillCreds.addEventListener('click', () => {
-      document.getElementById('login-email').value = 'admin@zewarmahal.com';
-      document.getElementById('login-password').value = 'Admin@123456';
-      showToast('Autofilled credentials!', 'info');
-    });
-
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value;
-      const btnText = document.getElementById('login-btn-text');
-      const spinner = document.getElementById('login-spinner');
-      const submitBtn = document.getElementById('btn-submit-login');
-
-      submitBtn.disabled = true;
-      btnText.textContent = 'Verifying...';
-      spinner.classList.remove('hidden');
-
-      try {
-        const data = await apiRequest('/admin/auth/login', 'POST', { email, password });
-        token = data.accessToken;
-        currentUser = data.admin;
-        localStorage.setItem('zm_admin_token', token);
-        localStorage.setItem('zm_admin_user', JSON.stringify(currentUser));
-
-        showToast(`Welcome back, ${currentUser.name || 'Admin'}!`, 'success');
-        initDashboard();
-      } catch (err) {
-        showToast(err.message || 'Login failed. Invalid credentials.', 'error');
-      } finally {
-        submitBtn.disabled = false;
-        btnText.textContent = 'Sign In To Admin Portal';
-        spinner.classList.add('hidden');
-      }
-    });
-
-    document.getElementById('btn-logout').addEventListener('click', handleLogout);
+    const logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', handleLogout);
+    }
 
     function handleLogout() {
-      token = '';
-      currentUser = null;
-      localStorage.removeItem('zm_admin_token');
-      localStorage.removeItem('zm_admin_user');
-      adminShell.classList.add('hidden');
-      loginView.classList.remove('hidden');
+      showToast('Admin session refreshed', 'info');
+      setTimeout(() => window.location.reload(), 300);
     }
 
     // -----------------------------------------------------------------
@@ -5199,14 +4954,9 @@
     // DATA LOADERS
     // -----------------------------------------------------------------
     async function initDashboard() {
-      if (!token) {
-        loginView.classList.remove('hidden');
-        adminShell.classList.add('hidden');
-        return;
+      if (adminShell) {
+        adminShell.classList.remove('hidden');
       }
-
-      loginView.classList.add('hidden');
-      adminShell.classList.remove('hidden');
 
       // Setup user info in sidebar & topbar
       if (currentUser) {
