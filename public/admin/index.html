@@ -3044,40 +3044,61 @@
       display: none;
     }
 
+    .topbar-left {
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .btn-sidebar-toggle {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .header-brand-wrap {
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .header-brand-logo {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
     .header-brand-title {
-      font-size: 13.5px;
-      letter-spacing: 1.8px;
+      font-size: 13px;
+      letter-spacing: 1.2px;
     }
 
     .header-admin-badge {
-      font-size: 8px;
-      padding: 1px 5px;
+      font-size: 7.5px;
+      padding: 1.5px 5px;
     }
 
     .header-brand-tagline {
       font-size: 7px;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
     }
 
-    .header-brand-logo {
-      width: 30px;
-      height: 30px;
+    .topbar-right {
+      gap: 8px;
+      flex-shrink: 0;
     }
 
-    .header-admin-info {
-      display: none;
+    /* On mobile, keep header pristine: only show Notifications Bell & Logout button */
+    #btn-header-refresh {
+      display: none !important;
     }
 
-    .header-admin-pill {
-      padding: 2px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
+    #header-admin-pill {
+      display: none !important;
     }
 
     .header-icon-btn {
       width: 36px;
       height: 36px;
+      flex-shrink: 0;
     }
 
     .content-area {
