@@ -22,6 +22,9 @@ export class Product {
   @Column({ type: 'varchar', length: 250, unique: true })
   slug: string;
 
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  sku: string | null;
+
   @Column({ type: 'text', nullable: true })
   description: string | null;
 
