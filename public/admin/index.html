@@ -3136,27 +3136,70 @@
         <p>ROYAL JEWELLERS • ADMINISTRATIVE PORTAL</p>
       </div>
 
-      <!-- Quick 1-Click Fill Credentials Box -->
-      <div class="quick-creds-box">
+      <!-- Login Method Tabs -->
+      <div class="auth-tabs" style="display:flex; gap:8px; margin-bottom:20px; background:#F4EFE6; padding:4px; border-radius:10px;">
+        <button type="button" id="tab-btn-phone" class="auth-tab active" style="flex:1; padding:9px 12px; border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; background:#FFFFFF; color:#9E6B28; box-shadow:0 2px 6px rgba(0,0,0,0.06); transition:all 0.2s;">📱 Phone OTP</button>
+        <button type="button" id="tab-btn-email" class="auth-tab" style="flex:1; padding:9px 12px; border:none; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer; background:transparent; color:#6B5E4D; transition:all 0.2s;">✉️ Email & Pass</button>
+      </div>
+
+      <!-- Quick 1-Click Fill Phone Credentials Box -->
+      <div class="quick-creds-box" id="quick-creds-phone">
         <div class="quick-creds-info">
-          <strong>Default Super Admin</strong>
+          <strong>Designated Admin Mobile</strong>
+          <span>+91 9930942947 • Dev OTP: 123456</span>
+        </div>
+        <button type="button" class="btn-autofill" id="btn-fill-phone">⚡ Auto Fill</button>
+      </div>
+
+      <!-- Phone OTP Form -->
+      <form id="phone-login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-phone">Mobile Number</label>
+          <div class="input-wrapper" style="display:flex; gap:8px;">
+            <input type="tel" id="login-phone" required placeholder="9930942947" maxlength="10" autocomplete="tel" style="flex:1;">
+            <button type="button" id="btn-send-otp" class="btn-primary" style="width:auto; padding:0 16px; font-size:12px; white-space:nowrap;">
+              <span id="send-otp-btn-text">Send OTP</span>
+              <div id="send-otp-spinner" class="spinner hidden"></div>
+            </button>
+          </div>
+          <div id="otp-sent-status" style="font-size:12px; color:#2E7D32; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="form-group" id="otp-input-group" style="display:none;">
+          <label class="form-label" for="login-otp">Enter 6-Digit OTP</label>
+          <div class="input-wrapper">
+            <input type="text" id="login-otp" placeholder="123456" maxlength="6" autocomplete="one-time-code">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-submit-phone-login" style="display:none;">
+          <span id="phone-login-btn-text">Verify & Enter Admin Portal</span>
+          <div id="phone-login-spinner" class="spinner hidden"></div>
+        </button>
+      </form>
+
+      <!-- Quick 1-Click Fill Credentials Box (Email) -->
+      <div class="quick-creds-box" id="quick-creds-email" style="display:none;">
+        <div class="quick-creds-info">
+          <strong>Default Admin Account</strong>
           <span>admin@zewarmahal.com • Admin@123456</span>
         </div>
         <button type="button" class="btn-autofill" id="btn-fill-creds">⚡ Auto Fill</button>
       </div>
 
-      <form id="login-form">
+      <!-- Email / Password Form -->
+      <form id="login-form" style="display:none;">
         <div class="form-group">
           <label class="form-label" for="login-email">Admin Email</label>
           <div class="input-wrapper">
-            <input type="email" id="login-email" required placeholder="admin@zewarmahal.com" autocomplete="username">
+            <input type="email" id="login-email" placeholder="admin@zewarmahal.com" autocomplete="username">
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="login-password">Password</label>
           <div class="input-wrapper">
-            <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
           </div>
         </div>
 
@@ -3196,6 +3239,38 @@
       </div>
 
       <ul class="nav-menu">
+        <div class="nav-label">Core Operations</div>
+        <li>
+          <a class="nav-item active" data-section="dashboard">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="rates">
+            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <span>Bullion Rates</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="shop-rates">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-.79-.6-1.72-2.31-1.72-1.43 0-2.31.74-2.31 1.56 0 .76.6 1.36 2.67 1.85 2.75.66 4.18 1.69 4.18 3.73 0 1.63-1.17 2.89-3.02 3.33z"/></svg>
+            <span>Shop Rates</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="products">
+            <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></svg>
+            <span>Jewellery Pieces</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="categories">
+            <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+            <span>Categories</span>
+          </a>
+        </li>
+
         <div class="nav-label">Customer CRM</div>
         <li>
           <a class="nav-item" data-section="enquiries">
@@ -3240,8 +3315,8 @@
         <div class="admin-profile-card">
           <div class="admin-avatar" id="admin-avatar-initials">SA</div>
           <div class="admin-info">
-            <div class="admin-name" id="admin-display-name">Super Admin</div>
-            <div class="admin-role" id="admin-display-role">super_admin</div>
+            <div class="admin-name" id="admin-display-name">Admin</div>
+            <div class="admin-role" id="admin-display-role">admin</div>
           </div>
           <button class="btn-logout" id="btn-logout" title="Sign Out">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -3275,6 +3350,11 @@
         </div>
 
         <div class="topbar-right" style="display: flex; align-items: center; gap: 10px;">
+          <!-- Customer App Link -->
+          <a href="http://localhost:8080" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:#F4EFE6; color:#9E6B28; font-weight:700; font-size:12px; padding:7px 14px; border-radius:20px; text-decoration:none; border:1px solid #D8CFC0; transition:all 0.2s;" title="Open Customer App">
+            <span>📱 View Customer App</span>
+          </a>
+
           <!-- Heart / Wishlist button with count 2 -->
           <button class="header-heart-button" title="Wishlist / Customer Favorites">
             <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#211A16" stroke-width="2"
@@ -4479,6 +4559,25 @@
   <script>
     // Configuration & State
     const API_BASE = '/api/v1';
+    
+    // Check if token was passed in query parameter (e.g. from customer app redirect)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramToken = urlParams.get('token');
+    const paramUser = urlParams.get('user');
+
+    if (paramToken) {
+      localStorage.setItem('zm_admin_token', paramToken);
+      if (paramUser) {
+        try {
+          localStorage.setItem('zm_admin_user', decodeURIComponent(paramUser));
+        } catch {
+          localStorage.setItem('zm_admin_user', paramUser);
+        }
+      }
+      // Clean query string from browser address bar
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     let token = localStorage.getItem('zm_admin_token') || '';
     let currentUser = JSON.parse(localStorage.getItem('zm_admin_user') || 'null');
     let categoriesList = [];
@@ -4543,6 +4642,127 @@
     const adminShell = document.getElementById('admin-shell');
     const loginForm = document.getElementById('login-form');
     const btnFillCreds = document.getElementById('btn-fill-creds');
+
+    // Tab switching (Phone OTP vs Email)
+    const tabBtnPhone = document.getElementById('tab-btn-phone');
+    const tabBtnEmail = document.getElementById('tab-btn-email');
+    const phoneForm = document.getElementById('phone-login-form');
+    const emailForm = document.getElementById('login-form');
+    const quickCredsPhone = document.getElementById('quick-creds-phone');
+    const quickCredsEmail = document.getElementById('quick-creds-email');
+
+    tabBtnPhone.addEventListener('click', () => {
+      tabBtnPhone.style.background = '#FFFFFF';
+      tabBtnPhone.style.color = '#9E6B28';
+      tabBtnPhone.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
+      tabBtnEmail.style.background = 'transparent';
+      tabBtnEmail.style.color = '#6B5E4D';
+      tabBtnEmail.style.boxShadow = 'none';
+      phoneForm.style.display = 'block';
+      quickCredsPhone.style.display = 'flex';
+      emailForm.style.display = 'none';
+      quickCredsEmail.style.display = 'none';
+    });
+
+    tabBtnEmail.addEventListener('click', () => {
+      tabBtnEmail.style.background = '#FFFFFF';
+      tabBtnEmail.style.color = '#9E6B28';
+      tabBtnEmail.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
+      tabBtnPhone.style.background = 'transparent';
+      tabBtnPhone.style.color = '#6B5E4D';
+      tabBtnPhone.style.boxShadow = 'none';
+      phoneForm.style.display = 'none';
+      quickCredsPhone.style.display = 'none';
+      emailForm.style.display = 'block';
+      quickCredsEmail.style.display = 'flex';
+    });
+
+    // Autofill phone number
+    document.getElementById('btn-fill-phone').addEventListener('click', () => {
+      document.getElementById('login-phone').value = '9930942947';
+      showToast('Autofilled admin phone 9930942947!', 'info');
+    });
+
+    // Send OTP logic
+    const btnSendOtp = document.getElementById('btn-send-otp');
+    btnSendOtp.addEventListener('click', async () => {
+      const mobile = document.getElementById('login-phone').value.trim();
+      if (!mobile || mobile.length !== 10) {
+        showToast('Please enter a valid 10-digit mobile number', 'error');
+        return;
+      }
+
+      const btnText = document.getElementById('send-otp-btn-text');
+      const spinner = document.getElementById('send-otp-spinner');
+      btnSendOtp.disabled = true;
+      btnText.textContent = 'Sending...';
+      spinner.classList.remove('hidden');
+
+      try {
+        const res = await apiRequest('/auth/send-otp', 'POST', { mobile });
+        const devOtpNotice = res.devOtp ? ` (Dev OTP: ${res.devOtp})` : ' (Dev OTP: 123456)';
+        const statusEl = document.getElementById('otp-sent-status');
+        statusEl.textContent = `✓ OTP sent to +91 ${mobile}${devOtpNotice}`;
+        statusEl.style.display = 'block';
+
+        document.getElementById('otp-input-group').style.display = 'block';
+        document.getElementById('btn-submit-phone-login').style.display = 'flex';
+        document.getElementById('login-otp').value = res.devOtp || '123456';
+        showToast('OTP sent successfully! Enter code below.', 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed to send OTP', 'error');
+      } finally {
+        btnSendOtp.disabled = false;
+        btnText.textContent = 'Resend OTP';
+        spinner.classList.add('hidden');
+      }
+    });
+
+    // Verify OTP & Phone Login
+    phoneForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const mobile = document.getElementById('login-phone').value.trim();
+      const otp = document.getElementById('login-otp').value.trim();
+
+      if (!mobile || !otp) {
+        showToast('Please enter both mobile and OTP', 'error');
+        return;
+      }
+
+      const submitBtn = document.getElementById('btn-submit-phone-login');
+      const btnText = document.getElementById('phone-login-btn-text');
+      const spinner = document.getElementById('phone-login-spinner');
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verifying OTP...';
+      spinner.classList.remove('hidden');
+
+      try {
+        const data = await apiRequest('/auth/verify-otp', 'POST', { mobile, otp });
+        if (data.user.role !== 'admin') {
+          throw new Error('Access denied. This phone number does not have Admin privileges.');
+        }
+
+        token = data.accessToken;
+        currentUser = {
+          id: data.user.id,
+          name: data.user.name || 'Admin',
+          role: data.user.role,
+          mobile: data.user.mobile,
+          email: data.user.email,
+        };
+        localStorage.setItem('zm_admin_token', token);
+        localStorage.setItem('zm_admin_user', JSON.stringify(currentUser));
+
+        showToast(`Welcome Admin (${currentUser.mobile})!`, 'success');
+        initDashboard();
+      } catch (err) {
+        showToast(err.message || 'Verification failed.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Verify & Enter Admin Portal';
+        spinner.classList.add('hidden');
+      }
+    });
 
     btnFillCreds.addEventListener('click', () => {
       document.getElementById('login-email').value = 'admin@zewarmahal.com';
@@ -4759,7 +4979,7 @@
       // Setup user info in sidebar
       if (currentUser) {
         document.getElementById('admin-display-name').textContent = currentUser.name || 'Admin';
-        document.getElementById('admin-display-role').textContent = currentUser.role || 'super_admin';
+        document.getElementById('admin-display-role').textContent = currentUser.role || 'admin';
         const initials = (currentUser.name || 'SA').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
         document.getElementById('admin-avatar-initials').textContent = initials;
       }

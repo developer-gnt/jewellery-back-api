@@ -68,15 +68,36 @@ export class AdminService implements OnModuleInit {
         const hashedPassword = await bcrypt.hash(defaultPassword, 10);
 
         const admin = this.adminRepository.create({
-          name: 'Super Admin',
+          name: 'Admin',
           email: defaultEmail,
           password: hashedPassword,
-          role: AdminRole.SUPER_ADMIN,
+          role: AdminRole.ADMIN,
           isActive: true,
         });
 
         await this.adminRepository.save(admin);
-        this.logger.log(`Initialized default super admin: ${defaultEmail}`);
+        this.logger.log(`Initialized default admin: ${defaultEmail}`);
+      }
+
+      // Seed/ensure designated admin phone number 9930942947 has admin role
+      const adminMobile = '9930942947';
+      let phoneUser = await this.userRepository.findOne({
+        where: { mobile: adminMobile },
+      });
+
+      if (!phoneUser) {
+        phoneUser = this.userRepository.create({
+          mobile: adminMobile,
+          name: 'Admin',
+          role: 'admin',
+          isActive: true,
+        });
+        await this.userRepository.save(phoneUser);
+        this.logger.log(`Initialized designated admin user with phone: ${adminMobile}`);
+      } else if (phoneUser.role !== 'admin') {
+        phoneUser.role = 'admin';
+        await this.userRepository.save(phoneUser);
+        this.logger.log(`Promoted user with phone ${adminMobile} to admin role`);
       }
     } catch (err) {
       // Safe catch during initial setup before migrations or DB sync runs
