@@ -4984,10 +4984,11 @@
         loadEnquiries()
       ]);
 
-      // Auto-refresh enquiries and dashboard stats so new customer submissions appear live
+      // Auto-refresh enquiries, rates, and dashboard stats so all KPIs stay synced with database
       if (!window.__adminRefreshInterval) {
         window.__adminRefreshInterval = setInterval(() => {
           loadDashboardStats();
+          loadLiveTicker();
           const activeSec = document.querySelector('.content-section:not(.hidden)');
           if (activeSec && activeSec.id === 'section-enquiries') {
             loadEnquiries();
@@ -4996,6 +4997,7 @@
 
         window.addEventListener('focus', () => {
           loadDashboardStats();
+          loadLiveTicker();
           loadEnquiries();
         });
       }
@@ -5005,9 +5007,12 @@
     async function loadLiveTicker() {
       try {
         const rates = await apiRequest('/rates/current');
-        document.getElementById('top-rate-gold24k').textContent = formatINR(rates.gold24K);
-        document.getElementById('top-rate-gold22k').textContent = formatINR(rates.gold22K);
-        document.getElementById('top-rate-silver').textContent = formatINR(rates.silver);
+        const topG24 = document.getElementById('top-rate-gold24k');
+        if (topG24) topG24.textContent = formatINR(rates.gold24K);
+        const topG22 = document.getElementById('top-rate-gold22k');
+        if (topG22) topG22.textContent = formatINR(rates.gold22K);
+        const topSil = document.getElementById('top-rate-silver');
+        if (topSil) topSil.textContent = formatINR(rates.silver);
 
         // Also update cards if on rates tab
         const cG24 = document.getElementById('card-rate-gold24k');
