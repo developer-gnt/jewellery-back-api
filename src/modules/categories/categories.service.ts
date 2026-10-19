@@ -3,11 +3,13 @@ import {
   NotFoundException,
   BadRequestException,
   ConflictException,
+  Optional,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity.js';
 import { Product } from '../products/entities/product.entity.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateCategoryDto } from './dto/create-category.dto.js';
 import { UpdateCategoryDto } from './dto/update-category.dto.js';
 
@@ -18,6 +20,8 @@ export class CategoriesService {
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @Optional()
+    private readonly notificationsService?: NotificationsService,
   ) {}
 
   private slugify(text: string): string {
@@ -93,7 +97,19 @@ export class CategoriesService {
       isActive: dto.isActive ?? true,
     });
 
-    return this.categoryRepository.save(category);
+    const saved = await this.categoryRepository.save(category);
+
+    if (saved.isActive && this.notificationsService) {
+      this.notificationsService
+        .notifyNewCategory({
+          id: saved.id,
+          name: saved.name,
+          description: saved.description,
+        })
+        .catch(() => {});
+    }
+
+    return saved;
   }
 
   async update(id: string, dto: UpdateCategoryDto) {

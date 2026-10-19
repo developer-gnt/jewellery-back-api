@@ -4831,6 +4831,28 @@
       box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.15);
     }
 
+    .btn-enq-msg {
+      background: #FDF6EC;
+      color: #92540F;
+      border: 1px solid #F5D3A9;
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-enq-msg:hover {
+      background: #FCE8CF;
+      border-color: #E6A763;
+      transform: translateY(-1px);
+    }
+
     /* Desktop Table */
     .enquiries-desktop-table {
       width: 100%;
@@ -8154,12 +8176,17 @@
                 <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
               </td>
               <td>
-                <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
-                  <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
-                  <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
-                  <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
-                  <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
-                </select>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
+                    <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
+                    <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
+                    <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
+                    <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
+                  </select>
+                  <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send official message/update to customer for this enquiry">
+                    <span>💬 Message</span>
+                  </button>
+                </div>
               </td>
               <td style="font-size:12px; color:#5C4E42; white-space:nowrap; line-height:1.35;">${formattedDate}</td>
             </tr>
@@ -8231,16 +8258,18 @@
 
               <!-- Card Footer: Status Badge & Status Changer -->
               <div class="enquiry-card-footer">
-                <div class="enquiry-status-group">
+                <div class="enquiry-status-group" style="width:100%; justify-content:space-between; flex-wrap:wrap; gap:8px;">
                   <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
                   <div style="display:flex; align-items:center; gap:6px;">
-                    <span style="font-size:11.5px; color:#8C8074; font-weight:600;">Status:</span>
                     <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
                       <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
                       <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
                       <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
                       <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
                     </select>
+                    <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send message to customer">
+                      <span>💬 Message</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -8253,10 +8282,30 @@
     window.updateEnquiryStatus = async function (id, status) {
       try {
         await apiRequest(`/admin/enquiries/${id}/status`, 'PATCH', { status });
-        showToast(`Status updated to "${status.replace('_', ' ')}"`, 'success');
+        showToast(`Status updated to "${status.replace('_', ' ')}"! Customer notification sent.`, 'success');
         loadEnquiries();
       } catch (err) {
         showToast(err.message, 'error');
+      }
+    };
+
+    window.sendEnquiryMessage = async function (id, refNo, customerName, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      const msg = prompt(`💬 Send message to ${customerName} regarding Enquiry ${refNo}:\n\n(This notification will appear in the customer's notification feed from Zewar Mahal Admin)`);
+      if (msg === null) return;
+      if (!msg.trim()) {
+        showToast('Message cannot be empty', 'error');
+        return;
+      }
+      try {
+        await apiRequest(`/admin/enquiries/${id}`, 'PATCH', { adminNotes: msg.trim() });
+        showToast(`Message sent to ${customerName}! It is now visible in their notification feed.`, 'success');
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to send message: ' + (err.message || 'Server error'), 'error');
       }
     };
 

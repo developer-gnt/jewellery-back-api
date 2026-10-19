@@ -166,20 +166,18 @@ export class EnquiriesService {
 
     await this.enquiryRepository.save(enquiry);
 
-    // Notify user if enquiry is associated with an account
-    if (enquiry.userId && this.notificationsService) {
+    // Notify customer regarding enquiry update or admin messages
+    if (this.notificationsService) {
       this.notificationsService
-        .sendToUser(
-          enquiry.userId,
-          'enquiries',
-          `Enquiry Update: ${enquiry.referenceNumber}`,
-          `Your enquiry status has been updated to "${enquiry.status}".`,
-          {
-            referenceNumber: enquiry.referenceNumber,
-            enquiryId: enquiry.id,
-            status: enquiry.status,
-          },
-        )
+        .notifyEnquiryUpdate({
+          id: enquiry.id,
+          referenceNumber: enquiry.referenceNumber,
+          name: enquiry.name,
+          mobile: enquiry.mobile,
+          status: enquiry.status,
+          adminNotes: enquiry.adminNotes,
+          userId: enquiry.userId,
+        })
         .catch(() => {});
     }
 
@@ -214,6 +212,8 @@ export class EnquiriesService {
     if (dto.message !== undefined) {
       enquiry.message = dto.message;
     }
+    const hasStatusChanged = dto.status !== undefined && dto.status !== enquiry.status;
+    const hasNewNotes = dto.adminNotes !== undefined && dto.adminNotes !== enquiry.adminNotes;
     if (dto.status !== undefined) {
       enquiry.status = dto.status;
     }
@@ -222,6 +222,21 @@ export class EnquiriesService {
     }
 
     await this.enquiryRepository.save(enquiry);
+
+    if ((hasStatusChanged || hasNewNotes) && this.notificationsService) {
+      this.notificationsService
+        .notifyEnquiryUpdate({
+          id: enquiry.id,
+          referenceNumber: enquiry.referenceNumber,
+          name: enquiry.name,
+          mobile: enquiry.mobile,
+          status: enquiry.status,
+          adminNotes: enquiry.adminNotes,
+          userId: enquiry.userId,
+        })
+        .catch(() => {});
+    }
+
     return enquiry;
   }
 }

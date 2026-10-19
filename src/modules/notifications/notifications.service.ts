@@ -66,20 +66,48 @@ export class NotificationsService {
     return { message: 'Device removed successfully' };
   }
 
-  async getMyNotifications(userId: string, page = 1, limit = 20) {
+  private isValidUUID(id?: string): boolean {
+    return typeof id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+  }
+
+  async getMyNotifications(userId?: string, page = 1, limit = 20) {
     const skip = (page - 1) * limit;
 
-    const [data, total] = await this.notificationRepository
-      .createQueryBuilder('n')
-      .where('n.userId = :userId OR n.userId IS NULL', { userId })
+    const qb = this.notificationRepository
+      .createQueryBuilder('n');
+
+    if (this.isValidUUID(userId)) {
+      qb.where(
+        '(n.userId = :userId OR (n.userId IS NULL AND (n.data->>\'targetRole\' IS NULL OR n.data->>\'targetRole\' != \'admin\')))',
+        { userId },
+      );
+    } else {
+      qb.where(
+        'n.userId IS NULL AND (n.data->>\'targetRole\' IS NULL OR n.data->>\'targetRole\' != \'admin\')',
+      );
+    }
+
+    const [data, total] = await qb
       .orderBy('n.createdAt', 'DESC')
       .skip(skip)
       .take(limit)
       .getManyAndCount();
 
-    const unreadCount = await this.notificationRepository
-      .createQueryBuilder('n')
-      .where('(n.userId = :userId OR n.userId IS NULL)', { userId })
+    const countQb = this.notificationRepository
+      .createQueryBuilder('n');
+
+    if (this.isValidUUID(userId)) {
+      countQb.where(
+        '(n.userId = :userId OR (n.userId IS NULL AND (n.data->>\'targetRole\' IS NULL OR n.data->>\'targetRole\' != \'admin\')))',
+        { userId },
+      );
+    } else {
+      countQb.where(
+        'n.userId IS NULL AND (n.data->>\'targetRole\' IS NULL OR n.data->>\'targetRole\' != \'admin\')',
+      );
+    }
+
+    const unreadCount = await countQb
       .andWhere('n.isRead = false')
       .getCount();
 
@@ -87,28 +115,36 @@ export class NotificationsService {
 
     return {
       ...paginated,
+      items: data,
       unreadCount,
     };
   }
 
-  async markAsRead(userId: string, notificationId: string) {
+  async markAsRead(userId: string | undefined, notificationId: string) {
     if (notificationId === 'all') {
-      await this.notificationRepository
+      const qb = this.notificationRepository
         .createQueryBuilder()
         .update(Notification)
         .set({ isRead: true, readAt: new Date() })
-        .where('(userId = :userId OR userId IS NULL)', { userId })
-        .andWhere('isRead = false')
-        .execute();
+        .where('isRead = false');
 
+      if (this.isValidUUID(userId)) {
+        qb.andWhere('(userId = :userId OR userId IS NULL)', { userId });
+      } else {
+        qb.andWhere('userId IS NULL');
+      }
+
+      await qb.execute();
       return { message: 'All notifications marked as read' };
     }
 
+    const whereConditions: any[] = [{ id: notificationId, userId: IsNull() }];
+    if (this.isValidUUID(userId)) {
+      whereConditions.push({ id: notificationId, userId });
+    }
+
     const notification = await this.notificationRepository.findOne({
-      where: [
-        { id: notificationId, userId },
-        { id: notificationId, userId: IsNull() },
-      ],
+      where: whereConditions,
     });
 
     if (!notification) {
@@ -295,6 +331,84 @@ export class NotificationsService {
     } catch {
       // Ensure notification failures do not disrupt enquiry creation
     }
+  }
+
+  async notifyNewCategory(category: { id: string; name: string; description?: string | null }) {
+    try {
+      const notif = this.notificationRepository.create({
+        userId: null,
+        title: `✨ New Collection: ${category.name}`,
+        body: category.description?.trim() || `Explore our newly added ${category.name} collection featuring royal handcrafted jewellery designs.`,
+        type: 'category',
+        data: {
+          categoryId: category.id,
+          categoryName: category.name,
+          source: 'admin',
+          sourceLabel: 'Admin CMS',
+        },
+      });
+      await this.notificationRepository.save(notif);
+    } catch {}
+  }
+
+  async notifyNewProduct(
+    product: { id: string; name: string; price?: number; categoryId?: string },
+    categoryName?: string,
+  ) {
+    try {
+      const priceStr = product.price ? ` (₹${Number(product.price).toLocaleString('en-IN')})` : '';
+      const catStr = categoryName ? ` to ${categoryName}` : '';
+      const notif = this.notificationRepository.create({
+        userId: null,
+        title: `💎 New Arrival: ${product.name}`,
+        body: `Exquisite new jewellery added${catStr}: ${product.name}${priceStr}. Discover fine craftsmanship at Zewar Mahal.`,
+        type: 'products',
+        data: {
+          productId: product.id,
+          productName: product.name,
+          categoryId: product.categoryId,
+          price: product.price,
+          source: 'admin',
+          sourceLabel: 'Admin CMS',
+        },
+      });
+      await this.notificationRepository.save(notif);
+    } catch {}
+  }
+
+  async notifyEnquiryUpdate(enquiry: {
+    id: string;
+    referenceNumber: string;
+    name: string;
+    mobile: string;
+    status: string;
+    adminNotes?: string | null;
+    userId?: string | null;
+  }) {
+    try {
+      const statusTitle = enquiry.status.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+      const bodyText = enquiry.adminNotes?.trim()
+        ? `Message from Zewar Mahal Concierge regarding Enquiry ${enquiry.referenceNumber}:\n"${enquiry.adminNotes.trim()}"`
+        : `Your enquiry ${enquiry.referenceNumber} status has been updated to "${statusTitle}". Our boutique team is attending to your request.`;
+
+      const notif = this.notificationRepository.create({
+        userId: this.isValidUUID(enquiry.userId || undefined) ? enquiry.userId : null,
+        title: `💬 Enquiry Update (${statusTitle}): ${enquiry.referenceNumber}`,
+        body: bodyText,
+        type: 'enquiries',
+        data: {
+          enquiryId: enquiry.id,
+          referenceNumber: enquiry.referenceNumber,
+          customerName: enquiry.name,
+          mobile: enquiry.mobile,
+          status: enquiry.status,
+          adminNotes: enquiry.adminNotes,
+          source: 'admin',
+          sourceLabel: 'Admin Concierge',
+        },
+      });
+      await this.notificationRepository.save(notif);
+    } catch {}
   }
 
   async getAdminNotificationHistory(page = 1, limit = 20) {
