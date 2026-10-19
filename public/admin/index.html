@@ -7333,11 +7333,10 @@
           <div class="cat-perm-feature-item">
             <div class="cat-perm-feature-dot">
               <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#9E6B28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
-            <div class="cat-perm-feature-text">Secure access restricted only to your chosen image file</div>
+            <div class="cat-perm-feature-text">Allow once to remember permission for future uploads</div>
           </div>
         </div>
       </div>
@@ -8569,6 +8568,14 @@
     }
 
     function requestCatImagePermission() {
+      // If admin already allowed permission previously, skip popup and open file picker directly
+      const isAllowed = localStorage.getItem('admin_image_permission_granted') === 'true';
+      if (isAllowed) {
+        const fileInput = document.getElementById('cat-file-input');
+        if (fileInput) fileInput.click();
+        return;
+      }
+
       const permModal = document.getElementById('modal-image-permission');
       if (permModal) {
         permModal.classList.remove('hidden');
@@ -8588,6 +8595,12 @@
     }
 
     function handleCatPermissionAllow() {
+      // Save permission so admin is not asked again on future clicks
+      try {
+        localStorage.setItem('admin_image_permission_granted', 'true');
+      } catch (e) {
+        console.warn('Could not save storage permission to localStorage', e);
+      }
       closeCatPermissionModal();
       const fileInput = document.getElementById('cat-file-input');
       if (fileInput) {
@@ -8596,6 +8609,12 @@
     }
 
     function handleCatPermissionDeny() {
+      // If admin clicks Deny, clear any saved permission so it asks every time
+      try {
+        localStorage.removeItem('admin_image_permission_granted');
+      } catch (e) {
+        console.warn('Could not clear storage permission from localStorage', e);
+      }
       closeCatPermissionModal();
       showToast('Storage permission denied. Image upload was cancelled.', 'warning');
     }
