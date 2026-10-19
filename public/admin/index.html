@@ -7027,14 +7027,9 @@
 
             <!-- Field 4: Upload Category Image (Centered Luxury Dropzone from Image 2!) -->
             <div class="cat-form-group">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <label class="cat-form-label" style="margin-bottom:0;">
-                  Upload Category Image <span class="cat-req-asterisk">*</span>
-                </label>
-                <span id="cat-image-badge" class="cat-image-badge-pill">
-                  Image Required *
-                </span>
-              </div>
+              <label class="cat-form-label" style="margin-bottom:8px;">
+                Upload Category Image <span class="cat-req-asterisk">*</span>
+              </label>
               <input type="hidden" id="cat-form-image" required>
               <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
                 style="display:none;" onchange="handleCatFileSelect(this.files)">
