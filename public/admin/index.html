@@ -8291,9 +8291,9 @@
                           <span>Select Catalogue Products <span class="req-star">*</span></span>
                         </div>
                         <div class="offer-prod-actions">
-                          <span id="product-selection-count-badge" class="offer-prod-badge">0 Pieces Selected</span>
-                          <button type="button" class="btn-prod-action" onclick="selectAllOfferProducts()">Select All</button>
-                          <button type="button" class="btn-prod-action" onclick="clearOfferProductSelections()">Clear Selection</button>
+                          <span id="product-selection-count-badge" class="offer-prod-badge">0 Pieces</span>
+                          <button type="button" class="btn-prod-action" onclick="selectAllOfferProducts()">All</button>
+                          <button type="button" class="btn-prod-action" onclick="clearOfferProductSelections()">Clear</button>
                         </div>
                       </div>
 
@@ -12637,7 +12637,7 @@
       const badge = document.getElementById('product-selection-count-badge');
       if (badge) {
         const count = selectedOfferProductIds.size;
-        badge.textContent = `${count} ${count === 1 ? 'Piece' : 'Pieces'} Selected`;
+        badge.textContent = `${count} ${count === 1 ? 'Piece' : 'Pieces'}`;
       }
     };
 
