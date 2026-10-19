@@ -3641,6 +3641,209 @@
       transform: translateY(0);
     }
 
+    /* ============================================================= */
+    /* IMAGE UPLOAD PERMISSION POPUP STYLES */
+    /* ============================================================= */
+    .cat-perm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 14, 10, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+
+    .cat-perm-overlay.hidden {
+      display: none !important;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    @keyframes permModalPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .cat-perm-card {
+      background: #FAF7F2;
+      border: 1px solid rgba(184, 121, 37, 0.28);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(25, 18, 12, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+      width: 100%;
+      max-width: 410px;
+      padding: 26px 22px 22px;
+      box-sizing: border-box;
+      text-align: center;
+      animation: permModalPop 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .cat-perm-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .cat-perm-icon-wrapper {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #F5EEE2 0%, #EDE1CF 100%);
+      border: 1.5px solid #DFCEB9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(184, 121, 37, 0.12);
+    }
+
+    .cat-perm-badge-icon {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #B87925;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      border: 2px solid #FAF7F2;
+    }
+
+    .cat-perm-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #9E6B28;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .cat-perm-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #211A16;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .cat-perm-body {
+      margin-bottom: 20px;
+    }
+
+    .cat-perm-message {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #5C4F44;
+      margin: 0 0 14px;
+      text-align: center;
+    }
+
+    .cat-perm-features {
+      background: #FFFFFF;
+      border: 1px solid #EAE3D9;
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .cat-perm-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .cat-perm-feature-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #F7F0E6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cat-perm-feature-text {
+      font-size: 12px;
+      color: #4A3E34;
+      line-height: 1.45;
+    }
+
+    .cat-perm-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .cat-perm-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+    }
+
+    .cat-perm-btn-deny {
+      background: #FFFFFF;
+      border: 1.5px solid #D6C8B8;
+      color: #5E4624;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .cat-perm-btn-deny:hover {
+      background: #F4EDE3;
+      border-color: #B87925;
+      color: #211A16;
+    }
+
+    .cat-perm-btn-allow {
+      background: linear-gradient(135deg, #B87925 0%, #945F1B 100%);
+      border: none;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(184, 121, 37, 0.32);
+    }
+
+    .cat-perm-btn-allow:hover {
+      background: linear-gradient(135deg, #A86D1E 0%, #855314 100%);
+      box-shadow: 0 6px 18px rgba(184, 121, 37, 0.42);
+      transform: translateY(-1px);
+    }
+
+    .cat-perm-btn-allow:active {
+      transform: translateY(0);
+    }
+
     .compact-dropzone-empty {
       display: flex;
       align-items: center;
@@ -7035,7 +7238,7 @@
                 style="display:none;" onchange="handleCatFileSelect(this.files)">
 
               <div class="cat-centered-dropzone image-dropzone" id="cat-image-dropzone"
-                onclick="document.getElementById('cat-file-input').click()">
+                onclick="requestCatImagePermission()">
                 <div id="dropzone-empty-state" class="cat-dropzone-empty-content">
                   <div class="cat-dropzone-icon-box">
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#9E6B28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -7047,7 +7250,7 @@
                   <div class="cat-dropzone-main-text">Choose image or drag and drop</div>
                   <div class="cat-dropzone-sub-text">PNG, JPG or WEBP (max. 5 MB)</div>
                   <button type="button" class="cat-browse-files-btn"
-                    onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
+                    onclick="event.stopPropagation(); requestCatImagePermission();">
                     Browse Files
                   </button>
                 </div>
@@ -7061,7 +7264,7 @@
                   </div>
                   <div class="dropzone-preview-actions" style="display:flex; align-items:center; gap:8px;">
                     <button type="button" class="btn-preview-change"
-                      onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
+                      onclick="event.stopPropagation(); requestCatImagePermission();">Change</button>
                     <button type="button" class="btn-preview-remove"
                       onclick="event.stopPropagation(); removeCatImage();">&times;</button>
                   </div>
@@ -7088,6 +7291,65 @@
           <button type="submit" class="cat-btn-save" id="btn-cat-save">Save Category</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- PERMISSION MODAL FOR IMAGE UPLOAD -->
+  <!-- ============================================================= -->
+  <div id="modal-image-permission" class="cat-perm-overlay hidden" onclick="if(event.target === this) handleCatPermissionDeny()">
+    <div class="cat-perm-card" role="dialog" aria-modal="true" aria-labelledby="cat-perm-title">
+      <div class="cat-perm-header">
+        <div class="cat-perm-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#9E6B28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3.5" ry="3.5"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span class="cat-perm-badge-icon" title="Device Storage">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="cat-perm-tag">STORAGE ACCESS</div>
+        <h3 id="cat-perm-title" class="cat-perm-title">Allow Access to Photos &amp; Files?</h3>
+      </div>
+
+      <div class="cat-perm-body">
+        <p class="cat-perm-message">
+          <strong>“Zewar Mahal Admin”</strong> requests permission to access your device storage to choose and upload catalogue imagery for this category.
+        </p>
+
+        <div class="cat-perm-features">
+          <div class="cat-perm-feature-item">
+            <div class="cat-perm-feature-dot">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#9E6B28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="cat-perm-feature-text">Select PNG, JPG, or WEBP catalogue pictures (up to 5 MB)</div>
+          </div>
+          <div class="cat-perm-feature-item">
+            <div class="cat-perm-feature-dot">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#9E6B28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <div class="cat-perm-feature-text">Secure access restricted only to your chosen image file</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-perm-actions">
+        <button type="button" class="cat-perm-btn cat-perm-btn-deny" onclick="handleCatPermissionDeny()">
+          Deny
+        </button>
+        <button type="button" class="cat-perm-btn cat-perm-btn-allow" onclick="handleCatPermissionAllow()">
+          Allow
+        </button>
+      </div>
     </div>
   </div>
 
@@ -7370,6 +7632,11 @@
     // Escape key closes any active modal and sidebar drawer
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' || e.key === 'Esc') {
+        const permModal = document.getElementById('modal-image-permission');
+        if (permModal && !permModal.classList.contains('hidden')) {
+          handleCatPermissionDeny();
+          return;
+        }
         closeSidebar();
         if (typeof closeCategoryModal === 'function') closeCategoryModal();
         if (typeof closeAddProductModal === 'function') closeAddProductModal();
@@ -8298,6 +8565,39 @@
     function closeCategoryModal() {
       const modal = document.getElementById('modal-category');
       if (modal) modal.classList.add('hidden');
+      closeCatPermissionModal();
+    }
+
+    function requestCatImagePermission() {
+      const permModal = document.getElementById('modal-image-permission');
+      if (permModal) {
+        permModal.classList.remove('hidden');
+        permModal.setAttribute('aria-hidden', 'false');
+      } else {
+        const fileInput = document.getElementById('cat-file-input');
+        if (fileInput) fileInput.click();
+      }
+    }
+
+    function closeCatPermissionModal() {
+      const permModal = document.getElementById('modal-image-permission');
+      if (permModal) {
+        permModal.classList.add('hidden');
+        permModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function handleCatPermissionAllow() {
+      closeCatPermissionModal();
+      const fileInput = document.getElementById('cat-file-input');
+      if (fileInput) {
+        fileInput.click();
+      }
+    }
+
+    function handleCatPermissionDeny() {
+      closeCatPermissionModal();
+      showToast('Storage permission denied. Image upload was cancelled.', 'warning');
     }
 
     function openEditCategoryModal(catId) {
