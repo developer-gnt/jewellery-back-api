@@ -27,13 +27,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
       if (typeof exceptionResponse === 'string') {
         message = exceptionResponse;
-      } else if (typeof exceptionResponse === 'object') {
+      } else if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
         const res = exceptionResponse as Record<string, unknown>;
-        message = (res.message as string | string[]) || message;
-        errors = Array.isArray(res.message)
-          ? (res.message as string[])
-          : undefined;
-        if (errors) message = 'Validation failed';
+        if (typeof res.message === 'string') {
+          message = res.message;
+        } else if (Array.isArray(res.message) && res.message.length > 0) {
+          errors = res.message as string[];
+          message = errors.join(', ');
+        } else if (res.error && typeof res.error === 'string') {
+          message = res.error;
+        }
       }
     } else if (exception instanceof Error) {
       message = exception.message;

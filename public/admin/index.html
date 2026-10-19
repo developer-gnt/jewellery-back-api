@@ -6731,12 +6731,16 @@
 
     // Helper: Toast alerts
     function showToast(message, type = 'info') {
+      let displayMsg = message;
+      if (typeof displayMsg === 'string' && (displayMsg.trim() === 'Validation failed' || displayMsg.includes('Validation failed'))) {
+        displayMsg = 'Please upload a category image. Uploading an image is mandatory.';
+      }
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
       toast.innerHTML = `
         <span style="font-size:18px;">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
-        <span>${message}</span>
+        <span>${displayMsg}</span>
       `;
       container.appendChild(toast);
       setTimeout(() => {
@@ -6767,7 +6771,13 @@
 
         if (!response.ok) {
           const errData = await response.json().catch(() => ({}));
-          throw new Error(errData.message || `API error ${response.status}`);
+          let errMsg = (errData.errors && Array.isArray(errData.errors) && errData.errors.length > 0)
+            ? errData.errors.join(', ')
+            : (errData.message || `API error ${response.status}`);
+          if (errMsg === 'Validation failed' || errMsg.includes('Validation failed')) {
+            errMsg = 'Please upload a category image before uploading category.';
+          }
+          throw new Error(errMsg);
         }
 
         const json = await response.json();
@@ -7944,17 +7954,17 @@
         if (dropzone) dropzone.classList.remove('dropzone-error');
         if (errorMsg) errorMsg.style.display = 'none';
         if (saveBtn) {
-          saveBtn.disabled = !hasName;
+          saveBtn.disabled = false;
           saveBtn.removeAttribute('title');
-          saveBtn.style.opacity = hasName ? '1' : '0.6';
-          saveBtn.style.cursor = hasName ? 'pointer' : 'not-allowed';
+          saveBtn.style.opacity = '1';
+          saveBtn.style.cursor = 'pointer';
         }
       } else {
         if (saveBtn) {
-          saveBtn.disabled = true;
-          saveBtn.title = 'Uploading image is mandatory before uploading category';
-          saveBtn.style.opacity = '0.55';
-          saveBtn.style.cursor = 'not-allowed';
+          saveBtn.disabled = false;
+          saveBtn.title = 'Please upload a category image before uploading category';
+          saveBtn.style.opacity = '0.75';
+          saveBtn.style.cursor = 'pointer';
         }
       }
     }
@@ -7991,12 +8001,12 @@
     async function handleCategoryFormSubmit(e) {
       e.preventDefault();
 
-      const image = document.getElementById('cat-form-image').value.trim();
+      const image = (document.getElementById('cat-form-image')?.value || '').trim();
       const dropzone = document.getElementById('cat-image-dropzone');
       const errorMsg = document.getElementById('cat-image-error-msg');
 
       if (!image) {
-        showToast('Uploading an image is mandatory before uploading category!', 'error');
+        showToast('Please upload a category image. Uploading an image is mandatory.', 'error');
         if (dropzone) {
           dropzone.classList.remove('dropzone-error');
           void dropzone.offsetWidth;
@@ -8038,7 +8048,11 @@
         await loadCategories();
         loadCategoriesForSelect();
       } catch (err) {
-        showToast(err.message || 'Failed to save category', 'error');
+        let msg = err.message || 'Failed to save category';
+        if (msg === 'Validation failed' || msg.includes('Validation failed')) {
+          msg = 'Please upload a category image. Uploading an image is mandatory.';
+        }
+        showToast(msg, 'error');
       } finally {
         if (saveBtn) {
           saveBtn.disabled = false;
