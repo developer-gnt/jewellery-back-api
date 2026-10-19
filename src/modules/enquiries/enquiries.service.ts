@@ -84,6 +84,20 @@ export class EnquiriesService {
         .catch(() => {});
     }
 
+    // Automatically create Admin Notification for new enquiry
+    if (this.notificationsService) {
+      this.notificationsService
+        .notifyAdminEnquiry({
+          id: saved.id,
+          referenceNumber: saved.referenceNumber,
+          name: saved.name,
+          mobile: saved.mobile,
+          message: saved.message,
+          productId: saved.productId || undefined,
+        })
+        .catch(() => {});
+    }
+
     return {
       id: saved.id,
       referenceNumber: saved.referenceNumber,

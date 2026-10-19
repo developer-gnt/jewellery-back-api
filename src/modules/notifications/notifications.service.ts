@@ -268,6 +268,35 @@ export class NotificationsService {
     });
   }
 
+  async notifyAdminEnquiry(enquiry: {
+    id: string;
+    referenceNumber: string;
+    name: string;
+    mobile: string;
+    message?: string;
+    productId?: string;
+  }) {
+    try {
+      const adminNotif = this.notificationRepository.create({
+        userId: null,
+        title: `New Customer Enquiry: ${enquiry.name}`,
+        body: `Customer ${enquiry.name} (+91 ${enquiry.mobile}) submitted enquiry ${enquiry.referenceNumber}.`,
+        type: 'enquiries',
+        data: {
+          enquiryId: enquiry.id,
+          referenceNumber: enquiry.referenceNumber,
+          customerName: enquiry.name,
+          mobile: enquiry.mobile,
+          productId: enquiry.productId,
+          targetRole: 'admin',
+        },
+      });
+      await this.notificationRepository.save(adminNotif);
+    } catch {
+      // Ensure notification failures do not disrupt enquiry creation
+    }
+  }
+
   async getAdminNotificationHistory(page = 1, limit = 20) {
     const skip = (page - 1) * limit;
 
