@@ -80,8 +80,12 @@ export class SettingsService {
     let setting = await this.getSettings();
 
     if (dto.whatsappNumber !== undefined) {
-      // Clean leading spaces or extra symbols
-      setting.whatsappNumber = dto.whatsappNumber.trim();
+      const raw = dto.whatsappNumber.trim();
+      const digits = raw.replace(/\D/g, '');
+      const clean10 = digits.length === 12 && digits.startsWith('91')
+        ? digits.slice(2)
+        : (digits.length >= 10 ? digits.slice(-10) : digits);
+      setting.whatsappNumber = clean10 || raw;
     }
     if (dto.supportPhone !== undefined) {
       setting.supportPhone = dto.supportPhone.trim();
