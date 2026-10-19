@@ -12,6 +12,7 @@ import { Offer } from '../modules/offers/entities/offer.entity.js';
 import { MetalRate } from '../modules/rates/entities/metal-rate.entity.js';
 import { ShopRate } from '../modules/shop-rates/entities/shop-rate.entity.js';
 import { Enquiry } from '../modules/enquiries/entities/enquiry.entity.js';
+import { EnquiryItem } from '../modules/enquiries/entities/enquiry-item.entity.js';
 import { UserDevice } from '../modules/notifications/entities/user-device.entity.js';
 import { Notification } from '../modules/notifications/entities/notification.entity.js';
 
@@ -48,6 +49,7 @@ export const AppDataSource = new DataSource({
     MetalRate,
     ShopRate,
     Enquiry,
+    EnquiryItem,
     UserDevice,
     Notification,
   ],

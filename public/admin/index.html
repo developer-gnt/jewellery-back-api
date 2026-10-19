@@ -5893,6 +5893,106 @@
     .enquiries-desktop-table tbody tr:hover td {
       background: #FDFBF8;
     }
+
+    /* Executive Luxury Enquiry Details Modal & Badges */
+    .badge-bulk-wishlist {
+      background: linear-gradient(135deg, #FFF9ED 0%, #F5E8C8 100%);
+      color: #87560B;
+      border: 1px solid #D6AD60;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .badge-bulk-wishlist:hover {
+      background: #EED7A1;
+      transform: translateY(-1px);
+    }
+    .btn-view-items-pill {
+      background: #FDF9F3;
+      border: 1px solid #D6AD60;
+      color: #87560B;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-view-items-pill:hover {
+      background: #F7E9CE;
+      transform: translateY(-1px);
+    }
+    .btn-enq-details {
+      background: #FAF7F2;
+      border: 1px solid #D1C4B5;
+      color: #3D2F24;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-enq-details:hover {
+      background: #F0E5D5;
+      border-color: #B57319;
+      color: #B57319;
+    }
+    .enq-modal-customer-card {
+      background: #FAF7F2;
+      border: 1px solid #EFE8DE;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .enq-modal-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .enq-modal-product-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE8DE;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .enq-modal-product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .enq-product-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #F5EFE6;
+      border: 1px solid #E8DFD3;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 
@@ -7259,6 +7359,94 @@
               <button type="button" class="btn-primary" id="btn-confirm-delete-offer" style="background:var(--danger); border-color:var(--danger);" onclick="executeDeleteOffer()">
                 Delete
               </button>
+            </div>
+          </div>
+        <!-- Dedicated Luxury Customer Enquiry & Wishlist Details Modal -->
+        <div id="modal-view-enquiry" class="modal-overlay hidden" onclick="if(event.target === this) closeEnquiryModal()">
+          <div class="modal-card" style="max-width: 760px; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid var(--border-subtle); background: #FAF7F2; display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:24px;">💎</div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <h3 class="panel-title" id="view-enq-ref" style="font-size:17px; margin:0; font-family:monospace; color:#8C5913;">ZM-ENQ-...</h3>
+                    <span id="view-enq-bulk-badge" class="badge-bulk-wishlist" style="display:none;">💎 Bulk Wishlist</span>
+                  </div>
+                  <div id="view-enq-date" style="font-size:12px; color:var(--text-muted); margin-top:2px;">-</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span id="view-enq-status-badge" class="enquiry-status-badge status-badge-new">New</span>
+                <button class="modal-close" onclick="closeEnquiryModal()">&times;</button>
+              </div>
+            </div>
+
+            <div class="modal-body" style="padding: 20px 24px; overflow-y: auto; display:flex; flex-direction:column; gap:16px;">
+              <!-- 1. Customer Contact & Details Card -->
+              <div class="enq-modal-customer-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div id="view-enq-avatar" class="enquiry-avatar-circle" style="width:44px; height:44px; font-size:16px;">CU</div>
+                  <div>
+                    <div id="view-enq-name" style="font-size:16px; font-weight:700; color:#1C1510;">-</div>
+                    <div id="view-enq-email" style="font-size:12px; color:#8C8074; margin-top:1px;">-</div>
+                    <div id="view-enq-phone" style="font-size:13px; font-weight:600; color:#B57319; margin-top:2px;">-</div>
+                  </div>
+                </div>
+                <div id="view-enq-actions" style="display:flex; align-items:center; gap:8px;">
+                  <a id="view-enq-btn-call" href="#" class="btn-enq-call" title="Call Customer">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </a>
+                  <a id="view-enq-btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="btn-enq-whatsapp" title="WhatsApp Customer">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 2. Customer Message Box -->
+              <div>
+                <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#8C8074; letter-spacing:0.5px; margin-bottom:6px;">Customer Enquiry Message</div>
+                <div id="view-enq-message" style="background:#FAF7F2; border:1px solid #EFE8DE; border-radius:10px; padding:12px 14px; font-size:13.5px; color:#2D231A; line-height:1.55; white-space:pre-wrap; max-height:150px; overflow-y:auto;">-</div>
+              </div>
+
+              <!-- 3. Associated Wishlist Products (All In One View) -->
+              <div id="view-enq-products-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <div style="font-size:13px; font-weight:700; text-transform:uppercase; color:#8C8074; letter-spacing:0.5px;" id="view-enq-items-heading">
+                    Associated Wishlist Products (0)
+                  </div>
+                  <div id="view-enq-total-value" style="font-size:13px; font-weight:700; color:#B57319;">Total Value: -</div>
+                </div>
+                <div id="view-enq-items-grid" class="enq-modal-products-grid">
+                  <!-- Dynamically populated product cards -->
+                </div>
+              </div>
+
+              <!-- 4. Workflow & Follow-Up Action -->
+              <div style="background:#FAF7F2; border:1px solid #EFE8DE; border-radius:12px; padding:16px;">
+                <div style="font-size:13px; font-weight:700; color:#211A16; margin-bottom:10px;">Executive Follow-Up &amp; Workflow Status</div>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:12px;">
+                  <label style="font-size:12px; font-weight:600; color:#5C4E42;">Enquiry Status:</label>
+                  <select id="view-enq-modal-status-select" class="enquiry-select-status" style="padding-right:32px;">
+                    <option value="new">🟡 New</option>
+                    <option value="contacted">🔵 Contacted</option>
+                    <option value="in_progress">🟣 In Progress</option>
+                    <option value="closed">🟢 Closed</option>
+                  </select>
+                  <button type="button" class="btn-primary" style="padding:6px 16px; font-size:12.5px;" onclick="saveEnquiryModalStatus()">Update Status</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <label style="font-size:12px; font-weight:600; color:#5C4E42;">Concierge Notes / Message to Customer:</label>
+                  <textarea id="view-enq-modal-notes" rows="2" placeholder="Write internal notes or message that will be delivered to customer's notifications..." style="width:100%; border:1px solid #D6C4AD; border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; resize:vertical;"></textarea>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <button type="button" class="btn-secondary" style="font-size:12px; padding:6px 14px;" onclick="saveEnquiryModalNotes()">Send / Save Note</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer" style="padding: 12px 24px; border-top: 1px solid var(--border-subtle); background:#FAF7F2; display:flex; justify-content:flex-end;">
+              <button type="button" class="btn-secondary" onclick="closeEnquiryModal()">Close</button>
             </div>
           </div>
         </div>
@@ -9727,6 +9915,9 @@
             year: 'numeric'
           }) + '<br><span style="font-size:11px; color:#9E9184;">' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + '</span>';
 
+          const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+          const itemsCount = (enq.items && enq.items.length) || enq.itemCount || 1;
+
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
@@ -9740,6 +9931,7 @@
                   <span>${enq.referenceNumber}</span>
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
+                ${isBulk ? `<div style="margin-top:5px;"><span class="badge-bulk-wishlist" onclick="openEnquiryModal('${enq.id}', event)" title="Click to view all associated wishlist items">💎 Wishlist (${itemsCount})</span></div>` : ''}
               </td>
               <td>
                 <div style="font-weight:700; color:#1C1510; font-size:13.5px;">${enq.name || 'Valued Customer'}</div>
@@ -9769,6 +9961,13 @@
                 <div style="font-size: 13px; line-height: 1.5; max-width: 380px; color: #2B221B; white-space: pre-wrap; word-break: break-word;">
                   ${enq.message ? enq.message : '<em style="color:#9E9184;">General Catalogue Enquiry</em>'}
                 </div>
+                ${isBulk ? `
+                  <div>
+                    <button type="button" class="btn-view-items-pill" onclick="openEnquiryModal('${enq.id}', event)">
+                      <span>💎 View All ${itemsCount} Wishlist Items</span> &rarr;
+                    </button>
+                  </div>
+                ` : ''}
               </td>
               <td>
                 <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
@@ -9783,6 +9982,9 @@
                   </select>
                   <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send official message/update to customer for this enquiry">
                     <span>💬 Message</span>
+                  </button>
+                  <button type="button" class="btn-enq-details" onclick="openEnquiryModal('${enq.id}', event)" title="View all enquiry items and customer details">
+                    <span>🔍 Details</span>
                   </button>
                 </div>
               </td>
@@ -9802,6 +10004,9 @@
             month: 'short'
           }) + ', ' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+          const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+          const itemsCount = (enq.items && enq.items.length) || enq.itemCount || 1;
+
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
@@ -9812,9 +10017,12 @@
             <div class="enquiry-card-mobile">
               <!-- Top Row: Ref Badge & Date -->
               <div class="enquiry-card-topbar">
-                <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
-                  <span>${enq.referenceNumber}</span>
-                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
+                    <span>${enq.referenceNumber}</span>
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </div>
+                  ${isBulk ? `<span class="badge-bulk-wishlist" onclick="openEnquiryModal('${enq.id}', event)">💎 Bulk (${itemsCount})</span>` : ''}
                 </div>
                 <div class="enquiry-date-text">${formattedDate}</div>
               </div>
@@ -9852,6 +10060,13 @@
               <!-- Message Card -->
               <div class="enquiry-message-card">
                 <div class="enquiry-message-body">${enq.message ? enq.message : 'General Catalogue Enquiry'}</div>
+                ${isBulk ? `
+                  <div style="margin-top:8px;">
+                    <button type="button" class="btn-view-items-pill" style="width:100%; justify-content:center;" onclick="openEnquiryModal('${enq.id}', event)">
+                      <span>💎 View All ${itemsCount} Wishlist Items</span> &rarr;
+                    </button>
+                  </div>
+                ` : ''}
               </div>
 
               <!-- Card Footer: Status Badge & Status Changer -->
@@ -9868,6 +10083,9 @@
                     <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send message to customer">
                       <span>💬 Message</span>
                     </button>
+                    <button type="button" class="btn-enq-details" onclick="openEnquiryModal('${enq.id}', event)" title="View all enquiry items">
+                      <span>🔍 Details</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -9876,6 +10094,215 @@
         }).join('');
       }
     }
+
+    let currentViewingEnquiry = null;
+
+    window.openEnquiryModal = async function(id, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      try {
+        const enq = await apiRequest(`/admin/enquiries/${id}`);
+        if (!enq) {
+          showToast('Enquiry details not found', 'error');
+          return;
+        }
+        currentViewingEnquiry = enq;
+
+        const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+        const refElem = document.getElementById('view-enq-ref');
+        if (refElem) refElem.textContent = enq.referenceNumber || 'ZM-ENQ-XXXX';
+
+        const bulkBadge = document.getElementById('view-enq-bulk-badge');
+        if (bulkBadge) {
+          if (isBulk) {
+            bulkBadge.style.display = 'inline-flex';
+            bulkBadge.textContent = `💎 Bulk Wishlist (${(enq.items && enq.items.length) || enq.itemCount || 1} items)`;
+          } else {
+            bulkBadge.style.display = 'none';
+          }
+        }
+
+        const dateElem = document.getElementById('view-enq-date');
+        if (dateElem) {
+          const dateStr = new Date(enq.createdAt).toLocaleDateString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+          dateElem.textContent = `Submitted on ${dateStr}`;
+        }
+
+        const status = (enq.status || 'new').toLowerCase();
+        const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
+        const statusBadge = document.getElementById('view-enq-status-badge');
+        if (statusBadge) {
+          statusBadge.className = `enquiry-status-badge status-badge-${status}`;
+          statusBadge.textContent = statusLabel;
+        }
+
+        // Customer details
+        const nameElem = document.getElementById('view-enq-name');
+        if (nameElem) nameElem.textContent = enq.name || 'Valued Customer';
+        const emailElem = document.getElementById('view-enq-email');
+        if (emailElem) emailElem.textContent = enq.email || (enq.user && enq.user.email) || 'No email provided';
+        const phoneElem = document.getElementById('view-enq-phone');
+        const cleanPhone = (enq.mobile || (enq.user && enq.user.mobile) || enq.phone || '').replace(/\D/g, '').slice(-10);
+        if (phoneElem) phoneElem.textContent = cleanPhone ? `+91 ${cleanPhone}` : 'No phone number';
+
+        const initials = (enq.name || 'CU').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const avatarElem = document.getElementById('view-enq-avatar');
+        if (avatarElem) avatarElem.textContent = initials || 'CU';
+
+        const btnCall = document.getElementById('view-enq-btn-call');
+        if (btnCall) {
+          if (cleanPhone) {
+            btnCall.style.display = 'inline-flex';
+            btnCall.href = `tel:${cleanPhone}`;
+          } else {
+            btnCall.style.display = 'none';
+          }
+        }
+
+        const btnWa = document.getElementById('view-enq-btn-whatsapp');
+        if (btnWa) {
+          if (cleanPhone) {
+            btnWa.style.display = 'inline-flex';
+            btnWa.href = `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`;
+          } else {
+            btnWa.style.display = 'none';
+          }
+        }
+
+        // Message
+        const msgElem = document.getElementById('view-enq-message');
+        if (msgElem) msgElem.textContent = enq.message || 'General Enquiry';
+
+        // Products Grid
+        const itemsGrid = document.getElementById('view-enq-items-grid');
+        const headingElem = document.getElementById('view-enq-items-heading');
+        const totalValElem = document.getElementById('view-enq-total-value');
+
+        const items = enq.items || [];
+        if (items.length > 0) {
+          if (headingElem) headingElem.textContent = `Associated Wishlist Products (${items.length} pieces)`;
+          let totalSum = 0;
+
+          itemsGrid.innerHTML = items.map((it, idx) => {
+            const price = Number(it.price) || 0;
+            totalSum += price;
+            const origPrice = it.originalPrice ? Number(it.originalPrice) : null;
+            const weightText = it.weight ? `${it.weight} g` : '';
+            const purityText = it.purity || '22K';
+            const specLine = [weightText, purityText].filter(Boolean).join(' | ');
+
+            // Find image
+            let imgSrc = '/admin/images/necklaces/necklace-1.jpg';
+            const nameLower = (it.productName || '').toLowerCase();
+            const rawSrc = (it.imageSource || '').toLowerCase();
+            if (rawSrc.includes('bangle') || nameLower.includes('bangle')) imgSrc = '/admin/images/bangles/bangle-2.jpg';
+            else if (rawSrc.includes('ring') || nameLower.includes('ring')) imgSrc = '/admin/images/rings/ring-1.jpg';
+            else if (rawSrc.includes('earring') || nameLower.includes('earring') || nameLower.includes('choker') || nameLower.includes('bridal')) imgSrc = '/admin/images/earrings/earrings-1.jpg';
+            else if (rawSrc.includes('necklace') || nameLower.includes('necklace')) imgSrc = '/admin/images/necklaces/necklace-1.jpg';
+
+            return `
+              <div class="enq-modal-product-card">
+                <img src="${imgSrc}" class="enq-product-thumb" alt="${it.productName}">
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:10px; font-weight:700; color:#A67C52; text-transform:uppercase; letter-spacing:0.5px;">${it.categoryName || 'JEWELLERY'}</div>
+                  <div style="font-weight:700; font-size:13.5px; color:#1C1510; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${it.productName}">${it.productName}</div>
+                  <div style="font-size:11.5px; color:#7D7166; margin-top:2px;">${specLine}</div>
+                  <div style="display:flex; align-items:baseline; gap:6px; margin-top:4px;">
+                    <strong style="color:#B57319; font-size:13.5px;">₹ ${price.toLocaleString('en-IN')}</strong>
+                    ${origPrice ? `<span style="font-size:11px; color:#A39688; text-decoration:line-through;">₹ ${origPrice.toLocaleString('en-IN')}</span>` : ''}
+                  </div>
+                  ${it.sku ? `<div style="font-size:10.5px; color:#9E9184; font-family:monospace; margin-top:2px;">SKU: ${it.sku}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          if (totalValElem) totalValElem.textContent = `Total Estimated Value: ₹ ${totalSum.toLocaleString('en-IN')}`;
+        } else if (enq.product) {
+          // Single product enquiry
+          const p = enq.product;
+          if (headingElem) headingElem.textContent = `Associated Product (1 piece)`;
+          const price = Number(p.price) || 0;
+          if (totalValElem) totalValElem.textContent = `Price: ₹ ${price.toLocaleString('en-IN')}`;
+          const imgUrl = (p.images && p.images[0] && p.images[0].url) || '/admin/images/necklaces/necklace-1.jpg';
+
+          itemsGrid.innerHTML = `
+            <div class="enq-modal-product-card" style="grid-column: 1 / -1;">
+              <img src="${imgUrl}" class="enq-product-thumb" alt="${p.name}">
+              <div style="flex:1;">
+                <div style="font-size:10px; font-weight:700; color:#A67C52; text-transform:uppercase;">${p.category?.name || 'JEWELLERY'}</div>
+                <div style="font-weight:700; font-size:14px; color:#1C1510;">${p.name}</div>
+                <div style="font-size:12px; color:#7D7166; margin-top:2px;">${p.purity || '22K'} • ${p.weightGrams ? `${p.weightGrams}g` : ''}</div>
+                <div style="font-size:14px; font-weight:700; color:#B57319; margin-top:4px;">₹ ${price.toLocaleString('en-IN')}</div>
+                ${p.sku ? `<div style="font-size:11px; color:#9E9184; font-family:monospace;">SKU: ${p.sku}</div>` : ''}
+              </div>
+            </div>
+          `;
+        } else {
+          if (headingElem) headingElem.textContent = `No Specific Products Attached`;
+          if (totalValElem) totalValElem.textContent = '';
+          itemsGrid.innerHTML = `<div style="grid-column:1 / -1; padding:16px; text-align:center; color:#8C8074; font-size:13px; background:#FAF7F2; border-radius:8px;">General enquiry without specific catalogue pieces attached.</div>`;
+        }
+
+        // Status select
+        const statusSelect = document.getElementById('view-enq-modal-status-select');
+        if (statusSelect) statusSelect.value = status;
+
+        // Admin notes
+        const notesElem = document.getElementById('view-enq-modal-notes');
+        if (notesElem) notesElem.value = enq.adminNotes || '';
+
+        document.getElementById('modal-view-enquiry').classList.remove('hidden');
+      } catch (err) {
+        showToast('Failed to load enquiry: ' + err.message, 'error');
+      }
+    };
+
+    window.closeEnquiryModal = function() {
+      document.getElementById('modal-view-enquiry').classList.add('hidden');
+      currentViewingEnquiry = null;
+    };
+
+    window.saveEnquiryModalStatus = async function() {
+      if (!currentViewingEnquiry) return;
+      const statusSelect = document.getElementById('view-enq-modal-status-select');
+      const newStatus = statusSelect ? statusSelect.value : 'new';
+      try {
+        await apiRequest(`/admin/enquiries/${currentViewingEnquiry.id}/status`, 'PATCH', { status: newStatus });
+        showToast(`Enquiry status updated to "${newStatus.replace('_', ' ')}"! Customer notified.`, 'success');
+        currentViewingEnquiry.status = newStatus;
+        const statusBadge = document.getElementById('view-enq-status-badge');
+        if (statusBadge) {
+          const statusLabel = newStatus === 'in_progress' ? 'In Progress' : (newStatus.charAt(0).toUpperCase() + newStatus.slice(1));
+          statusBadge.className = `enquiry-status-badge status-badge-${newStatus}`;
+          statusBadge.textContent = statusLabel;
+        }
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to update status: ' + err.message, 'error');
+      }
+    };
+
+    window.saveEnquiryModalNotes = async function() {
+      if (!currentViewingEnquiry) return;
+      const notesElem = document.getElementById('view-enq-modal-notes');
+      const notes = notesElem ? notesElem.value.trim() : '';
+      if (!notes) {
+        showToast('Please enter a note or message first', 'error');
+        return;
+      }
+      try {
+        await apiRequest(`/admin/enquiries/${currentViewingEnquiry.id}`, 'PATCH', { adminNotes: notes });
+        showToast('Follow-up note saved & notification dispatched to customer!', 'success');
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to save note: ' + err.message, 'error');
+      }
+    };
 
     window.updateEnquiryStatus = async function (id, status) {
       try {

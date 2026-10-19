@@ -22,6 +22,26 @@ export class AddWishlistDto {
   @IsString()
   purity: string;
 
+  @ApiPropertyOptional({ example: 22.4 })
+  @IsOptional()
+  @IsNumber()
+  weight?: number;
+
+  @ApiPropertyOptional({ example: 135000 })
+  @IsOptional()
+  @IsNumber()
+  originalPrice?: number;
+
+  @ApiPropertyOptional({ example: 'Necklaces' })
+  @IsOptional()
+  @IsString()
+  categoryName?: string;
+
+  @ApiPropertyOptional({ example: 'SKU-NECK-001' })
+  @IsOptional()
+  @IsString()
+  sku?: string;
+
   @ApiPropertyOptional({ example: 'necklace1' })
   @IsOptional()
   @IsString()

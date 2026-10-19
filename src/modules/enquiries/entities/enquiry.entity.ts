@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   JoinColumn,
   Index,
 } from 'typeorm';
@@ -54,6 +55,15 @@ export class Enquiry {
   @Index()
   @Column({ type: 'varchar', length: 30, default: 'new' })
   status: EnquiryStatus;
+
+  @Column({ type: 'boolean', default: false })
+  isBulkWishlist: boolean;
+
+  @Column({ type: 'int', default: 1 })
+  itemCount: number;
+
+  @OneToMany('EnquiryItem', 'enquiry', { cascade: true })
+  items: any[];
 
   @Column({ type: 'text', nullable: true })
   adminNotes: string | null;

@@ -32,6 +32,18 @@ export class UserWishlist {
   @Column({ type: 'varchar', length: 100 })
   purity: string;
 
+  @Column({ type: 'decimal', precision: 8, scale: 3, nullable: true })
+  weight: number | null;
+
+  @Column({ type: 'numeric', nullable: true })
+  originalPrice: number | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  categoryName: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  sku: string | null;
+
   @Column({ type: 'text', nullable: true })
   imageSource: string | null;
 
