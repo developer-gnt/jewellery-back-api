@@ -7457,14 +7457,13 @@
                 <div class="calc-field-group">
                   <div class="calc-field-label-row">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span class="calc-field-label" id="admin-calc-metal-label">Gold Rate</span>
-                  </div>
-                  <div class="calc-readonly-box" style="display: flex; align-items: center; justify-content: space-between;">
-                    <select id="admin-calc-metal" class="calc-select-box" style="width: auto; padding: 2px 8px; height: 28px; font-size: 12px; margin-right: 8px; border: 1px solid #E2D1BE; background: #F3E9DD; font-weight: 700; color: #6E4E25; border-radius: 6px; cursor: pointer;" onchange="onAdminMetalChange()">
-                      <option value="gold" selected>Gold</option>
-                      <option value="silver">Silver</option>
+                    <select id="admin-calc-metal" style="border: none; background: transparent; font-family: inherit; font-size: 13.5px; font-weight: 700; color: #2C2416; cursor: pointer; outline: none; padding: 0;" onchange="onAdminMetalChange()">
+                      <option value="gold" selected>Gold Rate</option>
+                      <option value="silver">Silver Rate</option>
                     </select>
-                    <span id="admin-calc-rate-display" style="flex: 1;">₹ 7,450 / gram</span>
+                  </div>
+                  <div class="calc-readonly-box">
+                    <span id="admin-calc-rate-display">₹ 7,450 / gram</span>
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#756B64" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   </div>
                   <span class="calc-field-helper" id="admin-calc-rate-helper">Live 24K Pure Market Benchmark</span>
