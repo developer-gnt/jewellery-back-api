@@ -813,9 +813,17 @@
     }
 
     @keyframes pulseGreen {
-      0% { box-shadow: 0 0 0 0 rgba(30, 130, 76, 0.5); }
-      70% { box-shadow: 0 0 0 6px rgba(30, 130, 76, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(30, 130, 76, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(30, 130, 76, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 6px rgba(30, 130, 76, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(30, 130, 76, 0);
+      }
     }
 
     .header-live-label {
@@ -1724,7 +1732,7 @@
       padding: 18px 24px 22px 4px;
       position: relative;
       background-color: transparent;
-      background-image: 
+      background-image:
         linear-gradient(90deg, rgba(251, 249, 245, 0.92) 0%, rgba(251, 249, 245, 0.50) 44%, rgba(251, 249, 245, 0) 72%),
         url('/admin/images/rates/bullion-hero-bg-trans.png');
       background-repeat: no-repeat;
@@ -3409,6 +3417,7 @@
       gap: 16px;
       margin-bottom: 24px;
     }
+
     .offers-header-titles h1 {
       font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
       font-size: 26px;
@@ -3416,10 +3425,12 @@
       color: var(--text-primary);
       margin-bottom: 4px;
     }
+
     .offers-header-titles p {
       font-size: 14px;
       color: var(--text-secondary);
     }
+
     .btn-create-offer-gold {
       display: inline-flex;
       align-items: center;
@@ -3435,6 +3446,7 @@
       box-shadow: 0 4px 14px rgba(181, 134, 52, 0.3);
       transition: var(--transition);
     }
+
     .btn-create-offer-gold:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(181, 134, 52, 0.42);
@@ -3450,6 +3462,7 @@
       margin-bottom: 22px;
       border: 1px solid var(--border-subtle);
     }
+
     .offers-tab-btn {
       flex: 1;
       display: inline-flex;
@@ -3466,6 +3479,7 @@
       color: var(--text-secondary);
       transition: var(--transition);
     }
+
     .offers-tab-btn.active {
       background: var(--gold-gradient);
       color: #FFFFFF;
@@ -3479,11 +3493,13 @@
       gap: 14px;
       margin-bottom: 22px;
     }
+
     @media (max-width: 640px) {
       .offers-stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
     .offers-stat-card {
       background: #FFFFFF;
       border: 1px solid var(--border-subtle);
@@ -3495,10 +3511,12 @@
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
     }
+
     .offers-stat-card:hover {
       border-color: var(--border-gold);
       transform: translateY(-2px);
     }
+
     .offers-stat-icon {
       width: 38px;
       height: 38px;
@@ -3509,20 +3527,39 @@
       font-size: 16px;
       flex-shrink: 0;
     }
-    .stat-icon-total { background: #FDF3E7; color: #D97706; }
-    .stat-icon-active { background: #EAF5EE; color: #1E824C; }
-    .stat-icon-upcoming { background: #FEF6E7; color: #B47608; }
-    .stat-icon-expired { background: #FDEDEC; color: #C0392B; }
+
+    .stat-icon-total {
+      background: #FDF3E7;
+      color: #D97706;
+    }
+
+    .stat-icon-active {
+      background: #EAF5EE;
+      color: #1E824C;
+    }
+
+    .stat-icon-upcoming {
+      background: #FEF6E7;
+      color: #B47608;
+    }
+
+    .stat-icon-expired {
+      background: #FDEDEC;
+      color: #C0392B;
+    }
+
     .offers-stat-info {
       display: flex;
       flex-direction: column;
     }
+
     .offers-stat-value {
       font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.2;
     }
+
     .offers-stat-label {
       font-size: 12px;
       color: var(--text-secondary);
@@ -3534,10 +3571,12 @@
       gap: 12px;
       margin-bottom: 20px;
     }
+
     .offers-search-wrap {
       flex: 1;
       position: relative;
     }
+
     .offers-search-wrap svg {
       position: absolute;
       left: 14px;
@@ -3548,6 +3587,7 @@
       height: 18px;
       pointer-events: none;
     }
+
     .offers-search-input {
       width: 100%;
       padding: 11px 16px 11px 42px;
@@ -3559,10 +3599,12 @@
       outline: none;
       transition: var(--transition);
     }
+
     .offers-search-input:focus {
       border-color: var(--border-gold-bright);
       box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.12);
     }
+
     .btn-offers-filter {
       display: inline-flex;
       align-items: center;
@@ -3578,11 +3620,14 @@
       transition: var(--transition);
       position: relative;
     }
-    .btn-offers-filter:hover, .btn-offers-filter.active {
+
+    .btn-offers-filter:hover,
+    .btn-offers-filter.active {
       border-color: var(--border-gold-bright);
       color: var(--gold-primary);
       background: var(--bg-surface-elevated);
     }
+
     .offers-filter-dropdown {
       position: absolute;
       top: calc(100% + 8px);
@@ -3596,9 +3641,11 @@
       padding: 6px;
       display: none;
     }
+
     .offers-filter-dropdown.show {
       display: block;
     }
+
     .offers-filter-opt {
       padding: 8px 12px;
       border-radius: 8px;
@@ -3610,9 +3657,11 @@
       justify-content: space-between;
       transition: background 0.15s;
     }
+
     .offers-filter-opt:hover {
       background: var(--bg-surface-elevated);
     }
+
     .offers-filter-opt.active {
       color: var(--gold-primary);
       font-weight: 600;
@@ -3625,6 +3674,7 @@
       flex-direction: column;
       gap: 14px;
     }
+
     .offer-item-card {
       background: #FFFFFF;
       border: 1px solid var(--border-subtle);
@@ -3637,10 +3687,12 @@
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
     }
+
     .offer-item-card:hover {
       border-color: var(--border-gold);
       box-shadow: var(--shadow-card);
     }
+
     .offer-card-thumb-wrap {
       width: 96px;
       height: 72px;
@@ -3651,23 +3703,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid rgba(0, 0, 0, 0.04);
     }
+
     .offer-card-thumb {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .offer-card-content {
       flex: 1;
       min-width: 0;
     }
+
     .offer-card-top-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 6px;
     }
+
     .offer-card-title {
       font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
       font-size: 16px;
@@ -3678,6 +3734,7 @@
       text-overflow: ellipsis;
       padding-right: 12px;
     }
+
     .offer-card-date {
       display: flex;
       align-items: center;
@@ -3686,16 +3743,19 @@
       color: var(--text-muted);
       margin-bottom: 8px;
     }
+
     .offer-card-date svg {
       width: 14px;
       height: 14px;
     }
+
     .offer-card-tags-row {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
+
     .offer-tag-cat {
       background: #F7F1E5;
       color: #8C6428;
@@ -3705,6 +3765,7 @@
       border-radius: 6px;
       border: 1px solid #EADBBE;
     }
+
     .offer-tag-status {
       display: inline-flex;
       align-items: center;
@@ -3714,42 +3775,60 @@
       padding: 3px 10px;
       border-radius: 6px;
     }
+
     .offer-tag-status.active {
       background: #EAF5EE;
       color: #1E824C;
       border: 1px solid #BCE3CB;
     }
+
     .offer-tag-status.upcoming {
       background: #FEF6E7;
       color: #B47608;
       border: 1px solid #FAD99B;
     }
+
     .offer-tag-status.expired {
       background: #FDEDEC;
       color: #C0392B;
       border: 1px solid #F5B7B1;
     }
+
     .offer-tag-status.draft {
       background: #F2ECE0;
       color: #7D7065;
       border: 1px solid #DFD7C8;
     }
+
     .status-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
       display: inline-block;
     }
-    .status-dot.active { background: #1E824C; }
-    .status-dot.upcoming { background: #B47608; }
-    .status-dot.expired { background: #C0392B; }
-    .status-dot.draft { background: #7D7065; }
+
+    .status-dot.active {
+      background: #1E824C;
+    }
+
+    .status-dot.upcoming {
+      background: #B47608;
+    }
+
+    .status-dot.expired {
+      background: #C0392B;
+    }
+
+    .status-dot.draft {
+      background: #7D7065;
+    }
 
     /* 3-dot Menu and Dropdown */
     .offer-menu-wrap {
       position: relative;
       flex-shrink: 0;
     }
+
     .btn-offer-menu {
       width: 32px;
       height: 32px;
@@ -3763,10 +3842,12 @@
       color: var(--text-secondary);
       transition: var(--transition);
     }
+
     .btn-offer-menu:hover {
       background: var(--bg-surface-elevated);
       color: var(--text-primary);
     }
+
     .offer-popover-menu {
       position: absolute;
       top: 100%;
@@ -3780,9 +3861,11 @@
       padding: 6px;
       display: none;
     }
+
     .offer-popover-menu.show {
       display: block;
     }
+
     .offer-popover-item {
       display: flex;
       align-items: center;
@@ -3799,12 +3882,15 @@
       text-align: left;
       transition: background 0.15s;
     }
+
     .offer-popover-item:hover {
       background: var(--bg-surface-elevated);
     }
+
     .offer-popover-item.danger {
       color: var(--danger);
     }
+
     .offer-popover-item.danger:hover {
       background: var(--danger-bg);
     }
@@ -3819,6 +3905,7 @@
       padding: 24px 28px;
       box-shadow: var(--shadow-card);
     }
+
     .offer-form-header {
       display: flex;
       align-items: center;
@@ -3827,6 +3914,7 @@
       padding-bottom: 16px;
       border-bottom: 1px solid var(--border-subtle);
     }
+
     .btn-form-back {
       width: 38px;
       height: 38px;
@@ -3840,10 +3928,12 @@
       cursor: pointer;
       transition: var(--transition);
     }
+
     .btn-form-back:hover {
       border-color: var(--border-gold-bright);
       background: var(--bg-surface-elevated);
     }
+
     .offer-form-titles h2 {
       font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
       font-size: 22px;
@@ -3851,6 +3941,7 @@
       color: var(--text-primary);
       margin-bottom: 2px;
     }
+
     .offer-form-titles p {
       font-size: 13px;
       color: var(--text-secondary);
@@ -3864,6 +3955,7 @@
       padding: 18px 20px;
       margin-bottom: 20px;
     }
+
     .offer-form-section-title {
       display: flex;
       align-items: center;
@@ -3874,6 +3966,7 @@
       color: var(--gold-dark);
       margin-bottom: 14px;
     }
+
     .offer-form-section-title .req-star {
       color: var(--danger);
     }
@@ -3888,10 +3981,12 @@
       cursor: pointer;
       transition: var(--transition);
     }
+
     .banner-dropzone-box:hover {
       border-color: var(--gold-primary);
       background: #FFFDF9;
     }
+
     .banner-upload-icon {
       width: 44px;
       height: 44px;
@@ -3903,16 +3998,19 @@
       justify-content: center;
       color: var(--gold-primary);
     }
+
     .banner-upload-text {
       font-size: 14px;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 4px;
     }
+
     .banner-upload-hint {
       font-size: 12px;
       color: var(--text-muted);
     }
+
     .banner-preview-wrapper {
       position: relative;
       border-radius: 12px;
@@ -3920,12 +4018,14 @@
       max-height: 220px;
       border: 1px solid var(--border-gold);
     }
+
     .banner-preview-img {
       width: 100%;
       height: 200px;
       object-fit: cover;
       display: block;
     }
+
     .banner-preview-overlay {
       position: absolute;
       top: 10px;
@@ -3933,6 +4033,7 @@
       display: flex;
       gap: 8px;
     }
+
     .btn-banner-action {
       padding: 6px 12px;
       border-radius: 8px;
@@ -3945,9 +4046,11 @@
       backdrop-filter: blur(4px);
       transition: var(--transition);
     }
+
     .btn-banner-action:hover {
       background: #28201A;
     }
+
     .btn-banner-action.remove {
       background: rgba(192, 57, 43, 0.9);
     }
@@ -3956,6 +4059,7 @@
     .form-field-group {
       margin-bottom: 14px;
     }
+
     .form-field-label {
       display: block;
       font-size: 13px;
@@ -3963,10 +4067,14 @@
       color: var(--text-primary);
       margin-bottom: 6px;
     }
+
     .form-field-label .req-star {
       color: var(--danger);
     }
-    .form-field-input, .form-field-select, .form-field-textarea {
+
+    .form-field-input,
+    .form-field-select,
+    .form-field-textarea {
       width: 100%;
       padding: 10px 14px;
       border: 1px solid var(--border-subtle);
@@ -3978,25 +4086,32 @@
       outline: none;
       transition: var(--transition);
     }
-    .form-field-input:focus, .form-field-select:focus, .form-field-textarea:focus {
+
+    .form-field-input:focus,
+    .form-field-select:focus,
+    .form-field-textarea:focus {
       border-color: var(--border-gold-bright);
       box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.12);
     }
+
     .form-field-textarea {
       min-height: 80px;
       resize: vertical;
     }
+
     .field-char-counter {
       text-align: right;
       font-size: 11px;
       color: var(--text-muted);
       margin-top: 4px;
     }
+
     .form-grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
+
     @media (max-width: 600px) {
       .form-grid-2col {
         grid-template-columns: 1fr;
@@ -4012,6 +4127,7 @@
       padding-top: 18px;
       border-top: 1px solid var(--border-subtle);
     }
+
     .btn-offers-draft {
       padding: 11px 24px;
       border-radius: 10px;
@@ -4023,10 +4139,12 @@
       cursor: pointer;
       transition: var(--transition);
     }
+
     .btn-offers-draft:hover {
       background: var(--gold-light);
       border-color: var(--gold-primary);
     }
+
     .btn-offers-primary {
       padding: 11px 28px;
       border-radius: 10px;
@@ -4039,6 +4157,7 @@
       box-shadow: 0 4px 14px rgba(181, 134, 52, 0.28);
       transition: var(--transition);
     }
+
     .btn-offers-primary:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 18px rgba(181, 134, 52, 0.38);
@@ -4058,20 +4177,24 @@
       box-shadow: var(--shadow-elevated);
       margin: auto;
     }
+
     .offer-view-banner-header {
       width: 100%;
       height: 200px;
       background: #F4EFE6;
       position: relative;
     }
+
     .offer-view-banner-header img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .offer-view-body {
       padding: 22px 26px;
     }
+
     .offer-view-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -4214,10 +4337,25 @@
       flex-shrink: 0;
     }
 
-    .enq-stat-total { background: #FDF3E7; color: #D97706; }
-    .enq-stat-new { background: #FEF3C7; color: #B45309; }
-    .enq-stat-contacted { background: #E0F2FE; color: #0284C7; }
-    .enq-stat-closed { background: #DCFCE7; color: #16A34A; }
+    .enq-stat-total {
+      background: #FDF3E7;
+      color: #D97706;
+    }
+
+    .enq-stat-new {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .enq-stat-contacted {
+      background: #E0F2FE;
+      color: #0284C7;
+    }
+
+    .enq-stat-closed {
+      background: #DCFCE7;
+      color: #16A34A;
+    }
 
     .enq-stat-info {
       display: flex;
@@ -4379,6 +4517,7 @@
       .enquiries-mobile-cards {
         display: flex;
       }
+
       .enquiries-desktop-table-card {
         display: none !important;
       }
@@ -4713,31 +4852,43 @@
         <div class="nav-label">Core Operations</div>
         <li>
           <a class="nav-item active" data-section="dashboard">
-            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+            </svg>
             <span>Dashboard</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-section="rates">
-            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+            </svg>
             <span>Bullion Rates</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-section="shop-rates">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-.79-.6-1.72-2.31-1.72-1.43 0-2.31.74-2.31 1.56 0 .76.6 1.36 2.67 1.85 2.75.66 4.18 1.69 4.18 3.73 0 1.63-1.17 2.89-3.02 3.33z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-.79-.6-1.72-2.31-1.72-1.43 0-2.31.74-2.31 1.56 0 .76.6 1.36 2.67 1.85 2.75.66 4.18 1.69 4.18 3.73 0 1.63-1.17 2.89-3.02 3.33z" />
+            </svg>
             <span>Shop Rates</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-section="products">
-            <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z" />
+            </svg>
             <span>Jewellery Pieces</span>
           </a>
         </li>
         <li>
           <a class="nav-item" data-section="categories">
-            <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
+            </svg>
             <span>Categories</span>
           </a>
         </li>
@@ -4771,15 +4922,15 @@
             <span>Customers</span>
           </a>
         </li>
-        <div class="nav-label">Store & System</div>
-        <li>
+        <!-- <div class="nav-label">Store & System</div> -->
+        <!-- <li>
           <a class="nav-item" data-section="settings">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25.7-.72 1.28-1.37 1.63-.58.32-1.33.48-2.22.48-.37 0-.77-.04-1.18-.12-1.15-.22-2.38-.85-3.66-1.89-1.29-1.04-2.28-2.26-2.95-3.62-.33-.67-.5-1.35-.5-2.02 0-.96.34-1.77 1.01-2.42.22-.22.48-.33.78-.33.15 0 .3.03.43.1.18.1.34.34.46.73l.63 1.54c.12.3.1.55-.06.77l-.46.59c-.06.07-.09.16-.09.25 0 .1.03.2.09.31.54.98 1.26 1.8 2.14 2.45.89.65 1.83 1.05 2.81 1.2.1.02.2-.01.29-.08l.58-.51c.22-.19.46-.24.73-.13l1.58.74c.37.17.58.37.64.6.06.23.01.52-.16.88z"/>
             </svg>
             <span>WhatsApp & Settings</span>
           </a>
-        </li>
+        </li> -->
       </ul>
 
       <div class="sidebar-footer">
@@ -4806,7 +4957,8 @@
       <header class="topbar">
         <div class="topbar-left">
           <button class="btn-sidebar-toggle" id="btn-toggle-sidebar" title="Toggle Navigation Menu">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -4835,7 +4987,8 @@
         <div class="topbar-right">
           <!-- Refresh Dashboard Data Button -->
           <button class="header-icon-btn" id="btn-header-refresh" title="Refresh Dashboard & Bullion Rates">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <polyline points="23 4 23 10 17 10"></polyline>
               <polyline points="1 20 1 14 7 14"></polyline>
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -4864,7 +5017,8 @@
 
           <!-- Direct Sign Out Icon Button -->
           <button class="header-icon-btn header-logout-btn" id="btn-header-logout" title="Sign Out">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
               <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -5397,45 +5551,14 @@
         </div>
 
         <!-- ========================================================= -->
-        <!-- SECTION 4: PRODUCTS -->
         <!-- ========================================================= -->
-        <div id="section-products" class="content-section hidden">
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <h2 class="panel-title">Jewellery Catalogue</h2>
-                <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
-                  Manage necklaces, bangles, rings, earrings and bridal sets.
-                </p>
-              </div>
-              <div class="flex gap-2">
-                <button class="btn-primary" style="padding:10px 18px; margin:0;" onclick="openAddProductModal()">
-                  + Add New Product
-                </button>
-              </div>
-            </div>
-
-            <div class="table-responsive">
-              <table class="custom-table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Category</th>
-                    <th>Metal & Purity</th>
-                    <th>Gross / Net Wt</th>
-                    <th>Base Price</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="products-tbody">
-                  <tr>
-                    <td colspan="7" style="text-align:center; padding: 24px;">Loading products...</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <!-- SECTION 4: DYNAMIC JEWELLERY CATALOGUE -->
+        <!-- ========================================================= -->
+        <div id="section-products" class="content-section hidden"
+          style="padding: 0; margin: 0; min-height: calc(100vh - 120px);">
+          <iframe id="live-catalogue-frame" src="about:blank"
+            style="width: 100%; height: calc(100vh - 120px); border: none; background: #FBF9F5; border-radius: 8px;"
+            title="Dynamic Catalogue"></iframe>
         </div>
 
         <!-- ========================================================= -->
@@ -5495,7 +5618,7 @@
         <!-- ========================================================= -->
         <div id="section-enquiries" class="content-section hidden">
           <div class="enquiries-module-wrapper">
-            
+
             <!-- 1. Enquiries Header Banner -->
             <div class="enquiries-header-row">
               <div class="enquiries-header-titles">
@@ -5507,8 +5630,10 @@
                   <span class="enquiries-live-dot"></span>
                   <span>LIVE SYNC ACTIVE</span>
                 </div>
-                <button type="button" class="btn-refresh-enquiries" id="btn-refresh-enquiries" onclick="loadEnquiries()" title="Refresh Enquiries">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <button type="button" class="btn-refresh-enquiries" id="btn-refresh-enquiries" onclick="loadEnquiries()"
+                  title="Refresh Enquiries">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="23 4 23 10 17 10"></polyline>
                     <polyline points="1 20 1 14 7 14"></polyline>
                     <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -5553,42 +5678,52 @@
             <!-- 3. Filter Tabs & Search Bar -->
             <div class="enquiries-controls-bar">
               <div class="enquiries-filter-pills">
-                <button type="button" class="enquiry-filter-btn active" data-status="all" onclick="filterEnquiriesByStatus('all')">
+                <button type="button" class="enquiry-filter-btn active" data-status="all"
+                  onclick="filterEnquiriesByStatus('all')">
                   <span>All</span>
                   <span class="enquiry-filter-count" id="filter-count-all">0</span>
                 </button>
-                <button type="button" class="enquiry-filter-btn" data-status="new" onclick="filterEnquiriesByStatus('new')">
+                <button type="button" class="enquiry-filter-btn" data-status="new"
+                  onclick="filterEnquiriesByStatus('new')">
                   <span>New</span>
                   <span class="enquiry-filter-count" id="filter-count-new">0</span>
                 </button>
-                <button type="button" class="enquiry-filter-btn" data-status="contacted" onclick="filterEnquiriesByStatus('contacted')">
+                <button type="button" class="enquiry-filter-btn" data-status="contacted"
+                  onclick="filterEnquiriesByStatus('contacted')">
                   <span>Contacted</span>
                   <span class="enquiry-filter-count" id="filter-count-contacted">0</span>
                 </button>
-                <button type="button" class="enquiry-filter-btn" data-status="in_progress" onclick="filterEnquiriesByStatus('in_progress')">
+                <button type="button" class="enquiry-filter-btn" data-status="in_progress"
+                  onclick="filterEnquiriesByStatus('in_progress')">
                   <span>In Progress</span>
                   <span class="enquiry-filter-count" id="filter-count-in_progress">0</span>
                 </button>
-                <button type="button" class="enquiry-filter-btn" data-status="closed" onclick="filterEnquiriesByStatus('closed')">
+                <button type="button" class="enquiry-filter-btn" data-status="closed"
+                  onclick="filterEnquiriesByStatus('closed')">
                   <span>Closed</span>
                   <span class="enquiry-filter-count" id="filter-count-closed">0</span>
                 </button>
               </div>
 
               <div class="enquiries-search-wrap">
-                <svg class="enquiries-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="enquiries-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="text" class="enquiries-search-input" id="enquiries-search-input" placeholder="Search customer, phone, ref #..." oninput="handleEnquiriesSearch(this.value)">
-                <button type="button" class="enquiries-search-clear" id="enquiries-search-clear" onclick="clearEnquiriesSearch()" title="Clear search">&times;</button>
+                <input type="text" class="enquiries-search-input" id="enquiries-search-input"
+                  placeholder="Search customer, phone, ref #..." oninput="handleEnquiriesSearch(this.value)">
+                <button type="button" class="enquiries-search-clear" id="enquiries-search-clear"
+                  onclick="clearEnquiriesSearch()" title="Clear search">&times;</button>
               </div>
             </div>
 
             <!-- 4. Mobile View: Responsive Luxury Cards (Displayed on <= 768px) -->
             <div class="enquiries-mobile-cards" id="enquiries-mobile-cards">
               <div style="text-align:center; padding:32px 16px; color:#8C8074;">
-                <div class="spinner" style="margin: 0 auto 12px; border-color: rgba(181, 134, 52, 0.2); border-top-color: var(--gold-primary);"></div>
+                <div class="spinner"
+                  style="margin: 0 auto 12px; border-color: rgba(181, 134, 52, 0.2); border-top-color: var(--gold-primary);">
+                </div>
                 Loading customer enquiries...
               </div>
             </div>
@@ -5610,7 +5745,8 @@
                   </thead>
                   <tbody id="enquiries-tbody">
                     <tr>
-                      <td colspan="7" style="text-align:center; padding: 36px 16px; color:#8C8074;">Loading enquiries...</td>
+                      <td colspan="7" style="text-align:center; padding: 36px 16px; color:#8C8074;">Loading enquiries...
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -5627,7 +5763,7 @@
         <!-- ========================================================= -->
         <div id="section-offers" class="content-section hidden">
           <div class="offers-module-wrapper">
-            
+
             <!-- SCREEN 1: LISTING VIEW -->
             <div id="offers-view-listing">
               <!-- Page Heading -->
@@ -5636,9 +5772,10 @@
                   <h1>Offers & Announcements</h1>
                   <p>Create and manage offers, discounts and announcements</p>
                 </div>
-                <button type="button" class="btn-create-offer-gold" id="btn-open-create-offer" onclick="openCreateOfferScreen()">
+                <button type="button" class="btn-create-offer-gold" id="btn-open-create-offer"
+                  onclick="openCreateOfferScreen()">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                   </svg>
                   Create New
                 </button>
@@ -5646,15 +5783,19 @@
 
               <!-- Segmented Tabs: Offers vs Announcements -->
               <div class="offers-tabs-bar">
-                <button type="button" class="offers-tab-btn active" id="tab-btn-offers" onclick="switchOffersTab('offer')">
+                <button type="button" class="offers-tab-btn active" id="tab-btn-offers"
+                  onclick="switchOffersTab('offer')">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                    <path
+                      d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
                   </svg>
                   Offers
                 </button>
-                <button type="button" class="offers-tab-btn" id="tab-btn-announcements" onclick="switchOffersTab('announcement')">
+                <button type="button" class="offers-tab-btn" id="tab-btn-announcements"
+                  onclick="switchOffersTab('announcement')">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z"/>
+                    <path
+                      d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z" />
                   </svg>
                   Announcements
                 </button>
@@ -5665,7 +5806,8 @@
                 <div class="offers-stat-card">
                   <div class="offers-stat-icon stat-icon-total">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                      <path
+                        d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
                     </svg>
                   </div>
                   <div class="offers-stat-info">
@@ -5677,7 +5819,7 @@
                 <div class="offers-stat-card">
                   <div class="offers-stat-icon stat-icon-active">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                      <circle cx="12" cy="12" r="10"/>
+                      <circle cx="12" cy="12" r="10" />
                     </svg>
                   </div>
                   <div class="offers-stat-info">
@@ -5689,7 +5831,8 @@
                 <div class="offers-stat-card">
                   <div class="offers-stat-icon stat-icon-upcoming">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                      <path
+                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
                     </svg>
                   </div>
                   <div class="offers-stat-info">
@@ -5701,7 +5844,8 @@
                 <div class="offers-stat-card">
                   <div class="offers-stat-icon stat-icon-expired">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+                      <path
+                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
                     </svg>
                   </div>
                   <div class="offers-stat-info">
@@ -5715,15 +5859,18 @@
               <div class="offers-controls-row">
                 <div class="offers-search-wrap">
                   <svg viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                   </svg>
-                  <input type="text" id="offers-search-input" class="offers-search-input" placeholder="Search offers or announcements..." oninput="filterOffersList()">
+                  <input type="text" id="offers-search-input" class="offers-search-input"
+                    placeholder="Search offers or announcements..." oninput="filterOffersList()">
                 </div>
 
                 <div style="position: relative;">
-                  <button type="button" class="btn-offers-filter" id="btn-offers-filter-toggle" onclick="toggleOffersFilterMenu()">
+                  <button type="button" class="btn-offers-filter" id="btn-offers-filter-toggle"
+                    onclick="toggleOffersFilterMenu()">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+                      <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
                     </svg>
                     <span id="offers-filter-label">Filter</span>
                   </button>
@@ -5752,9 +5899,10 @@
               <div class="offer-form-container">
                 <!-- Header with Back Button -->
                 <div class="offer-form-header">
-                  <button type="button" class="btn-form-back" onclick="closeCreateOfferScreen()" title="Back to listing">
+                  <button type="button" class="btn-form-back" onclick="closeCreateOfferScreen()"
+                    title="Back to listing">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
                     </svg>
                   </button>
                   <div class="offer-form-titles">
@@ -5765,15 +5913,19 @@
 
                 <!-- Mode Toggle: Offer (Discount) vs Announcement -->
                 <div class="offers-tabs-bar" style="margin-bottom: 22px;">
-                  <button type="button" class="offers-tab-btn active" id="form-tab-offer" onclick="setFormModeType('offer')">
+                  <button type="button" class="offers-tab-btn active" id="form-tab-offer"
+                    onclick="setFormModeType('offer')">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                      <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                      <path
+                        d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
                     </svg>
                     Offer (Discount)
                   </button>
-                  <button type="button" class="offers-tab-btn" id="form-tab-announcement" onclick="setFormModeType('announcement')">
+                  <button type="button" class="offers-tab-btn" id="form-tab-announcement"
+                    onclick="setFormModeType('announcement')">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                      <path d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z"/>
+                      <path
+                        d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z" />
                     </svg>
                     Announcement
                   </button>
@@ -5787,28 +5939,34 @@
                   <div class="offer-form-section">
                     <div class="offer-form-section-title">
                       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        <path
+                          d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
                       </svg>
                       Banner Image <span class="req-star">*</span>
                     </div>
 
-                    <div id="banner-dropzone" class="banner-dropzone-box" onclick="document.getElementById('banner-file-input').click()">
+                    <div id="banner-dropzone" class="banner-dropzone-box"
+                      onclick="document.getElementById('banner-file-input').click()">
                       <div class="banner-upload-icon">
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                          <path
+                            d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
                         </svg>
                       </div>
                       <div class="banner-upload-text">Upload Banner Image</div>
                       <div class="banner-upload-hint">JPG, PNG (Max 5MB) | Recommended size: 1080 x 600 px</div>
                     </div>
-                    <input type="file" id="banner-file-input" accept="image/png, image/jpeg, image/webp" style="display: none;" onchange="handleBannerFileSelect(event)">
+                    <input type="file" id="banner-file-input" accept="image/png, image/jpeg, image/webp"
+                      style="display: none;" onchange="handleBannerFileSelect(event)">
 
                     <!-- Preview Container -->
                     <div id="banner-preview-wrapper" class="banner-preview-wrapper hidden" style="margin-top: 12px;">
                       <img id="banner-preview-img" class="banner-preview-img" src="" alt="Banner Preview">
                       <div class="banner-preview-overlay">
-                        <button type="button" class="btn-banner-action" onclick="document.getElementById('banner-file-input').click()">Replace Image</button>
-                        <button type="button" class="btn-banner-action remove" onclick="removeSelectedBanner()">Remove</button>
+                        <button type="button" class="btn-banner-action"
+                          onclick="document.getElementById('banner-file-input').click()">Replace Image</button>
+                        <button type="button" class="btn-banner-action remove"
+                          onclick="removeSelectedBanner()">Remove</button>
                       </div>
                     </div>
                   </div>
@@ -5817,19 +5975,22 @@
                   <div class="offer-form-section">
                     <div class="offer-form-section-title">
                       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        <path
+                          d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
                       </svg>
                       Basic Details
                     </div>
 
                     <div class="form-field-group">
                       <label class="form-field-label">Title <span class="req-star">*</span></label>
-                      <input type="text" id="offer-field-title" class="form-field-input" placeholder="Enter offer title (e.g. Flat 20% Off on Making Charges)" required>
+                      <input type="text" id="offer-field-title" class="form-field-input"
+                        placeholder="Enter offer title (e.g. Flat 20% Off on Making Charges)" required>
                     </div>
 
                     <div class="form-field-group" style="margin-bottom: 0;">
                       <label class="form-field-label">Description <span class="req-star">*</span></label>
-                      <textarea id="offer-field-desc" class="form-field-textarea" maxlength="300" placeholder="Enter offer details..." oninput="updateDescCharCounter()" required></textarea>
+                      <textarea id="offer-field-desc" class="form-field-textarea" maxlength="300"
+                        placeholder="Enter offer details..." oninput="updateDescCharCounter()" required></textarea>
                       <div class="field-char-counter" id="offer-desc-counter">0/300</div>
                     </div>
                   </div>
@@ -5838,7 +5999,8 @@
                   <div class="offer-form-section" id="section-config-offer">
                     <div class="offer-form-section-title">
                       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                        <path
+                          d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" />
                       </svg>
                       Offer Configuration
                     </div>
@@ -5872,12 +6034,14 @@
                         <select id="offer-field-category" class="form-field-select" required>
                           <option value="">Select category...</option>
                         </select>
-                        <div id="category-load-hint" style="font-size:11px; color:var(--text-muted); margin-top:3px;">Categories loaded dynamically from database</div>
+                        <div id="category-load-hint" style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                          Categories loaded dynamically from database</div>
                       </div>
 
                       <div class="form-field-group">
                         <label class="form-field-label">Discount Type <span class="req-star">*</span></label>
-                        <select id="offer-field-discount-type" class="form-field-select" onchange="updateDiscountUnitLabel()">
+                        <select id="offer-field-discount-type" class="form-field-select"
+                          onchange="updateDiscountUnitLabel()">
                           <option value="percentage" selected>Percentage (%)</option>
                           <option value="fixed">Fixed Amount (₹)</option>
                         </select>
@@ -5888,8 +6052,10 @@
                       <div class="form-field-group">
                         <label class="form-field-label">Discount Value <span class="req-star">*</span></label>
                         <div style="position:relative;">
-                          <input type="number" id="offer-field-discount-value" class="form-field-input" placeholder="Enter value (e.g. 20)" min="1" step="any" required>
-                          <span id="discount-unit-addon" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); font-weight:600; color:var(--gold-primary);">%</span>
+                          <input type="number" id="offer-field-discount-value" class="form-field-input"
+                            placeholder="Enter value (e.g. 20)" min="1" step="any" required>
+                          <span id="discount-unit-addon"
+                            style="position:absolute; right:14px; top:50%; transform:translateY(-50%); font-weight:600; color:var(--gold-primary);">%</span>
                         </div>
                       </div>
 
@@ -5919,7 +6085,8 @@
                   <div class="offer-form-section hidden" id="section-config-announcement">
                     <div class="offer-form-section-title">
                       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z"/>
+                        <path
+                          d="M20 2v3h-2V4h-3V2h5zm-2 15h2v3h-5v-2h3v-1zm-7 3v-2H4v-3H2v5h9zm-9-7h2v-3H2V7h2v4zm1-9h9v2H4v3H2V4c0-1.1.9-2 2-2zm14 8V8l-6 4v1l6 4v-2l-4-2.5 4-2.5z" />
                       </svg>
                       Announcement Details
                     </div>
@@ -5956,7 +6123,8 @@
 
                   <!-- Form Action Buttons -->
                   <div class="offer-form-actions">
-                    <button type="button" class="btn-offers-draft" onclick="submitOfferForm(true)">Save as Draft</button>
+                    <button type="button" class="btn-offers-draft" onclick="submitOfferForm(true)">Save as
+                      Draft</button>
                     <button type="submit" id="btn-create-offer-submit" class="btn-offers-primary">Create Offer</button>
                   </div>
                 </form>
@@ -5967,17 +6135,21 @@
         </div>
 
         <!-- Dedicated View Offer Modal -->
-        <div id="modal-view-offer" class="modal-overlay hidden" onclick="if(event.target === this) closeViewOfferModal()">
+        <div id="modal-view-offer" class="modal-overlay hidden"
+          onclick="if(event.target === this) closeViewOfferModal()">
           <div class="offer-view-modal-content">
             <div class="offer-view-banner-header">
               <img id="view-offer-banner" src="" alt="Offer Banner">
             </div>
             <div class="offer-view-body">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
-                <h3 id="view-offer-title" style="font-family:'Playfair Display', serif; font-size:20px; font-weight:700; color:var(--text-primary);"></h3>
+                <h3 id="view-offer-title"
+                  style="font-family:'Playfair Display', serif; font-size:20px; font-weight:700; color:var(--text-primary);">
+                </h3>
                 <span id="view-offer-status-badge" class="offer-tag-status active">Active</span>
               </div>
-              <p id="view-offer-desc" style="font-size:14px; color:var(--text-secondary); line-height:1.5; margin-bottom:12px;"></p>
+              <p id="view-offer-desc"
+                style="font-size:14px; color:var(--text-secondary); line-height:1.5; margin-bottom:12px;"></p>
 
               <div class="offer-view-grid">
                 <div>
@@ -6000,14 +6172,16 @@
 
               <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
                 <button type="button" class="btn-secondary" onclick="closeViewOfferModal()">Close</button>
-                <button type="button" class="btn-primary" id="btn-view-modal-edit" onclick="editFromViewModal()">Edit Record</button>
+                <button type="button" class="btn-primary" id="btn-view-modal-edit" onclick="editFromViewModal()">Edit
+                  Record</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Dedicated Delete Confirmation Modal -->
-        <div id="modal-delete-offer" class="modal-overlay hidden" onclick="if(event.target === this) closeDeleteOfferModal()">
+        <div id="modal-delete-offer" class="modal-overlay hidden"
+          onclick="if(event.target === this) closeDeleteOfferModal()">
           <div class="modal-card" style="max-width: 440px;">
             <div class="modal-header">
               <h3 class="panel-title" style="font-size:18px; color:var(--danger);">Delete Confirmation</h3>
@@ -6017,16 +6191,20 @@
               <p style="font-size:14px; color:var(--text-primary); margin-bottom: 8px;">
                 Are you sure you want to delete this promotional record?
               </p>
-              <div style="background:#FAF7F0; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:10px; font-weight:600; color:var(--text-primary);" id="delete-offer-title-target">
+              <div
+                style="background:#FAF7F0; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:10px; font-weight:600; color:var(--text-primary);"
+                id="delete-offer-title-target">
                 -
               </div>
               <p style="font-size:12px; color:var(--text-muted); margin-top: 8px;">
-                This action will permanently delete the record from the database. It will immediately cease to be visible on customer applications.
+                This action will permanently delete the record from the database. It will immediately cease to be
+                visible on customer applications.
               </p>
             </div>
             <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:12px; padding: 14px 24px;">
               <button type="button" class="btn-secondary" onclick="closeDeleteOfferModal()">Cancel</button>
-              <button type="button" class="btn-primary" id="btn-confirm-delete-offer" style="background:var(--danger); border-color:var(--danger);" onclick="executeDeleteOffer()">
+              <button type="button" class="btn-primary" id="btn-confirm-delete-offer"
+                style="background:var(--danger); border-color:var(--danger);" onclick="executeDeleteOffer()">
                 Delete
               </button>
             </div>
@@ -6078,30 +6256,39 @@
               <div>
                 <h2 class="panel-title">Store Contact & WhatsApp Concierge Settings</h2>
                 <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">
-                  Configure the live WhatsApp mobile number, concierge helpline, support email, and store address used across the Zewar Mahal Customer Mobile App.
+                  Configure the live WhatsApp mobile number, concierge helpline, support email, and store address used
+                  across the Zewar Mahal Customer Mobile App.
                 </p>
               </div>
             </div>
 
             <!-- WhatsApp Live Status & Test Banner -->
-            <div style="background: linear-gradient(135deg, #F4FBF7 0%, #E8F7EE 100%); border: 1px solid #B8E2CB; border-radius: var(--radius-lg); padding: 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <div
+              style="background: linear-gradient(135deg, #F4FBF7 0%, #E8F7EE 100%); border: 1px solid #B8E2CB; border-radius: var(--radius-lg); padding: 22px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 50px; height: 50px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35); flex-shrink: 0;">
-                  <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFFFFF"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25.7-.72 1.28-1.37 1.63-.58.32-1.33.48-2.22.48-.37 0-.77-.04-1.18-.12-1.15-.22-2.38-.85-3.66-1.89-1.29-1.04-2.28-2.26-2.95-3.62-.33-.67-.5-1.35-.5-2.02 0-.96.34-1.77 1.01-2.42.22-.22.48-.33.78-.33.15 0 .3.03.43.1.18.1.34.34.46.73l.63 1.54c.12.3.1.55-.06.77l-.46.59c-.06.07-.09.16-.09.25 0 .1.03.2.09.31.54.98 1.26 1.8 2.14 2.45.89.65 1.83 1.05 2.81 1.2.1.02.2-.01.29-.08l.58-.51c.22-.19.46-.24.73-.13l1.58.74c.37.17.58.37.64.6.06.23.01.52-.16.88z"/></svg>
+                <div
+                  style="width: 50px; height: 50px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35); flex-shrink: 0;">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFFFFF">
+                    <path
+                      d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25.7-.72 1.28-1.37 1.63-.58.32-1.33.48-2.22.48-.37 0-.77-.04-1.18-.12-1.15-.22-2.38-.85-3.66-1.89-1.29-1.04-2.28-2.26-2.95-3.62-.33-.67-.5-1.35-.5-2.02 0-.96.34-1.77 1.01-2.42.22-.22.48-.33.78-.33.15 0 .3.03.43.1.18.1.34.34.46.73l.63 1.54c.12.3.1.55-.06.77l-.46.59c-.06.07-.09.16-.09.25 0 .1.03.2.09.31.54.98 1.26 1.8 2.14 2.45.89.65 1.83 1.05 2.81 1.2.1.02.2-.01.29-.08l.58-.51c.22-.19.46-.24.73-.13l1.58.74c.37.17.58.37.64.6.06.23.01.52-.16.88z" />
+                  </svg>
                 </div>
                 <div>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <span style="font-weight: 700; font-size: 15px; color: #1E6B3E;">Live App WhatsApp Number:</span>
-                    <span id="preview-active-whatsapp" style="font-size: 17px; font-weight: 700; color: #0E4E28; font-family: monospace;">Loading...</span>
+                    <span id="preview-active-whatsapp"
+                      style="font-size: 17px; font-weight: 700; color: #0E4E28; font-family: monospace;">Loading...</span>
                     <span class="badge badge-active" style="margin-left: 6px;">Live In Customer App</span>
                   </div>
                   <p style="font-size: 12px; color: #2D6A4F; margin-top: 4px;">
-                    Tapping "WhatsApp Us" on jewellery pieces or "WhatsApp Consultation" on Profile will connect to this number.
+                    Tapping "WhatsApp Us" on jewellery pieces or "WhatsApp Consultation" on Profile will connect to this
+                    number.
                   </p>
                 </div>
               </div>
               <div>
-                <button type="button" class="btn-action" id="btn-test-whatsapp" style="padding: 10px 18px; font-size: 13px; background: #25D366; color: #FFFFFF; border-color: #1EBE5D; display: flex; align-items: center; gap: 8px;">
+                <button type="button" class="btn-action" id="btn-test-whatsapp"
+                  style="padding: 10px 18px; font-size: 13px; background: #25D366; color: #FFFFFF; border-color: #1EBE5D; display: flex; align-items: center; gap: 8px;">
                   <span>💬 Test WhatsApp Link</span>
                 </button>
               </div>
@@ -6109,24 +6296,28 @@
 
             <!-- Settings Edit Form -->
             <form id="form-store-settings">
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px;">
-                
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px;">
+
                 <div class="form-group">
                   <label class="form-label" for="setting-whatsapp-number">
                     <strong>WhatsApp Mobile Number *</strong>
-                    <span style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
+                    <span
+                      style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
                       Enter standard 10-digit number or with +91 (e.g. 9930942947 or +91 99309 42947)
                     </span>
                   </label>
                   <div class="input-wrapper">
-                    <input type="text" id="setting-whatsapp-number" placeholder="9930942947" required style="font-weight:600; font-size:15px;">
+                    <input type="text" id="setting-whatsapp-number" placeholder="9930942947" required
+                      style="font-weight:600; font-size:15px;">
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label" for="setting-support-phone">
                     <strong>Concierge Voice Helpline</strong>
-                    <span style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
+                    <span
+                      style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
                       Direct phone line shown in customer app
                     </span>
                   </label>
@@ -6138,7 +6329,8 @@
                 <div class="form-group">
                   <label class="form-label" for="setting-support-email">
                     <strong>Support & Concierge Email</strong>
-                    <span style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
+                    <span
+                      style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
                       Official concierge inbox address
                     </span>
                   </label>
@@ -6150,12 +6342,14 @@
                 <div class="form-group">
                   <label class="form-label" for="setting-store-address">
                     <strong>Flagship Boutique Address</strong>
-                    <span style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
+                    <span
+                      style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
                       Store physical address
                     </span>
                   </label>
                   <div class="input-wrapper">
-                    <input type="text" id="setting-store-address" placeholder="Zewar Mahal Flagship Store, Bandra West, Mumbai">
+                    <input type="text" id="setting-store-address"
+                      placeholder="Zewar Mahal Flagship Store, Bandra West, Mumbai">
                   </div>
                 </div>
 
@@ -6164,12 +6358,14 @@
               <div class="form-group" style="margin-bottom: 24px;">
                 <label class="form-label" for="setting-welcome-message">
                   <strong>Default Customer WhatsApp Greeting Message</strong>
-                  <span style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
+                  <span
+                    style="font-size:12px; font-weight:normal; color:var(--text-muted); display:block; margin-top:2px;">
                     Prefilled text shown when opening a new chat with Zewar Mahal concierge
                   </span>
                 </label>
                 <div class="input-wrapper">
-                  <textarea id="setting-welcome-message" rows="3" placeholder="Hello Zewar Mahal, I would like to inquire about fine jewellery pieces."></textarea>
+                  <textarea id="setting-welcome-message" rows="3"
+                    placeholder="Hello Zewar Mahal, I would like to inquire about fine jewellery pieces."></textarea>
                 </div>
               </div>
 
@@ -6453,7 +6649,7 @@
   <script>
     // Configuration & State
     const API_BASE = '/api/v1';
-    
+
     // Check if token was passed in query parameter (e.g. from customer app redirect)
     const urlParams = new URLSearchParams(window.location.search);
     const paramToken = urlParams.get('token');
@@ -6632,6 +6828,17 @@
       });
     });
 
+    function redirectToCatalogue() {
+      // Determine app URL (running on port 8080 when backend is on 3000, or same origin)
+      const isPort3000 = window.location.port === '3000';
+      const targetOrigin = isPort3000
+        ? `${window.location.protocol}//${window.location.hostname}:8080`
+        : window.location.origin;
+      const adminToken = localStorage.getItem('zm_admin_token') || token || '';
+      const tokenQuery = adminToken ? `?token=${encodeURIComponent(adminToken)}` : '';
+      window.location.href = `${targetOrigin}/${tokenQuery}#catalogue`;
+    }
+
     function switchSection(sectionId) {
       document.querySelectorAll('.nav-item, .footer-nav-item').forEach(i => i.classList.remove('active'));
       const activeElements = document.querySelectorAll(`[data-section="${sectionId}"]`);
@@ -6640,6 +6847,22 @@
       document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
       const targetSec = document.getElementById(`section-${sectionId}`);
       if (targetSec) targetSec.classList.remove('hidden');
+
+      if (sectionId === 'products') {
+        const frame = document.getElementById('live-catalogue-frame');
+        if (frame) {
+          const isPort3000 = window.location.port === '3000';
+          const targetOrigin = isPort3000
+            ? `${window.location.protocol}//${window.location.hostname}:8080`
+            : '';
+          const adminToken = localStorage.getItem('zm_admin_token') || token || '';
+          const tokenQuery = adminToken ? `?token=${encodeURIComponent(adminToken)}` : '';
+          const expectedSrc = `${targetOrigin}/${tokenQuery}#catalogue`;
+          if (!frame.src || frame.src === 'about:blank' || !frame.src.includes('catalogue')) {
+            frame.src = expectedSrc;
+          }
+        }
+      }
 
       // Update heading and subtitle
       const titles = {
@@ -6675,16 +6898,15 @@
         btnHeaderAddCat.style.display = (sectionId === 'categories') ? 'inline-flex' : 'none';
       }
 
-      // Hide page-section-header when on rates, offers or enquiries because they have their own dedicated luxury headers
+      // Hide page-section-header when on rates, offers, enquiries, or products
       const pageHeader = document.querySelector('.page-section-header');
       if (pageHeader) {
-        pageHeader.style.display = (sectionId === 'rates' || sectionId === 'offers' || sectionId === 'enquiries') ? 'none' : 'flex';
+        pageHeader.style.display = (sectionId === 'rates' || sectionId === 'offers' || sectionId === 'enquiries' || sectionId === 'products') ? 'none' : 'flex';
       }
 
       // Load section data
       if (sectionId === 'rates') loadBullionRates();
       if (sectionId === 'shop-rates') loadShopRates();
-      if (sectionId === 'products') loadProducts();
       if (sectionId === 'categories') loadCategories();
       if (sectionId === 'enquiries') loadEnquiries();
       if (sectionId === 'offers') loadOffersAndBanners();
@@ -7340,52 +7562,7 @@
       }
     }
 
-    // 5. Products Catalogue
-    async function loadProducts() {
-      const tbody = document.getElementById('products-tbody');
-      try {
-        const res = await apiRequest('/products?limit=50');
-        const items = Array.isArray(res) ? res : (res.data || res.items || []);
-        if (Array.isArray(items) && items.length > 0) {
-          tbody.innerHTML = items.map(p => `
-            <tr>
-              <td>
-                <div style="font-weight:600; color:var(--text-primary); font-family:'Playfair Display', serif; font-size:15px;">${p.name}</div>
-                <div style="font-size:11px; color:var(--text-muted); font-family:monospace;">SKU: ${p.sku || '-'}</div>
-              </td>
-              <td>${p.category ? p.category.name : '-'}</td>
-              <td><strong style="color:var(--gold-primary); text-transform:uppercase;">${p.metal || 'Gold'} ${p.purity || ''}</strong></td>
-              <td>${p.grossWeight || 0}g / ${p.netWeight || 0}g</td>
-              <td><strong style="color:var(--text-primary);">${formatINR(p.basePrice)}</strong></td>
-              <td>
-                <span class="badge ${p.isPublished ? 'badge-published' : 'badge-inactive'}">
-                  ${p.isPublished ? 'Published' : 'Draft'}
-                </span>
-              </td>
-              <td>
-                <button class="btn-action" onclick="toggleProductStatus('${p.id}', ${!p.isPublished})">
-                  ${p.isPublished ? 'Unpublish' : 'Publish'}
-                </button>
-              </td>
-            </tr>
-          `).join('');
-        } else {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">No products found in catalogue. Click "+ Add New Product" to create one.</td></tr>';
-        }
-      } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--danger); padding:24px;">Error: ${err.message}</td></tr>`;
-      }
-    }
-
-    window.toggleProductStatus = async function (id, isPublished) {
-      try {
-        await apiRequest(`/admin/products/${id}/status`, 'PATCH', { isPublished });
-        showToast(`Product ${isPublished ? 'published' : 'unpublished'} successfully!`, 'success');
-        loadProducts();
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    };
+    // 5. Products Catalogue (delegated to Dynamic React Native Catalogue)
 
     // Safe HTML Escaping
     function escapeHtml(str) {
@@ -7880,7 +8057,7 @@
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
-            ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
+            ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Namaste ${enq.name || 'Ji'}, Zewar Mahal se pranaam! Hamein aapki enquiry mili hai (Ref: ${enq.referenceNumber}). Hum aapki jewellery pasand aur order booking mein kya madad kar sakte hain?`)}`
             : '';
 
           return `
@@ -7950,7 +8127,7 @@
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
-            ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`
+            ? `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Namaste ${enq.name || 'Ji'}, Zewar Mahal se pranaam! Hamein aapki enquiry mili hai (Ref: ${enq.referenceNumber}). Hum aapki jewellery pasand aur order booking mein kya madad kar sakte hain?`)}`
             : '';
 
           return `
@@ -8247,7 +8424,7 @@
         const status = getOfferRecordStatus(item);
         const dateRangeStr = formatOfferDateRange(item.startDate, item.endDate);
         const catName = item.category ? item.category.name : (item.applicableOn || (item.type === 'announcement' ? 'Announcement' : 'All Jewellery'));
-        
+
         // Thumbnail: actual uploaded image or curated luxury jewellery fallback
         const thumbSrc = item.image || '/admin/images/necklaces/necklace-1.jpg';
 
@@ -8316,7 +8493,7 @@
     }
 
     // Tab switching
-    window.switchOffersTab = function(type) {
+    window.switchOffersTab = function (type) {
       currentOffersTab = type;
       document.getElementById('tab-btn-offers').classList.toggle('active', type === 'offer');
       document.getElementById('tab-btn-announcements').classList.toggle('active', type === 'announcement');
@@ -8325,16 +8502,16 @@
     };
 
     // Filter controls
-    window.filterOffersList = function() {
+    window.filterOffersList = function () {
       renderOffersCards();
     };
 
-    window.toggleOffersFilterMenu = function() {
+    window.toggleOffersFilterMenu = function () {
       const menu = document.getElementById('offers-filter-dropdown');
       if (menu) menu.classList.toggle('show');
     };
 
-    window.selectOffersStatusFilter = function(status) {
+    window.selectOffersStatusFilter = function (status) {
       currentOffersStatusFilter = status;
       const label = document.getElementById('offers-filter-label');
       if (label) {
@@ -8349,7 +8526,7 @@
     };
 
     // 3-Dot Card Menu Popover Toggle
-    window.toggleOfferCardMenu = function(e, id) {
+    window.toggleOfferCardMenu = function (e, id) {
       e.stopPropagation();
       // Close any other open popovers
       document.querySelectorAll('.offer-popover-menu').forEach(m => {
@@ -8371,7 +8548,7 @@
     });
 
     // Form Mode: Offer vs Announcement
-    window.setFormModeType = function(type) {
+    window.setFormModeType = function (type) {
       document.getElementById('offer-current-type').value = type;
       document.getElementById('form-tab-offer').classList.toggle('active', type === 'offer');
       document.getElementById('form-tab-announcement').classList.toggle('active', type === 'announcement');
@@ -8393,7 +8570,7 @@
     };
 
     // Screen 2 Open & Close
-    window.openCreateOfferScreen = function() {
+    window.openCreateOfferScreen = function () {
       document.getElementById('offers-view-listing').classList.add('hidden');
       document.getElementById('offers-view-form').classList.remove('hidden');
 
@@ -8407,7 +8584,7 @@
       document.getElementById('offer-field-desc').value = '';
       document.getElementById('offer-desc-counter').textContent = '0/300';
       document.getElementById('offer-field-discount-value').value = '';
-      
+
       // Default dates
       const today = new Date();
       const in30Days = new Date();
@@ -8432,7 +8609,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.closeCreateOfferScreen = function() {
+    window.closeCreateOfferScreen = function () {
       document.getElementById('offers-view-form').classList.add('hidden');
       document.getElementById('offers-view-listing').classList.remove('hidden');
       updateOffersSummaryStats();
@@ -8441,7 +8618,7 @@
     };
 
     // Open Edit Screen
-    window.openEditOfferScreen = function(id) {
+    window.openEditOfferScreen = function (id) {
       const record = allOffersData.find(item => item.id === id);
       if (!record) {
         showToast('Record not found', 'error');
@@ -8506,7 +8683,7 @@
     };
 
     // Banner file upload handlers
-    window.handleBannerFileSelect = function(e) {
+    window.handleBannerFileSelect = function (e) {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
 
@@ -8516,7 +8693,7 @@
       }
 
       const reader = new FileReader();
-      reader.onload = function(event) {
+      reader.onload = function (event) {
         currentBannerBase64 = event.target.result;
         document.getElementById('banner-preview-img').src = currentBannerBase64;
         document.getElementById('banner-preview-wrapper').classList.remove('hidden');
@@ -8525,7 +8702,7 @@
       reader.readAsDataURL(file);
     };
 
-    window.removeSelectedBanner = function() {
+    window.removeSelectedBanner = function () {
       currentBannerBase64 = null;
       const fileInput = document.getElementById('banner-file-input');
       if (fileInput) fileInput.value = '';
@@ -8533,12 +8710,12 @@
       document.getElementById('banner-dropzone').classList.remove('hidden');
     };
 
-    window.updateDescCharCounter = function() {
+    window.updateDescCharCounter = function () {
       const descVal = document.getElementById('offer-field-desc').value || '';
       document.getElementById('offer-desc-counter').textContent = `${descVal.length}/300`;
     };
 
-    window.updateDiscountUnitLabel = function() {
+    window.updateDiscountUnitLabel = function () {
       const discType = document.getElementById('offer-field-discount-type').value;
       const addon = document.getElementById('discount-unit-addon');
       if (addon) {
@@ -8547,7 +8724,7 @@
     };
 
     // Form Submission: Save as Draft or Create / Save Changes
-    window.submitOfferForm = async function(isDraft = false) {
+    window.submitOfferForm = async function (isDraft = false) {
       const editId = document.getElementById('offer-edit-id').value;
       const type = document.getElementById('offer-current-type').value || 'offer';
       const title = document.getElementById('offer-field-title').value.trim();
@@ -8655,7 +8832,7 @@
     };
 
     // View Modal
-    window.openViewOfferModal = function(id) {
+    window.openViewOfferModal = function (id) {
       const record = allOffersData.find(item => item.id === id);
       if (!record) return;
       currentViewingOfferId = id;
@@ -8667,7 +8844,7 @@
       document.getElementById('view-offer-banner').src = record.image || '/admin/images/necklaces/necklace-1.jpg';
       document.getElementById('view-offer-title').textContent = record.title;
       document.getElementById('view-offer-desc').textContent = record.description || 'No description provided.';
-      
+
       const statusBadge = document.getElementById('view-offer-status-badge');
       if (statusBadge) {
         statusBadge.className = `offer-tag-status ${status.className}`;
@@ -8682,11 +8859,11 @@
       document.getElementById('modal-view-offer').classList.remove('hidden');
     };
 
-    window.closeViewOfferModal = function() {
+    window.closeViewOfferModal = function () {
       document.getElementById('modal-view-offer').classList.add('hidden');
     };
 
-    window.editFromViewModal = function() {
+    window.editFromViewModal = function () {
       closeViewOfferModal();
       if (currentViewingOfferId) {
         openEditOfferScreen(currentViewingOfferId);
@@ -8694,7 +8871,7 @@
     };
 
     // Delete Modal Confirmation
-    window.openDeleteOfferModal = function(id) {
+    window.openDeleteOfferModal = function (id) {
       const record = allOffersData.find(item => item.id === id);
       if (!record) return;
       currentDeletingOfferId = id;
@@ -8706,12 +8883,12 @@
       document.getElementById('modal-delete-offer').classList.remove('hidden');
     };
 
-    window.closeDeleteOfferModal = function() {
+    window.closeDeleteOfferModal = function () {
       currentDeletingOfferId = null;
       document.getElementById('modal-delete-offer').classList.add('hidden');
     };
 
-    window.executeDeleteOffer = async function() {
+    window.executeDeleteOffer = async function () {
       if (!currentDeletingOfferId) return;
 
       const deleteBtn = document.getElementById('btn-confirm-delete-offer');
@@ -8887,6 +9064,11 @@
 
     // Auto-bootstrap on load
     window.addEventListener('DOMContentLoaded', () => {
+      const initHash = (window.location.hash || '').replace('#', '').toLowerCase();
+      if (initHash === 'products' || initHash === 'catalogue') {
+        redirectToCatalogue();
+        return;
+      }
       initDashboard();
       initDropzoneEvents();
     });

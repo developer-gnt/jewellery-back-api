@@ -80,6 +80,28 @@ export class ProductsController {
   }
 
   @Public()
+  @Get('products/check-name')
+  @ApiOperation({ summary: 'Check if product name is available in category' })
+  @ApiQuery({ name: 'name', required: true, description: 'Product name to check' })
+  @ApiQuery({ name: 'categoryId', required: false, description: 'Category ID' })
+  @ApiResponse({ status: 200, description: 'Availability status' })
+  checkNameAvailability(
+    @Query('name') name: string,
+    @Query('categoryId') categoryId?: string,
+  ) {
+    return this.productsService.checkNameAvailability(name, categoryId);
+  }
+
+  @Public()
+  @Get('products/next-article-code')
+  @ApiOperation({ summary: 'Get next sequential common article code (e.g. ZM0004)' })
+  @ApiResponse({ status: 200, description: 'Next article code' })
+  async getNextArticleCode() {
+    const articleCode = await this.productsService.generateNextArticleCode();
+    return { articleCode, prefix: 'ZM' };
+  }
+
+  @Public()
   @Get('products/:id')
   @ApiOperation({ summary: 'Retrieve product details with full gallery and category' })
   @ApiResponse({ status: 200, description: 'Product details' })

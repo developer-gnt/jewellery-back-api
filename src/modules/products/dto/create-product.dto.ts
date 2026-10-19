@@ -28,12 +28,12 @@ export class CreateProductDto {
   slug?: string;
 
   @ApiPropertyOptional({
-    example: 'mub-001',
-    description: 'Unique product SKU',
+    example: 'ZM0001',
+    description: 'Article Code (common sequence across all categories, e.g. ZM0001)',
   })
   @IsOptional()
-  @IsString({ message: 'SKU must be a string' })
-  @MaxLength(100, { message: 'SKU cannot exceed 100 characters' })
+  @IsString({ message: 'Article Code must be a string' })
+  @MaxLength(50, { message: 'Article Code cannot exceed 50 characters' })
   sku?: string;
 
   @ApiPropertyOptional({
@@ -61,12 +61,12 @@ export class CreateProductDto {
   @IsString({ message: 'Purity must be a string' })
   purity?: string;
 
-  @ApiPropertyOptional({ example: 28.45, description: 'Gross weight in grams' })
-  @IsOptional()
+  @ApiProperty({ example: 28.45, description: 'Gross weight in grams' })
+  @IsNotEmpty({ message: 'Gross weight in grams is required' })
   @Type(() => Number)
   @IsNumber({}, { message: 'Weight must be a number' })
-  @Min(0, { message: 'Weight cannot be negative' })
-  weight?: number;
+  @Min(0.01, { message: 'Weight must be greater than 0' })
+  weight: number;
 
   @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000', description: 'Category UUID' })
   @IsNotEmpty({ message: 'Category ID is required' })

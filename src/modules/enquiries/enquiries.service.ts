@@ -77,8 +77,8 @@ export class EnquiriesService {
         .sendToUser(
           userId,
           'enquiries',
-          `Enquiry Received: ${referenceNumber}`,
-          'Thank you for contacting Zewar Mahal. We have received your enquiry and our team will get back to you shortly.',
+          `Enquiry Mili: ${referenceNumber}`,
+          'Zewar Mahal se judne ka shukriya. Hamein aapki enquiry mil gayi hai aur hamaari team aapse jald hi contact karegi.',
           { referenceNumber, enquiryId: saved.id },
         )
         .catch(() => {});
