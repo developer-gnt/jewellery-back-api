@@ -141,7 +141,7 @@ describe('EnquiriesService', () => {
   });
 
   describe('submitBulk', () => {
-    it('should create a bulk wishlist enquiry with associated items', async () => {
+    it('should create a bulk wishlist enquiry with associated items and no prices in message', async () => {
       const result = await service.submitBulk(
         {
           name: 'Rohan Sharma',
@@ -157,6 +157,11 @@ describe('EnquiriesService', () => {
       expect(result.isBulkWishlist).toBe(true);
       expect(result.itemCount).toBe(1);
       expect(mockEnquiryItemRepo.save).toHaveBeenCalled();
+      expect(mockEnquiryRepo.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: expect.not.stringContaining('₹'),
+        }),
+      );
     });
   });
 });

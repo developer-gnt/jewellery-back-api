@@ -209,13 +209,13 @@ export class EnquiriesService {
     // 2. Generate Unique Reference Number
     const referenceNumber = this.generateReferenceNumber();
 
-    // 3. Compose clean, structured bulk message
+    // 3. Compose clean, structured bulk message (without amount)
     const productListText = itemsToProcess
       .map(
         (it, idx) =>
           `${idx + 1}. ${it.productName} — ${it.purity || 'Hallmark Gold'}${
             it.weight ? `, ${it.weight} g` : ''
-          }, ₹${Number(it.price).toLocaleString('en-IN')}`,
+          }`,
       )
       .join('\n');
 
