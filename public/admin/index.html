@@ -3174,6 +3174,473 @@
       40%, 80% { transform: translateX(4px); }
     }
 
+    /* ============================================================= */
+    /* BESPOKE LUXURY CATEGORY SCREEN / MODAL (Matching Image 2)      */
+    /* ============================================================= */
+    #modal-category {
+      background: rgba(28, 22, 18, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      z-index: 1050;
+    }
+
+    #modal-category.hidden {
+      display: none !important;
+    }
+
+    #modal-category .modal-card {
+      background: #FAF7F2;
+      border: 1px solid #EFE8DF;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 440px;
+      height: 94vh;
+      height: 94dvh;
+      max-height: 860px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 60px rgba(45, 32, 20, 0.28);
+      overflow: hidden;
+      margin: auto;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 520px) {
+      #modal-category {
+        padding: 0;
+      }
+      #modal-category .modal-card {
+        max-width: 100%;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: none;
+      }
+    }
+
+    /* Branded Header (Top Row with Logo & Quick Icons) */
+    .cat-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #FAF7F2;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(229, 219, 207, 0.6);
+    }
+
+    .cat-header-circle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid #EAE2D7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      color: #211A16;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 0;
+    }
+
+    .cat-header-circle-btn:hover {
+      background: #F7EFE4;
+      border-color: #B87925;
+      transform: scale(1.02);
+    }
+
+    .cat-header-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cat-brand-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .cat-brand-monogram {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #B87925;
+      letter-spacing: 0.5px;
+    }
+
+    .cat-brand-title {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #9E6B28;
+      letter-spacing: 1.8px;
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .cat-brand-sub {
+      font-size: 8px;
+      font-weight: 600;
+      color: #8C7866;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .cat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-badge-counter {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #A26E27;
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #FFFFFF;
+    }
+
+    .cat-badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #E11D48;
+      border: 1px solid #FFFFFF;
+    }
+
+    /* Scrollable Body Content */
+    .cat-modal-scroll-body {
+      padding: 16px 18px 24px;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
+    }
+
+    .cat-heading-wrap {
+      margin-bottom: 16px;
+      padding: 2px 2px 0;
+    }
+
+    .cat-page-title {
+      font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: #211A16;
+      margin: 0 0 3px 0;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .cat-page-subtitle {
+      font-size: 13px;
+      color: #786C60;
+      margin: 0;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* Inner White Form Card */
+    .cat-form-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 20px 18px;
+      border: 1px solid #ECE4DA;
+      box-shadow: 0 2px 14px rgba(45, 32, 20, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .cat-form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+
+    .cat-form-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #211A16;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    .cat-req-asterisk {
+      color: #DC2626;
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    .cat-form-input,
+    .cat-form-textarea {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.2px solid #E5DFD7;
+      border-radius: 12px;
+      padding: 12px 15px;
+      font-size: 14px;
+      color: #211A16;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .cat-form-input:focus,
+    .cat-form-textarea:focus {
+      border-color: #B87925;
+      box-shadow: 0 0 0 3px rgba(184, 121, 37, 0.12);
+      background: #FFFFFF;
+    }
+
+    .cat-form-input::placeholder,
+    .cat-form-textarea::placeholder {
+      color: #A89C91;
+      font-size: 13.5px;
+    }
+
+    .cat-form-helper {
+      font-size: 11.5px;
+      color: #8C7E74;
+      margin-top: 5px;
+      display: block;
+      font-weight: 400;
+    }
+
+    .cat-form-textarea {
+      resize: vertical;
+      min-height: 85px;
+      line-height: 1.45;
+    }
+
+    /* Centered Image Dropzone (Matching Image 2) */
+    .cat-centered-dropzone {
+      border: 1.5px dashed #D4AF37;
+      border-radius: 16px;
+      background: #FAF6F0;
+      padding: 24px 16px 20px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      position: relative;
+      user-select: none;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cat-centered-dropzone:hover {
+      border-color: #9E6B28;
+      background: #F5EEE2;
+    }
+
+    .cat-centered-dropzone.dragover {
+      border-color: #7E4F18;
+      background: #EFE4D2;
+      transform: scale(0.99);
+    }
+
+    .cat-centered-dropzone.dropzone-error {
+      border-color: #DC2626 !important;
+      background: #FEF2F2 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+      animation: dropzone-shake 0.35s ease;
+    }
+
+    .cat-dropzone-empty-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .cat-dropzone-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: #F3EAE0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 0 1px rgba(184, 121, 37, 0.12);
+    }
+
+    .cat-dropzone-main-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #211A16;
+      margin-bottom: 4px;
+    }
+
+    .cat-dropzone-sub-text {
+      font-size: 12px;
+      color: #786C60;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    .cat-browse-files-btn {
+      background: #FFFFFF;
+      border: 1px solid #D6C8B8;
+      border-radius: 10px;
+      padding: 8px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6D4C1B;
+      cursor: pointer;
+      display: inline-block;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .cat-browse-files-btn:hover {
+      border-color: #B87925;
+      color: #B87925;
+      background: #FAF6F0;
+    }
+
+    /* Dropzone Preview State */
+    .cat-dropzone-preview-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .cat-preview-image {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid #E5DFD7;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .cat-preview-info {
+      flex: 1;
+      text-align: left;
+      min-width: 0;
+    }
+
+    .cat-image-badge-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+      transition: all 0.2s ease;
+    }
+
+    .cat-image-error-alert {
+      color: #DC2626;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Fixed Bottom Action Bar (Image 2) */
+    .cat-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px 18px;
+      background: #FAF7F2;
+      border-top: 1px solid #EDE7DF;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .cat-btn-cancel {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid #D6C9BA;
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #211A16;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      outline: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .cat-btn-cancel:hover {
+      background: #F5EFE6;
+      border-color: #B87925;
+    }
+
+    .cat-btn-save {
+      flex: 1.35;
+      background: #A26E27;
+      background: linear-gradient(135deg, #B27B2D 0%, #945F1B 100%);
+      border: none;
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #FFFFFF;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      outline: none;
+      box-shadow: 0 4px 14px rgba(162, 110, 39, 0.28);
+    }
+
+    .cat-btn-save:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(162, 110, 39, 0.35);
+    }
+
+    .cat-btn-save:active {
+      transform: translateY(0);
+    }
+
     .compact-dropzone-empty {
       display: flex;
       align-items: center;
@@ -6488,117 +6955,142 @@
   <!-- ============================================================= -->
   <div id="modal-category" class="modal-overlay hidden" onclick="if(event.target === this) closeCategoryModal()">
     <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="panel-title" id="modal-category-title" style="font-size:20px;">Add New Category</h3>
-        <button type="button" class="modal-close" onclick="closeCategoryModal()" aria-label="Close dialog">&times;</button>
+      <!-- 1. Luxury Branded Mobile Header (Image 2) -->
+      <div class="cat-modal-header">
+        <button type="button" class="cat-header-circle-btn" onclick="closeCategoryModal()" aria-label="Go back">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#211A16" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="cat-header-brand">
+          <div class="cat-brand-logo-row">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#B87925">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span class="cat-brand-monogram">ZM</span>
+          </div>
+          <div class="cat-brand-title">ZEWAR MAHAL</div>
+          <div class="cat-brand-sub">TIMELESS JEWELLERY FOR YOU</div>
+        </div>
+
+        <div class="cat-header-actions">
+          <div class="cat-header-circle-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#211A16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="cat-badge-counter">2</span>
+          </div>
+          <div class="cat-header-circle-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#211A16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="cat-badge-dot"></span>
+          </div>
+        </div>
       </div>
 
+      <!-- 2. Scrollable Body Content -->
       <form id="form-category" onsubmit="handleCategoryFormSubmit(event)" style="display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden;">
         <input type="hidden" id="cat-edit-id">
 
-        <div class="modal-body">
-          <div class="form-grid-2col">
-            <div class="form-group">
-              <label class="form-label">Category Name <span style="color:var(--danger)">*</span></label>
-              <div class="input-wrapper">
-                <input type="text" id="cat-form-name" placeholder="e.g. Necklaces" required
-                  oninput="handleCategoryNameInput(this.value)">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">URL Slug</label>
-              <div class="input-wrapper">
-                <input type="text" id="cat-form-slug" placeholder="e.g. necklaces">
-              </div>
-              <small style="color:var(--text-muted); font-size:11px; margin-top:3px; display:block;">Leave blank to auto-generate from name</small>
-            </div>
+        <div class="cat-modal-scroll-body modal-body">
+          <!-- Page Heading (Image 2) -->
+          <div class="cat-heading-wrap">
+            <h2 class="cat-page-title" id="modal-category-title">Add New Category</h2>
+            <p class="cat-page-subtitle">Create a category for your jewellery catalogue</p>
           </div>
 
-          <div class="form-group">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <label class="form-label" style="font-size:13.5px; font-weight:600; color:#2D251E; margin-bottom:0; display:block;">
-                Upload Category Image <span style="color:var(--danger, #DC2626); font-weight:700;">*</span>
-              </label>
-              <span id="cat-image-badge" style="font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; transition:all 0.2s;">
-                Image Required *
-              </span>
+          <!-- White Form Card Container (Image 2) -->
+          <div class="cat-form-card">
+            <!-- Field 1: Category Name * -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">Category Name <span class="cat-req-asterisk">*</span></label>
+              <input type="text" id="cat-form-name" class="cat-form-input" placeholder="Enter category name" required
+                oninput="handleCategoryNameInput(this.value)">
             </div>
-            <input type="hidden" id="cat-form-image" required>
-            <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
-              style="display:none;" onchange="handleCatFileSelect(this.files)">
 
-            <div class="compact-luxury-dropzone image-dropzone" id="cat-image-dropzone"
-              onclick="document.getElementById('cat-file-input').click()">
-              <div id="dropzone-empty-state" class="compact-dropzone-empty">
-                <div class="compact-dropzone-left">
-                  <div class="compact-dropzone-icon">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#9E6B28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <!-- Field 2: URL Slug -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">URL Slug</label>
+              <input type="text" id="cat-form-slug" class="cat-form-input" placeholder="Enter URL slug">
+              <span class="cat-form-helper">Leave blank to auto-generate from name</span>
+            </div>
+
+            <!-- Field 3: Description (Positioned BEFORE image upload as in Image 2!) -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">Description</label>
+              <textarea id="cat-form-desc" class="cat-form-textarea" rows="3"
+                placeholder="Brief description of the collection..."></textarea>
+            </div>
+
+            <!-- Field 4: Upload Category Image (Centered Luxury Dropzone from Image 2!) -->
+            <div class="cat-form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <label class="cat-form-label" style="margin-bottom:0;">
+                  Upload Category Image <span class="cat-req-asterisk">*</span>
+                </label>
+                <span id="cat-image-badge" class="cat-image-badge-pill">
+                  Image Required *
+                </span>
+              </div>
+              <input type="hidden" id="cat-form-image" required>
+              <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
+                style="display:none;" onchange="handleCatFileSelect(this.files)">
+
+              <div class="cat-centered-dropzone image-dropzone" id="cat-image-dropzone"
+                onclick="document.getElementById('cat-file-input').click()">
+                <div id="dropzone-empty-state" class="cat-dropzone-empty-content">
+                  <div class="cat-dropzone-icon-box">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#9E6B28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
                       <circle cx="8.5" cy="8.5" r="1.5"></circle>
                       <polyline points="21 15 16 10 5 21"></polyline>
                     </svg>
                   </div>
-                  <div class="compact-dropzone-text">
-                    <div class="compact-main-title">Choose image or drag and drop</div>
-                    <div class="compact-sub-title">PNG, JPG or WEBP (max. 5 MB) &bull; <strong style="color:#B87925;">Mandatory</strong></div>
+                  <div class="cat-dropzone-main-text">Choose image or drag and drop</div>
+                  <div class="cat-dropzone-sub-text">PNG, JPG or WEBP (max. 5 MB)</div>
+                  <button type="button" class="cat-browse-files-btn"
+                    onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
+                    Browse Files
+                  </button>
+                </div>
+
+                <!-- Uploaded Preview State -->
+                <div id="dropzone-preview-state" style="display:none;" class="cat-dropzone-preview-content">
+                  <img id="cat-dropzone-img" src="" alt="Selected Preview" class="cat-preview-image">
+                  <div class="cat-preview-info">
+                    <span class="preview-filename" id="cat-preview-name" style="font-weight:600; font-size:13px; color:#211A16; display:block;">image.jpg</span>
+                    <span class="preview-filesize" id="cat-preview-size" style="font-size:11.5px; color:#786C60;">Ready</span>
+                  </div>
+                  <div class="dropzone-preview-actions" style="display:flex; align-items:center; gap:8px;">
+                    <button type="button" class="btn-preview-change"
+                      onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
+                    <button type="button" class="btn-preview-remove"
+                      onclick="event.stopPropagation(); removeCatImage();">&times;</button>
                   </div>
                 </div>
-                <button type="button" class="btn-browse-files compact-browse-btn"
-                  onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
-                  Browse Files
-                </button>
               </div>
 
-              <!-- Uploaded Preview State -->
-              <div id="dropzone-preview-state" style="display:none;">
-                <img id="cat-dropzone-img" src="" alt="Selected Preview">
-                <div class="dropzone-preview-info">
-                  <span class="preview-filename" id="cat-preview-name">image.jpg</span>
-                  <span class="preview-filesize" id="cat-preview-size">Selected</span>
-                </div>
-                <div class="dropzone-preview-actions">
-                  <button type="button" class="btn-preview-change"
-                    onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
-                  <button type="button" class="btn-preview-remove"
-                    onclick="event.stopPropagation(); removeCatImage();">&times;</button>
-                </div>
+              <div id="cat-image-error-msg" style="display:none;" class="cat-image-error-alert">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Please upload a category image. Uploading an image is mandatory.</span>
               </div>
             </div>
-            <div id="cat-image-error-msg" style="display:none; color:#DC2626; font-size:12px; font-weight:500; margin-top:6px; align-items:center; gap:5px;">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              <span>Uploading an image is mandatory before uploading category.</span>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label">Description</label>
-            <div class="input-wrapper">
-              <textarea id="cat-form-desc" rows="2"
-                style="width:100%; border:none; outline:none; font-family:inherit; font-size:13px; background:transparent; resize:vertical; padding:8px 0;"
-                placeholder="Brief description of the collection..."></textarea>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-bottom:0;">
-            <label class="flex items-center gap-2"
-              style="cursor:pointer; font-size:13.5px; font-weight:600; color:var(--text-primary); user-select:none;">
-              <input type="checkbox" id="cat-form-active" checked
-                style="accent-color:var(--gold-primary); width:17px; height:17px; cursor:pointer;">
-              <span>Active (Display in mobile app &amp; web catalogue)</span>
-            </label>
+            <input type="checkbox" id="cat-form-active" checked style="display:none;">
           </div>
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn-modal-cancel" onclick="closeCategoryModal()">Cancel</button>
-          <button type="submit" class="btn-primary" id="btn-cat-save" style="margin:0; padding:10px 24px;">
-            Save Category
-          </button>
+        <!-- 3. Fixed Bottom Action Bar (Image 2) -->
+        <div class="cat-modal-footer">
+          <button type="button" class="cat-btn-cancel" onclick="closeCategoryModal()">Cancel</button>
+          <button type="submit" class="cat-btn-save" id="btn-cat-save">Save Category</button>
         </div>
       </form>
     </div>
