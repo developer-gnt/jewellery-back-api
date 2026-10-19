@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
   JoinColumn,
+  JoinTable,
 } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity.js';
+import { Product } from '../../products/entities/product.entity.js';
 
 @Entity('offers')
 export class Offer {
@@ -41,6 +44,17 @@ export class Offer {
   @ManyToOne(() => Category, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'categoryId' })
   category: Category | null;
+
+  @Column({ type: 'jsonb', nullable: true, default: () => "'[]'::jsonb" })
+  productIds: string[] | null;
+
+  @ManyToMany(() => Product, { cascade: false })
+  @JoinTable({
+    name: 'offer_products',
+    joinColumn: { name: 'offerId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'productId', referencedColumnName: 'id' },
+  })
+  products: Product[];
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   discountType: string | null; // 'percentage' | 'fixed'

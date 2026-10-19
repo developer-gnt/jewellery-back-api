@@ -16,7 +16,12 @@ export class SmsService {
     const message = `Your Zewar Mahal verification OTP is ${otp}. Valid for 2 minutes. Please do not share this OTP with anyone.`;
 
     if (isDev) {
-      this.logger.log(`[SMS-DEV-MOCK] To: ${mobile} | Message: ${message}`);
+      console.log('\n┌──────────────────────────────────────────────┐');
+      console.log(`│ 🔐 ZEWAR MAHAL OTP CODE:  ${otp}             │`);
+      console.log(`│ 📱 Mobile: +91 ${mobile.padEnd(28)} │`);
+      console.log(`│ 💡 Dev Bypass OTP: 123456                    │`);
+      console.log('└──────────────────────────────────────────────┘\n');
+      this.logger.log(`[SMS-DEV-MOCK] To: ${mobile} | OTP: ${otp} | Message: ${message}`);
       return true;
     }
 

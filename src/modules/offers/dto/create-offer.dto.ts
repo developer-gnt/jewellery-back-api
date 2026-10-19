@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsBoolean, IsDate, IsNumber, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsBoolean, IsDate, IsNumber, IsUUID, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateOfferDto {
@@ -42,6 +42,12 @@ export class CreateOfferDto {
   @IsOptional()
   @IsUUID()
   categoryId?: string;
+
+  @ApiPropertyOptional({ example: ['09b5b2eb-9f34-409a-9f15-344f957aa767'], description: 'Product UUIDs for Specific Pieces' })
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  productIds?: string[];
 
   @ApiPropertyOptional({ example: 'percentage', description: 'Discount type: percentage or fixed' })
   @IsOptional()

@@ -30,6 +30,7 @@ describe('HomeService', () => {
 
   const mockOfferRepo = {
     createQueryBuilder: vi.fn().mockReturnValue({
+      leftJoinAndSelect: vi.fn().mockReturnThis(),
       where: vi.fn().mockReturnThis(),
       andWhere: vi.fn().mockReturnThis(),
       orderBy: vi.fn().mockReturnThis(),

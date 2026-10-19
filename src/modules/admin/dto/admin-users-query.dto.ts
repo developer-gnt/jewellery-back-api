@@ -24,4 +24,13 @@ export class AdminUsersQueryDto extends PaginationDto {
   })
   @IsBoolean()
   isActive?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Filter customers by tab status: all, active, inactive',
+    example: 'active',
+  })
+  @IsOptional()
+  @IsString()
+  status?: string;
 }
+
