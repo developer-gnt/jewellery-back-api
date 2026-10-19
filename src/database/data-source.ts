@@ -2,6 +2,8 @@ import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
 import { User } from '../modules/users/entities/user.entity.js';
 import { NotificationPreference } from '../modules/users/entities/notification-preference.entity.js';
+import { UserAddress } from '../modules/users/entities/user-address.entity.js';
+import { UserWishlist } from '../modules/users/entities/user-wishlist.entity.js';
 import { Admin } from '../modules/admin/entities/admin.entity.js';
 import { RefreshToken } from '../modules/auth/entities/refresh-token.entity.js';
 import { Category } from '../modules/categories/entities/category.entity.js';
@@ -26,11 +28,13 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASS || 'postgres',
   database: process.env.DB_NAME || 'zewar_mahal',
-  synchronize: false,
+  synchronize: process.env.DB_SYNC === 'true',
   logging: process.env.DB_LOGGING === 'true',
   entities: [
     User,
     NotificationPreference,
+    UserAddress,
+    UserWishlist,
     Admin,
     RefreshToken,
     Category,

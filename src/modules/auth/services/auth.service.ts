@@ -40,10 +40,7 @@ export class AuthService {
   }
 
   async verifyOtp(dto: VerifyOtpDto) {
-    const isValid = await this.otpService.verifyOtp(dto.mobile, dto.otp);
-    if (!isValid) {
-      throw new BadRequestException('Invalid or expired OTP');
-    }
+    await this.otpService.verifyOtp(dto.mobile, dto.otp);
 
     // Find or create user
     let user = await this.userRepository.findOne({
