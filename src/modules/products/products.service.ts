@@ -4,12 +4,14 @@ import {
   ConflictException,
   BadRequestException,
   OnModuleInit,
+  Optional,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Raw } from 'typeorm';
 import { Product } from './entities/product.entity.js';
 import { ProductImage } from './entities/product-image.entity.js';
 import { Category } from '../categories/entities/category.entity.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
 import { QueryProductsDto } from './dto/query-products.dto.js';
@@ -25,6 +27,8 @@ export class ProductsService implements OnModuleInit {
     private readonly imageRepository: Repository<ProductImage>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+    @Optional()
+    private readonly notificationsService?: NotificationsService,
   ) {}
 
   private slugify(text: string): string {
@@ -349,6 +353,20 @@ export class ProductsService implements OnModuleInit {
       );
       await this.imageRepository.save(images);
       savedProduct.images = images;
+    }
+
+    if (savedProduct.isPublished && this.notificationsService) {
+      this.notificationsService
+        .notifyNewProduct(
+          {
+            id: savedProduct.id,
+            name: savedProduct.name,
+            price: savedProduct.price ? Number(savedProduct.price) : undefined,
+            categoryId: savedProduct.categoryId,
+          },
+          category?.name,
+        )
+        .catch(() => {});
     }
 
     return this.findOne(savedProduct.id);

@@ -16,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { EnquiriesService } from './enquiries.service.js';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto.js';
+import { CreateBulkWishlistEnquiryDto } from './dto/create-bulk-enquiry.dto.js';
 import { UpdateEnquiryStatusDto } from './dto/update-enquiry-status.dto.js';
 import { UpdateEnquiryDto } from './dto/update-enquiry.dto.js';
 import { QueryEnquiriesDto } from './dto/query-enquiries.dto.js';
@@ -54,6 +55,21 @@ export class EnquiriesController {
     @CurrentUser('sub') userId?: string,
   ) {
     return this.enquiriesService.submit(dto, userId);
+  }
+
+  @Public()
+  @UseGuards(JwtAuthGuard)
+  @Post('enquiries/bulk')
+  @ApiOperation({ summary: 'Submit a bulk wishlist enquiry with all products (Customer or Guest)' })
+  @ApiResponse({
+    status: 201,
+    description: 'Bulk enquiry submitted with unique reference number and associated items',
+  })
+  submitBulk(
+    @Body() dto: CreateBulkWishlistEnquiryDto,
+    @CurrentUser('sub') userId?: string,
+  ) {
+    return this.enquiriesService.submitBulk(dto, userId);
   }
 
   @Get('users/enquiries')

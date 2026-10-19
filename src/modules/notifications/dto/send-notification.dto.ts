@@ -45,10 +45,10 @@ export class SendNotificationDto {
 
   @ApiPropertyOptional({
     example: 'general',
-    enum: ['offers', 'rates', 'enquiries', 'general'],
+    enum: ['offers', 'rates', 'enquiries', 'general', 'category', 'products'],
     description: 'Notification category type to respect user notification preferences',
   })
   @IsOptional()
   @IsString()
-  type?: 'offers' | 'rates' | 'enquiries' | 'general';
+  type?: 'offers' | 'rates' | 'enquiries' | 'general' | 'category' | 'products';
 }

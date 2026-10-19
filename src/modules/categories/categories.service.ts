@@ -2,14 +2,15 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
-  ConflictException,
   OnModuleInit,
   Logger,
+  Optional,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Category } from './entities/category.entity.js';
 import { Product } from '../products/entities/product.entity.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateCategoryDto } from './dto/create-category.dto.js';
 import { UpdateCategoryDto } from './dto/update-category.dto.js';
 import { seedCatalogue } from '../../database/seeds/catalogue.seed.js';
@@ -24,6 +25,8 @@ export class CategoriesService implements OnModuleInit {
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
     private readonly dataSource: DataSource,
+    @Optional()
+    private readonly notificationsService?: NotificationsService,
   ) {}
 
   async onModuleInit() {
@@ -107,6 +110,10 @@ export class CategoriesService implements OnModuleInit {
   }
 
   async create(dto: CreateCategoryDto) {
+    if (!dto.image || !dto.image.trim()) {
+      throw new BadRequestException('Category image is required. Please upload an image before creating a category.');
+    }
+
     const slug = dto.slug ? this.slugify(dto.slug) : this.slugify(dto.name);
 
     const existing = await this.categoryRepository.findOne({
@@ -123,7 +130,19 @@ export class CategoriesService implements OnModuleInit {
       isActive: dto.isActive ?? true,
     });
 
-    return this.categoryRepository.save(category);
+    const saved = await this.categoryRepository.save(category);
+
+    if (saved.isActive && this.notificationsService) {
+      this.notificationsService
+        .notifyNewCategory({
+          id: saved.id,
+          name: saved.name,
+          description: saved.description,
+        })
+        .catch(() => {});
+    }
+
+    return saved;
   }
 
   async update(id: string, dto: UpdateCategoryDto) {

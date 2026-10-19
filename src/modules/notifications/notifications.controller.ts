@@ -24,6 +24,7 @@ import { SendNotificationDto } from './dto/send-notification.dto.js';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
 import { AdminGuard } from '../../common/guards/admin.guard.js';
 import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
+import { Public } from '../../common/decorators/roles.decorator.js';
 
 @ApiTags('notifications')
 @Controller()
@@ -60,14 +61,15 @@ export class NotificationsController {
   }
 
   @Get('notifications')
+  @Public()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
-  @ApiOperation({ summary: 'Retrieve notifications for authenticated customer' })
+  @ApiOperation({ summary: 'Retrieve notifications for customer (authenticated or guest)' })
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiResponse({ status: 200, description: 'List of in-app notifications with unread count' })
   getMyNotifications(
-    @CurrentUser('sub') userId: string,
+    @CurrentUser('sub') userId?: string,
     @Query('page') page?: number,
     @Query('limit') limit?: number,
   ) {
@@ -75,12 +77,13 @@ export class NotificationsController {
   }
 
   @Patch('notifications/:id/read')
+  @Public()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Mark specific notification (or "all") as read' })
   @ApiResponse({ status: 200, description: 'Notification(s) marked read' })
   markAsRead(
-    @CurrentUser('sub') userId: string,
+    @CurrentUser('sub') userId: string | undefined,
     @Param('id') notificationId: string,
   ) {
     return this.notificationsService.markAsRead(userId, notificationId);

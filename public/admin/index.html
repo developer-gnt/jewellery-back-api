@@ -901,14 +901,30 @@
 
     .red-badge-dot {
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      top: -4px;
+      right: -6px;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 9999px;
       background: #B3261E;
+      color: #FFFFFF;
+      font-size: 9.5px;
+      font-weight: 800;
+      line-height: 15px;
+      text-align: center;
+      padding: 0 4px;
       border: 1.5px solid #FFFFFF;
-      box-shadow: 0 0 6px rgba(179, 38, 30, 0.6);
+      box-shadow: 0 0 8px rgba(179, 38, 30, 0.7);
+      animation: pulseRed 2s infinite;
+      display: none;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    @keyframes pulseRed {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 38, 30, 0.6); }
+      70% { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(179, 38, 30, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 38, 30, 0); }
     }
 
     .header-admin-pill {
@@ -2979,52 +2995,59 @@
       background: #FCE2E2;
     }
 
-    /* MODAL */
+    /* MODAL SYSTEM — LUXURY & RESPONSIVE WITH DOCKED HEADER/FOOTER & SMOOTH SCROLL */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(40, 32, 26, 0.55);
+      background: rgba(30, 24, 18, 0.65);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 1000;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 20px 16px;
+      padding: 24px 16px;
       overflow-y: auto;
+      overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+      cursor: pointer;
+    }
+
+    @media (min-height: 700px) {
+      .modal-overlay {
+        align-items: center;
+      }
     }
 
     .modal-card {
       background: #FFFFFF;
       border: 1px solid var(--border-gold);
-      border-radius: var(--radius-lg);
+      border-radius: 22px;
       width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
+      max-width: 540px;
       max-height: calc(100dvh - 36px);
+      max-height: calc(100vh - 36px);
       display: flex;
       flex-direction: column;
-      padding: 28px 24px 24px 24px;
-      box-shadow: 0 24px 60px rgba(90, 65, 30, 0.25);
-      animation: zoomIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      margin: auto;
+      padding: 0;
+      box-shadow: 0 24px 60px rgba(90, 65, 30, 0.28);
+      animation: zoomIn 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      margin: auto 0;
       box-sizing: border-box;
+      cursor: default;
     }
 
     @keyframes zoomIn {
       from {
-        transform: scale(0.95);
+        transform: scale(0.96) translateY(8px);
         opacity: 0;
       }
-
       to {
-        transform: scale(1);
+        transform: scale(1) translateY(0);
         opacity: 1;
       }
     }
@@ -3033,22 +3056,1182 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
+      padding: 20px 24px 16px 24px;
       border-bottom: 1px solid var(--border-subtle);
       flex-shrink: 0;
+      background: #FFFFFF;
+    }
+
+    .modal-header .panel-title {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #28201A;
+      margin: 0;
+      letter-spacing: 0.01em;
     }
 
     .modal-close {
       background: transparent;
       border: none;
-      color: var(--text-muted);
-      font-size: 22px;
+      color: #8C8074;
+      font-size: 26px;
+      line-height: 1;
       cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      outline: none;
     }
 
     .modal-close:hover {
+      background: rgba(184, 139, 50, 0.12);
       color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 22px 24px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 14px 24px 18px 24px;
+      border-top: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      background: #FFFFFF;
+    }
+
+    .btn-modal-cancel {
+      background: #FFFFFF;
+      border: 1px solid #D5C8B9;
+      border-radius: 12px;
+      padding: 10px 22px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #65594F;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-modal-cancel:hover {
+      background: #F8F5EE;
+      color: var(--text-primary);
+      border-color: #B58634;
+    }
+
+    /* 2-Column Responsive Grid inside Modals */
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .form-grid-2col {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    /* Streamlined Luxury Image Dropzone */
+    .compact-luxury-dropzone {
+      border: 1.5px dashed #D6C9BA;
+      border-radius: 14px;
+      background: #FAF7F2;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      user-select: none;
+    }
+
+    .compact-luxury-dropzone:hover {
+      border-color: #B87925;
+      background: #F7F1E6;
+    }
+
+    .compact-luxury-dropzone.dragover {
+      border-color: #9E6B28;
+      background: #F2E7D5;
+      transform: scale(0.99);
+    }
+
+    .compact-luxury-dropzone.dropzone-error {
+      border-color: #DC2626 !important;
+      background: #FEF2F2 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+      animation: dropzone-shake 0.35s ease;
+    }
+
+    @keyframes dropzone-shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+
+    /* ============================================================= */
+    /* BESPOKE LUXURY CATEGORY SCREEN / MODAL (Matching Image 2)      */
+    /* ============================================================= */
+    #modal-category {
+      background: rgba(28, 22, 18, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      z-index: 1050;
+    }
+
+    #modal-category.hidden {
+      display: none !important;
+    }
+
+    #modal-category .modal-card {
+      background: #FAF7F2;
+      border: 1px solid #EFE8DF;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 440px;
+      height: 94vh;
+      height: 94dvh;
+      max-height: 860px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 60px rgba(45, 32, 20, 0.28);
+      overflow: hidden;
+      margin: auto;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 520px) {
+      #modal-category {
+        padding: 0;
+      }
+      #modal-category .modal-card {
+        max-width: 100%;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: none;
+      }
+    }
+
+    /* Branded Header (Top Row with Logo & Quick Icons) */
+    .cat-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #FAF7F2;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(229, 219, 207, 0.6);
+    }
+
+    .cat-header-circle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid #EAE2D7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      color: #211A16;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 0;
+    }
+
+    .cat-header-circle-btn:hover {
+      background: #F7EFE4;
+      border-color: #B87925;
+      transform: scale(1.02);
+    }
+
+    .cat-header-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cat-brand-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .cat-brand-monogram {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #B87925;
+      letter-spacing: 0.5px;
+    }
+
+    .cat-brand-title {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #9E6B28;
+      letter-spacing: 1.8px;
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .cat-brand-sub {
+      font-size: 8px;
+      font-weight: 600;
+      color: #8C7866;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .cat-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-badge-counter {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #A26E27;
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #FFFFFF;
+    }
+
+    .cat-badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #E11D48;
+      border: 1px solid #FFFFFF;
+    }
+
+    /* Scrollable Body Content */
+    .cat-modal-scroll-body {
+      padding: 16px 18px 24px;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
+    }
+
+    .cat-heading-wrap {
+      margin-bottom: 16px;
+      padding: 2px 2px 0;
+    }
+
+    .cat-page-title {
+      font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: #211A16;
+      margin: 0 0 3px 0;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .cat-page-subtitle {
+      font-size: 13px;
+      color: #786C60;
+      margin: 0;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* Inner White Form Card */
+    .cat-form-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 20px 18px;
+      border: 1px solid #ECE4DA;
+      box-shadow: 0 2px 14px rgba(45, 32, 20, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .cat-form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+
+    .cat-form-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #211A16;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    .cat-req-asterisk {
+      color: #DC2626;
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    .cat-form-input,
+    .cat-form-textarea {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.2px solid #E5DFD7;
+      border-radius: 12px;
+      padding: 12px 15px;
+      font-size: 14px;
+      color: #211A16;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .cat-form-input:focus,
+    .cat-form-textarea:focus {
+      border-color: #B87925;
+      box-shadow: 0 0 0 3px rgba(184, 121, 37, 0.12);
+      background: #FFFFFF;
+    }
+
+    .cat-form-input::placeholder,
+    .cat-form-textarea::placeholder {
+      color: #A89C91;
+      font-size: 13.5px;
+    }
+
+    .cat-form-helper {
+      font-size: 11.5px;
+      color: #8C7E74;
+      margin-top: 5px;
+      display: block;
+      font-weight: 400;
+    }
+
+    .cat-form-textarea {
+      resize: vertical;
+      min-height: 85px;
+      line-height: 1.45;
+    }
+
+    /* Centered Image Dropzone (Matching Image 2) */
+    .cat-centered-dropzone {
+      border: 1.5px dashed #D4AF37;
+      border-radius: 16px;
+      background: #FAF6F0;
+      padding: 24px 16px 20px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      position: relative;
+      user-select: none;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cat-centered-dropzone:hover {
+      border-color: #9E6B28;
+      background: #F5EEE2;
+    }
+
+    .cat-centered-dropzone.dragover {
+      border-color: #7E4F18;
+      background: #EFE4D2;
+      transform: scale(0.99);
+    }
+
+    .cat-centered-dropzone.dropzone-error {
+      border-color: #DC2626 !important;
+      background: #FEF2F2 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+      animation: dropzone-shake 0.35s ease;
+    }
+
+    .cat-dropzone-empty-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .cat-dropzone-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: #F3EAE0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: inset 0 0 0 1px rgba(184, 121, 37, 0.12);
+    }
+
+    .cat-dropzone-main-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #211A16;
+      margin-bottom: 4px;
+    }
+
+    .cat-dropzone-sub-text {
+      font-size: 12px;
+      color: #786C60;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    .cat-browse-files-btn {
+      background: #FFFFFF;
+      border: 1px solid #D6C8B8;
+      border-radius: 10px;
+      padding: 8px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6D4C1B;
+      cursor: pointer;
+      display: inline-block;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .cat-browse-files-btn:hover {
+      border-color: #B87925;
+      color: #B87925;
+      background: #FAF6F0;
+    }
+
+    /* Dropzone Preview State */
+    .cat-dropzone-preview-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .cat-preview-image {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid #E5DFD7;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .cat-preview-info {
+      flex: 1;
+      text-align: left;
+      min-width: 0;
+    }
+
+    .cat-image-badge-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+      transition: all 0.2s ease;
+    }
+
+    .cat-image-error-alert {
+      color: #DC2626;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Fixed Bottom Action Bar (Image 2) */
+    .cat-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px 18px;
+      background: #FAF7F2;
+      border-top: 1px solid #EDE7DF;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .cat-btn-cancel {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid #D6C9BA;
+      border-radius: 14px;
+      padding: 13px 18px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #211A16;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      outline: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .cat-btn-cancel:hover {
+      background: #F5EFE6;
+      border-color: #B87925;
+    }
+
+    .cat-btn-save {
+      flex: 1.35;
+      background: #A26E27;
+      background: linear-gradient(135deg, #B27B2D 0%, #945F1B 100%);
+      border: none;
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #FFFFFF;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      outline: none;
+      box-shadow: 0 4px 14px rgba(162, 110, 39, 0.28);
+    }
+
+    .cat-btn-save:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(162, 110, 39, 0.35);
+    }
+
+    .cat-btn-save:active {
+      transform: translateY(0);
+    }
+
+    /* ============================================================= */
+    /* IMAGE UPLOAD PERMISSION POPUP STYLES */
+    /* ============================================================= */
+    .cat-perm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 14, 10, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+
+    .cat-perm-overlay.hidden {
+      display: none !important;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    @keyframes permModalPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .cat-perm-card {
+      background: #FAF7F2;
+      border: 1px solid rgba(184, 121, 37, 0.28);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(25, 18, 12, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+      width: 100%;
+      max-width: 410px;
+      padding: 26px 22px 22px;
+      box-sizing: border-box;
+      text-align: center;
+      animation: permModalPop 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .cat-perm-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .cat-perm-icon-wrapper {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #F5EEE2 0%, #EDE1CF 100%);
+      border: 1.5px solid #DFCEB9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(184, 121, 37, 0.12);
+    }
+
+    .cat-perm-badge-icon {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #B87925;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      border: 2px solid #FAF7F2;
+    }
+
+    .cat-perm-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #9E6B28;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .cat-perm-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #211A16;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .cat-perm-body {
+      margin-bottom: 20px;
+    }
+
+    .cat-perm-message {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #5C4F44;
+      margin: 0 0 14px;
+      text-align: center;
+    }
+
+    .cat-perm-features {
+      background: #FFFFFF;
+      border: 1px solid #EAE3D9;
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .cat-perm-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .cat-perm-feature-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #F7F0E6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cat-perm-feature-text {
+      font-size: 12px;
+      color: #4A3E34;
+      line-height: 1.45;
+    }
+
+    .cat-perm-actions {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .cat-perm-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+    }
+
+    .cat-perm-btn-deny {
+      background: #FFFFFF;
+      border: 1.5px solid #D6C8B8;
+      color: #5E4624;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .cat-perm-btn-deny:hover {
+      background: #F4EDE3;
+      border-color: #B87925;
+      color: #211A16;
+    }
+
+    .cat-perm-btn-allow {
+      background: linear-gradient(135deg, #B87925 0%, #945F1B 100%);
+      border: none;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(184, 121, 37, 0.32);
+    }
+
+    .cat-perm-btn-allow:hover {
+      background: linear-gradient(135deg, #A86D1E 0%, #855314 100%);
+      box-shadow: 0 6px 18px rgba(184, 121, 37, 0.42);
+      transform: translateY(-1px);
+    }
+
+    .cat-perm-btn-allow:active {
+      transform: translateY(0);
+    }
+
+    /* ============================================================= */
+    /* GOLD PRICE CALCULATOR STYLES (MATCHES WIREFRAME) */
+    /* ============================================================= */
+    .calc-screen-wrapper {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 12px 0 32px;
+    }
+
+    .calc-hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .calc-hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #211A16;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .calc-hero-subtitle {
+      font-size: 14px;
+      color: #756B64;
+    }
+
+    .calc-rings-artwork {
+      width: 80px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .calc-rings-artwork svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 10px rgba(184, 121, 37, 0.25));
+    }
+
+    .calc-form-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE8DE;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 18px rgba(33, 26, 22, 0.05);
+      margin-bottom: 16px;
+    }
+
+    .calc-grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .calc-grid-2x2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .calc-field-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calc-field-label-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .calc-field-label-row svg {
+      width: 16px;
+      height: 16px;
+      stroke: #B87925;
+      flex-shrink: 0;
+    }
+
+    .calc-field-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #211A16;
+    }
+
+    .calc-readonly-box {
+      background: #FAF6F1;
+      border: 1px solid #EADFD3;
+      border-radius: 12px;
+      padding: 0 12px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #3B2F25;
+    }
+
+    .calc-select-box {
+      background: #FFFFFF;
+      border: 1px solid #EADFD3;
+      border-radius: 12px;
+      padding: 0 12px;
+      height: 46px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #211A16;
+      width: 100%;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .calc-select-box:focus {
+      border-color: #B87925;
+    }
+
+    .calc-input-addon-wrap {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid #EADFD3;
+      border-radius: 12px;
+      height: 46px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .calc-input-addon-wrap:focus-within {
+      border-color: #B87925;
+      box-shadow: 0 0 0 3px rgba(184, 121, 37, 0.1);
+    }
+
+    .calc-input-addon-wrap input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      outline: none;
+      padding: 0 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #211A16;
+      background: transparent;
+    }
+
+    .calc-addon-badge {
+      background: #F8F4EE;
+      border-left: 1px solid #EADFD3;
+      padding: 0 14px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #6E5F52;
+    }
+
+    .calc-addon-select {
+      background: #F8F4EE;
+      border-left: 1px solid #EADFD3;
+      border-top: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 0 8px;
+      height: 100%;
+      font-size: 13px;
+      font-weight: 700;
+      color: #B87925;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .calc-field-helper {
+      font-size: 11px;
+      color: #8E8277;
+      margin-top: 4px;
+      padding: 0 2px;
+    }
+
+    /* Estimated Amount Card */
+    .calc-estimate-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE8DE;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 18px rgba(33, 26, 22, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .calc-estimate-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #F4ECE2;
+      margin-bottom: 14px;
+    }
+
+    .calc-icon-box {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #FBF5EE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calc-icon-box svg {
+      width: 17px;
+      height: 17px;
+      stroke: #B87925;
+    }
+
+    .calc-estimate-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: #211A16;
+    }
+
+    .calc-breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 16px;
+    }
+
+    .calc-breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+    }
+
+    .calc-row-label {
+      color: #756B64;
+    }
+
+    .calc-row-val {
+      font-weight: 600;
+      color: #211A16;
+    }
+
+    .calc-total-banner {
+      background: #FAF5ED;
+      border: 1px solid #EFE2CE;
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .calc-total-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #6F4E1B;
+    }
+
+    .calc-total-price {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #8A5818;
+    }
+
+    .calc-actions-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .calc-btn-reset {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1.5px solid #B87925;
+      color: #B87925;
+      border-radius: 14px;
+      height: 48px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calc-btn-reset:hover {
+      background: #FAF5ED;
+    }
+
+    .calc-btn-calc {
+      flex: 1.3;
+      background: linear-gradient(135deg, #B87925 0%, #945F1B 100%);
+      border: none;
+      color: #FFFFFF;
+      border-radius: 14px;
+      height: 48px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(184, 121, 37, 0.32);
+      transition: all 0.2s ease;
+    }
+
+    .calc-btn-calc:hover {
+      box-shadow: 0 6px 18px rgba(184, 121, 37, 0.42);
+      transform: translateY(-1px);
+    }
+
+    .compact-dropzone-empty {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .compact-dropzone-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .compact-dropzone-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(184, 139, 50, 0.12);
+      border: 1px solid rgba(184, 139, 50, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .compact-dropzone-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .compact-main-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #2D251E;
+    }
+
+    .compact-sub-title {
+      font-size: 11px;
+      color: #8A7E72;
+    }
+
+    .compact-browse-btn {
+      background: #FFFFFF;
+      border: 1px solid #D5C8B9;
+      border-radius: 10px;
+      padding: 7px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #4A3E33;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .compact-browse-btn:hover {
+      background: #FAF5EE;
+      border-color: #B87925;
+      color: #9E6B28;
     }
 
     /* LOADING SPINNER */
@@ -3255,13 +4438,27 @@
     }
 
     .modal-overlay {
-      padding: 14px 10px;
+      padding: 12px 10px;
+      align-items: flex-start;
     }
 
     .modal-card {
-      padding: 20px 16px 20px 16px;
-      max-height: calc(100dvh - 28px);
-      border-radius: 20px;
+      padding: 0;
+      max-height: calc(100dvh - 24px);
+      max-height: calc(100vh - 24px);
+      border-radius: 18px;
+    }
+
+    .modal-header {
+      padding: 16px 18px 12px 18px;
+    }
+
+    .modal-body {
+      padding: 16px 18px;
+    }
+
+    .modal-footer {
+      padding: 12px 18px 16px 18px;
     }
 
     .image-dropzone {
@@ -4774,6 +5971,28 @@
       box-shadow: 0 0 0 3px rgba(181, 134, 52, 0.15);
     }
 
+    .btn-enq-msg {
+      background: #FDF6EC;
+      color: #92540F;
+      border: 1px solid #F5D3A9;
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-enq-msg:hover {
+      background: #FCE8CF;
+      border-color: #E6A763;
+      transform: translateY(-1px);
+    }
+
     /* Desktop Table */
     .enquiries-desktop-table {
       width: 100%;
@@ -4812,6 +6031,106 @@
 
     .enquiries-desktop-table tbody tr:hover td {
       background: #FDFBF8;
+    }
+
+    /* Executive Luxury Enquiry Details Modal & Badges */
+    .badge-bulk-wishlist {
+      background: linear-gradient(135deg, #FFF9ED 0%, #F5E8C8 100%);
+      color: #87560B;
+      border: 1px solid #D6AD60;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .badge-bulk-wishlist:hover {
+      background: #EED7A1;
+      transform: translateY(-1px);
+    }
+    .btn-view-items-pill {
+      background: #FDF9F3;
+      border: 1px solid #D6AD60;
+      color: #87560B;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-view-items-pill:hover {
+      background: #F7E9CE;
+      transform: translateY(-1px);
+    }
+    .btn-enq-details {
+      background: #FAF7F2;
+      border: 1px solid #D1C4B5;
+      color: #3D2F24;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-enq-details:hover {
+      background: #F0E5D5;
+      border-color: #B57319;
+      color: #B57319;
+    }
+    .enq-modal-customer-card {
+      background: #FAF7F2;
+      border: 1px solid #EFE8DE;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .enq-modal-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .enq-modal-product-card {
+      background: #FFFFFF;
+      border: 1px solid #EFE8DE;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .enq-modal-product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .enq-product-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #F5EFE6;
+      border: 1px solid #E8DFD3;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -4864,6 +6183,17 @@
               <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
             </svg>
             <span>Bullion Rates</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-section="calculator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+              <line x1="8" y1="6" x2="16" y2="6"></line>
+              <line x1="16" y1="14" x2="16" y2="18"></line>
+              <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"></path>
+            </svg>
+            <span>Gold Calculator</span>
           </a>
         </li>
         <li>
@@ -6209,6 +7539,94 @@
               </button>
             </div>
           </div>
+        <!-- Dedicated Luxury Customer Enquiry & Wishlist Details Modal -->
+        <div id="modal-view-enquiry" class="modal-overlay hidden" onclick="if(event.target === this) closeEnquiryModal()">
+          <div class="modal-card" style="max-width: 760px; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid var(--border-subtle); background: #FAF7F2; display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:24px;">💎</div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <h3 class="panel-title" id="view-enq-ref" style="font-size:17px; margin:0; font-family:monospace; color:#8C5913;">ZM-ENQ-...</h3>
+                    <span id="view-enq-bulk-badge" class="badge-bulk-wishlist" style="display:none;">💎 Bulk Wishlist</span>
+                  </div>
+                  <div id="view-enq-date" style="font-size:12px; color:var(--text-muted); margin-top:2px;">-</div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span id="view-enq-status-badge" class="enquiry-status-badge status-badge-new">New</span>
+                <button class="modal-close" onclick="closeEnquiryModal()">&times;</button>
+              </div>
+            </div>
+
+            <div class="modal-body" style="padding: 20px 24px; overflow-y: auto; display:flex; flex-direction:column; gap:16px;">
+              <!-- 1. Customer Contact & Details Card -->
+              <div class="enq-modal-customer-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div id="view-enq-avatar" class="enquiry-avatar-circle" style="width:44px; height:44px; font-size:16px;">CU</div>
+                  <div>
+                    <div id="view-enq-name" style="font-size:16px; font-weight:700; color:#1C1510;">-</div>
+                    <div id="view-enq-email" style="font-size:12px; color:#8C8074; margin-top:1px;">-</div>
+                    <div id="view-enq-phone" style="font-size:13px; font-weight:600; color:#B57319; margin-top:2px;">-</div>
+                  </div>
+                </div>
+                <div id="view-enq-actions" style="display:flex; align-items:center; gap:8px;">
+                  <a id="view-enq-btn-call" href="#" class="btn-enq-call" title="Call Customer">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </a>
+                  <a id="view-enq-btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="btn-enq-whatsapp" title="WhatsApp Customer">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.155-.526-1.503-.622-2.484-2.164-2.559-2.264-.075-.101-.611-.814-.611-1.552 0-.737.387-1.1.526-1.25.139-.15.303-.188.405-.188.102 0 .204.002.292.006.094.004.22-.036.344.262.128.308.437 1.066.475 1.144.038.077.063.167.013.267-.05.101-.076.164-.151.253-.075.088-.158.197-.226.265-.075.076-.154.159-.066.31.088.151.393.649.843 1.049.58.517 1.069.676 1.22.752.151.076.24.064.33-.038.089-.102.38-.442.481-.594.102-.152.203-.127.343-.076.139.051.886.418 1.038.494.152.076.253.114.291.177.038.064.038.369-.106.774z"/></svg>
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 2. Customer Message Box -->
+              <div>
+                <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:#8C8074; letter-spacing:0.5px; margin-bottom:6px;">Customer Enquiry Message</div>
+                <div id="view-enq-message" style="background:#FAF7F2; border:1px solid #EFE8DE; border-radius:10px; padding:12px 14px; font-size:13.5px; color:#2D231A; line-height:1.55; white-space:pre-wrap; max-height:150px; overflow-y:auto;">-</div>
+              </div>
+
+              <!-- 3. Associated Wishlist Products (All In One View) -->
+              <div id="view-enq-products-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <div style="font-size:13px; font-weight:700; text-transform:uppercase; color:#8C8074; letter-spacing:0.5px;" id="view-enq-items-heading">
+                    Associated Wishlist Products (0)
+                  </div>
+                  <div id="view-enq-total-value" style="font-size:13px; font-weight:700; color:#B57319;">Total Value: -</div>
+                </div>
+                <div id="view-enq-items-grid" class="enq-modal-products-grid">
+                  <!-- Dynamically populated product cards -->
+                </div>
+              </div>
+
+              <!-- 4. Workflow & Follow-Up Action -->
+              <div style="background:#FAF7F2; border:1px solid #EFE8DE; border-radius:12px; padding:16px;">
+                <div style="font-size:13px; font-weight:700; color:#211A16; margin-bottom:10px;">Executive Follow-Up &amp; Workflow Status</div>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:12px;">
+                  <label style="font-size:12px; font-weight:600; color:#5C4E42;">Enquiry Status:</label>
+                  <select id="view-enq-modal-status-select" class="enquiry-select-status" style="padding-right:32px;">
+                    <option value="new">🟡 New</option>
+                    <option value="contacted">🔵 Contacted</option>
+                    <option value="in_progress">🟣 In Progress</option>
+                    <option value="closed">🟢 Closed</option>
+                  </select>
+                  <button type="button" class="btn-primary" style="padding:6px 16px; font-size:12.5px;" onclick="saveEnquiryModalStatus()">Update Status</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  <label style="font-size:12px; font-weight:600; color:#5C4E42;">Concierge Notes / Message to Customer:</label>
+                  <textarea id="view-enq-modal-notes" rows="2" placeholder="Write internal notes or message that will be delivered to customer's notifications..." style="width:100%; border:1px solid #D6C4AD; border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; resize:vertical;"></textarea>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <button type="button" class="btn-secondary" style="font-size:12px; padding:6px 14px;" onclick="saveEnquiryModalNotes()">Send / Save Note</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer" style="padding: 12px 24px; border-top: 1px solid var(--border-subtle); background:#FAF7F2; display:flex; justify-content:flex-end;">
+              <button type="button" class="btn-secondary" onclick="closeEnquiryModal()">Close</button>
+            </div>
+          </div>
         </div>
 
 
@@ -6384,6 +7802,151 @@
           </div>
         </div>
 
+        <!-- ========================================================= -->
+        <!-- SECTION 10: GOLD PRICE CALCULATOR (MATCHES WIREFRAME) -->
+        <!-- ========================================================= -->
+        <div id="section-calculator" class="content-section hidden">
+          <div class="calc-screen-wrapper">
+            
+            <!-- Hero Header with Rings Artwork -->
+            <div class="calc-hero-header">
+              <div>
+                <h1 class="calc-hero-title">Gold Price Calculator</h1>
+                <p class="calc-hero-subtitle">Calculate the approximate price of your jewellery.</p>
+              </div>
+              <div class="calc-rings-artwork">
+                <svg viewBox="0 0 64 64" fill="none">
+                  <ellipse cx="26" cy="34" rx="18" ry="12" stroke="url(#adminRingGoldGrad1)" stroke-width="5" transform="rotate(-20 26 34)"/>
+                  <ellipse cx="38" cy="28" rx="16" ry="10" stroke="url(#adminRingGoldGrad2)" stroke-width="4.5" transform="rotate(25 38 28)"/>
+                  <defs>
+                    <linearGradient id="adminRingGoldGrad1" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#E5C07B"/>
+                      <stop offset="50%" stop-color="#B87925"/>
+                      <stop offset="100%" stop-color="#8F581B"/>
+                    </linearGradient>
+                    <linearGradient id="adminRingGoldGrad2" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#F7E6BD"/>
+                      <stop offset="50%" stop-color="#D4AF37"/>
+                      <stop offset="100%" stop-color="#9E6B28"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 2 × 2 Input Grid Card -->
+            <div class="calc-form-card">
+              <div class="calc-grid-2x2">
+                <!-- Col 1: Gold / Silver Rate -->
+                <div class="calc-field-group">
+                  <div class="calc-field-label-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <select id="admin-calc-metal" style="border: none; background: transparent; font-family: inherit; font-size: 13.5px; font-weight: 700; color: #2C2416; cursor: pointer; outline: none; padding: 0;" onchange="onAdminMetalChange()">
+                      <option value="gold" selected>Gold Rate</option>
+                      <option value="silver">Silver Rate</option>
+                    </select>
+                  </div>
+                  <div class="calc-readonly-box">
+                    <span id="admin-calc-rate-display">₹ 7,450 / gram</span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#756B64" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </div>
+                  <span class="calc-field-helper" id="admin-calc-rate-helper">Live 24K Pure Market Benchmark</span>
+                </div>
+
+                <!-- Col 2: Karat -->
+                <div class="calc-field-group">
+                  <div class="calc-field-label-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    <span class="calc-field-label" id="admin-calc-karat-label">Karat</span>
+                  </div>
+                  <select id="admin-calc-karat" class="calc-select-box" onchange="recalculateAdminGoldPrice()">
+                    <option value="24K" selected>24K (999 Purity)</option>
+                    <option value="22K">22K (916 Purity)</option>
+                    <option value="20K">20K (833 Purity)</option>
+                    <option value="18K">18K (750 Purity)</option>
+                    <option value="16K">16K (667 Purity)</option>
+                  </select>
+                  <span class="calc-field-helper" id="admin-calc-karat-helper">99.9% Pure • Hallmarked</span>
+                </div>
+
+                <!-- Col 3: Gram -->
+                <div class="calc-field-group">
+                  <div class="calc-field-label-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    <span class="calc-field-label">Gram</span>
+                  </div>
+                  <div class="calc-input-addon-wrap">
+                    <input type="number" id="admin-calc-weight" placeholder="Enter weight in grams" step="any" min="0" oninput="recalculateAdminGoldPrice()">
+                    <div class="calc-addon-badge">g</div>
+                  </div>
+                  <span class="calc-field-helper">e.g. 1, 2.5, 10</span>
+                </div>
+
+                <!-- Col 4: Making Charges -->
+                <div class="calc-field-group">
+                  <div class="calc-field-label-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span class="calc-field-label">Making Charges</span>
+                  </div>
+                  <div class="calc-input-addon-wrap">
+                    <input type="number" id="admin-calc-mc" placeholder="Enter making charges" step="any" min="0" oninput="recalculateAdminGoldPrice()">
+                    <select id="admin-calc-mc-type" class="calc-addon-select" onchange="recalculateAdminGoldPrice()">
+                      <option value="percentage">%</option>
+                      <option value="fixed">₹</option>
+                    </select>
+                  </div>
+                  <span class="calc-field-helper" id="admin-calc-mc-helper">Percentage on raw gold value</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Estimated Amount Section Card -->
+            <div class="calc-estimate-card">
+              <div class="calc-estimate-header">
+                <div class="calc-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <h3 class="calc-estimate-title">Estimated Amount</h3>
+              </div>
+
+              <div class="calc-breakdown-list">
+                <div class="calc-breakdown-row">
+                  <span class="calc-row-label" id="admin-calc-breakdown-rate-label">Gold Rate (24K)</span>
+                  <span class="calc-row-val" id="admin-calc-breakdown-rate-val">₹ 7,450 / g</span>
+                </div>
+                <div class="calc-breakdown-row">
+                  <span class="calc-row-label">Weight</span>
+                  <span class="calc-row-val" id="admin-calc-breakdown-weight">0.00 g</span>
+                </div>
+                <div class="calc-breakdown-row">
+                  <span class="calc-row-label" id="admin-calc-breakdown-metal-label">Gold Value</span>
+                  <span class="calc-row-val" id="admin-calc-breakdown-gold-val">₹ 0.00</span>
+                </div>
+                <div class="calc-breakdown-row">
+                  <span class="calc-row-label" id="admin-calc-breakdown-mc-label">Making Charges (0%)</span>
+                  <span class="calc-row-val" id="admin-calc-breakdown-mc-val">₹ 0.00</span>
+                </div>
+              </div>
+
+              <!-- Total Banner -->
+              <div class="calc-total-banner">
+                <div>
+                  <span class="calc-total-label">Total Estimated Price</span>
+                  <span id="admin-calc-total-sub" style="display:block; font-size:11px; font-weight:normal; opacity:0.85;">Raw Gold + Artisanal Making</span>
+                </div>
+                <span class="calc-total-price" id="admin-calc-total-val">₹ 0.00</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="calc-actions-row">
+              <button type="button" class="calc-btn-reset" onclick="resetAdminGoldCalculator()">Reset</button>
+              <button type="button" class="calc-btn-calc" onclick="recalculateAdminGoldPrice(true)">Calculate Price</button>
+            </div>
+
+          </div>
+        </div>
+
       </main>
 
       <!-- FOOTER NAVIGATION BAR (MATCHES CUSTOMER APP BOTTOM TAB BAR) -->
@@ -6451,194 +8014,294 @@
   <!-- ============================================================= -->
   <!-- ADD / EDIT CATEGORY MODAL -->
   <!-- ============================================================= -->
-  <div id="modal-category" class="modal-overlay hidden">
-    <div class="modal-card" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3 class="panel-title" id="modal-category-title" style="font-size:20px;">Add New Category</h3>
-        <button class="modal-close" onclick="closeCategoryModal()">&times;</button>
+  <div id="modal-category" class="modal-overlay hidden" onclick="if(event.target === this) closeCategoryModal()">
+    <div class="modal-card">
+      <!-- 1. Luxury Branded Mobile Header (Image 2) -->
+      <div class="cat-modal-header">
+        <button type="button" class="cat-header-circle-btn" onclick="closeCategoryModal()" aria-label="Go back">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#211A16" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="cat-header-brand">
+          <div class="cat-brand-logo-row">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#B87925">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span class="cat-brand-monogram">ZM</span>
+          </div>
+          <div class="cat-brand-title">ZEWAR MAHAL</div>
+          <div class="cat-brand-sub">TIMELESS JEWELLERY FOR YOU</div>
+        </div>
+
+        <div class="cat-header-actions">
+          <div class="cat-header-circle-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#211A16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="cat-badge-counter">2</span>
+          </div>
+          <div class="cat-header-circle-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#211A16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="cat-badge-dot"></span>
+          </div>
+        </div>
       </div>
 
-      <form id="form-category" onsubmit="handleCategoryFormSubmit(event)">
+      <!-- 2. Scrollable Body Content -->
+      <form id="form-category" onsubmit="handleCategoryFormSubmit(event)" style="display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden;">
         <input type="hidden" id="cat-edit-id">
 
-        <div class="form-group">
-          <label class="form-label">Category Name <span style="color:var(--danger)">*</span></label>
-          <div class="input-wrapper">
-            <input type="text" id="cat-form-name" placeholder="e.g. Necklaces" required
-              oninput="handleCategoryNameInput(this.value)">
+        <div class="cat-modal-scroll-body modal-body">
+          <!-- Page Heading (Image 2) -->
+          <div class="cat-heading-wrap">
+            <h2 class="cat-page-title" id="modal-category-title">Add New Category</h2>
+            <p class="cat-page-subtitle">Create a category for your jewellery catalogue</p>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label class="form-label">URL Slug</label>
-          <div class="input-wrapper">
-            <input type="text" id="cat-form-slug" placeholder="e.g. necklaces">
-          </div>
-          <small style="color:var(--text-muted); font-size:11px; margin-top:3px; display:block;">Leave blank to
-            auto-generate from name</small>
-        </div>
+          <!-- White Form Card Container (Image 2) -->
+          <div class="cat-form-card">
+            <!-- Field 1: Category Name * -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">Category Name <span class="cat-req-asterisk">*</span></label>
+              <input type="text" id="cat-form-name" class="cat-form-input" placeholder="Enter category name" required
+                oninput="handleCategoryNameInput(this.value)">
+            </div>
 
-        <div class="form-group">
-          <label class="form-label"
-            style="font-size:14px; font-weight:600; color:#2D251E; margin-bottom:8px; display:block;">Upload Product
-            Image</label>
-          <input type="hidden" id="cat-form-image">
-          <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
-            style="display:none;" onchange="handleCatFileSelect(this.files)">
+            <!-- Field 2: URL Slug -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">URL Slug</label>
+              <input type="text" id="cat-form-slug" class="cat-form-input" placeholder="Enter URL slug">
+              <span class="cat-form-helper">Leave blank to auto-generate from name</span>
+            </div>
 
-          <div class="image-dropzone" id="cat-image-dropzone"
-            onclick="document.getElementById('cat-file-input').click()">
-            <div id="dropzone-empty-state">
-              <div class="dropzone-icon-wrap">
-                <svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="#7E5F3D" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M36 24V14a4 4 0 0 0-4-4H12a4 4 0 0 0-4 4v20a4 4 0 0 0 4 4h12"></path>
-                  <circle cx="18" cy="18" r="2.2" fill="#7E5F3D"></circle>
-                  <path d="M9 31l8-8 7 7 4-4 4 4"></path>
-                  <circle cx="34" cy="34" r="9" fill="#FAF7F2" stroke="#7E5F3D" stroke-width="2"></circle>
-                  <path d="M34 38V30M30.5 33.5L34 30l3.5 3.5"></path>
+            <!-- Field 3: Description (Positioned BEFORE image upload as in Image 2!) -->
+            <div class="cat-form-group">
+              <label class="cat-form-label">Description</label>
+              <textarea id="cat-form-desc" class="cat-form-textarea" rows="3"
+                placeholder="Brief description of the collection..."></textarea>
+            </div>
+
+            <!-- Field 4: Upload Category Image (Centered Luxury Dropzone from Image 2!) -->
+            <div class="cat-form-group">
+              <label class="cat-form-label" style="margin-bottom:8px;">
+                Upload Category Image <span class="cat-req-asterisk">*</span>
+              </label>
+              <input type="hidden" id="cat-form-image" required>
+              <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
+                style="display:none;" onchange="handleCatFileSelect(this.files)">
+
+              <div class="cat-centered-dropzone image-dropzone" id="cat-image-dropzone"
+                onclick="requestCatImagePermission()">
+                <div id="dropzone-empty-state" class="cat-dropzone-empty-content">
+                  <div class="cat-dropzone-icon-box">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#9E6B28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                  </div>
+                  <div class="cat-dropzone-main-text">Choose image or drag and drop</div>
+                  <div class="cat-dropzone-sub-text">PNG, JPG or WEBP (max. 5 MB)</div>
+                  <button type="button" class="cat-browse-files-btn"
+                    onclick="event.stopPropagation(); requestCatImagePermission();">
+                    Browse Files
+                  </button>
+                </div>
+
+                <!-- Uploaded Preview State -->
+                <div id="dropzone-preview-state" style="display:none;" class="cat-dropzone-preview-content">
+                  <img id="cat-dropzone-img" src="" alt="Selected Preview" class="cat-preview-image">
+                  <div class="cat-preview-info">
+                    <span class="preview-filename" id="cat-preview-name" style="font-weight:600; font-size:13px; color:#211A16; display:block;">image.jpg</span>
+                    <span class="preview-filesize" id="cat-preview-size" style="font-size:11.5px; color:#786C60;">Ready</span>
+                  </div>
+                  <div class="dropzone-preview-actions" style="display:flex; align-items:center; gap:8px;">
+                    <button type="button" class="btn-preview-change"
+                      onclick="event.stopPropagation(); requestCatImagePermission();">Change</button>
+                    <button type="button" class="btn-preview-remove"
+                      onclick="event.stopPropagation(); removeCatImage();">&times;</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="cat-image-error-msg" style="display:none;" class="cat-image-error-alert">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
                 </svg>
+                <span>Please upload a category image. Uploading an image is mandatory.</span>
               </div>
-              <div class="dropzone-main-text">Choose image or drag and drop</div>
-              <div class="dropzone-sub-text">PNG, JPG or WEBP (max. 5 MB)</div>
-              <button type="button" class="btn-browse-files"
-                onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">
-                Browse Files
-              </button>
             </div>
 
-            <!-- Uploaded Preview State -->
-            <div id="dropzone-preview-state" style="display:none;">
-              <img id="cat-dropzone-img" src="" alt="Selected Preview">
-              <div class="dropzone-preview-info">
-                <span class="preview-filename" id="cat-preview-name">image.jpg</span>
-                <span class="preview-filesize" id="cat-preview-size">Selected</span>
-              </div>
-              <div class="dropzone-preview-actions">
-                <button type="button" class="btn-preview-change"
-                  onclick="event.stopPropagation(); document.getElementById('cat-file-input').click();">Change</button>
-                <button type="button" class="btn-preview-remove"
-                  onclick="event.stopPropagation(); removeCatImage();">&times;</button>
-              </div>
-            </div>
+            <input type="checkbox" id="cat-form-active" checked style="display:none;">
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <div class="input-wrapper">
-            <textarea id="cat-form-desc" rows="2"
-              style="width:100%; border:none; outline:none; font-family:inherit; font-size:13px; background:transparent; resize:vertical; padding:8px 0;"
-              placeholder="Brief description of the collection..."></textarea>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="flex items-center gap-2"
-            style="cursor:pointer; font-size:13.5px; font-weight:600; color:var(--text-primary); user-select:none;">
-            <input type="checkbox" id="cat-form-active" checked
-              style="accent-color:var(--gold-primary); width:16px; height:16px;">
-            Active (Display in mobile app)
-          </label>
-        </div>
-
-        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
-          <button type="button" class="btn-refresh" onclick="closeCategoryModal()"
-            style="padding:9px 18px;">Cancel</button>
-          <button type="submit" class="btn-primary" id="btn-cat-save" style="margin:0; padding:9px 22px;">Save
-            Category</button>
+        <!-- 3. Fixed Bottom Action Bar (Image 2) -->
+        <div class="cat-modal-footer">
+          <button type="button" class="cat-btn-cancel" onclick="closeCategoryModal()">Cancel</button>
+          <button type="submit" class="cat-btn-save" id="btn-cat-save">Save Category</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ============================================================= -->
+  <!-- PERMISSION MODAL FOR IMAGE UPLOAD -->
+  <!-- ============================================================= -->
+  <div id="modal-image-permission" class="cat-perm-overlay hidden" onclick="if(event.target === this) handleCatPermissionDeny()">
+    <div class="cat-perm-card" role="dialog" aria-modal="true" aria-labelledby="cat-perm-title">
+      <div class="cat-perm-header">
+        <div class="cat-perm-icon-wrapper">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#9E6B28" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3.5" ry="3.5"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span class="cat-perm-badge-icon" title="Device Storage">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="cat-perm-tag">STORAGE ACCESS</div>
+        <h3 id="cat-perm-title" class="cat-perm-title">Allow Access to Photos &amp; Files?</h3>
+      </div>
+
+      <div class="cat-perm-body">
+        <p class="cat-perm-message">
+          <strong>“Zewar Mahal Admin”</strong> requests permission to access your device storage to choose and upload catalogue imagery for this category.
+        </p>
+
+        <div class="cat-perm-features">
+          <div class="cat-perm-feature-item">
+            <div class="cat-perm-feature-dot">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#9E6B28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="cat-perm-feature-text">Select PNG, JPG, or WEBP catalogue pictures (up to 5 MB)</div>
+          </div>
+          <div class="cat-perm-feature-item">
+            <div class="cat-perm-feature-dot">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#9E6B28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="cat-perm-feature-text">Allow once to remember permission for future uploads</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-perm-actions">
+        <button type="button" class="cat-perm-btn cat-perm-btn-deny" onclick="handleCatPermissionDeny()">
+          Deny
+        </button>
+        <button type="button" class="cat-perm-btn cat-perm-btn-allow" onclick="handleCatPermissionAllow()">
+          Allow
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
   <!-- ADD PRODUCT MODAL -->
   <!-- ============================================================= -->
-  <div id="modal-add-product" class="modal-overlay hidden">
+  <div id="modal-add-product" class="modal-overlay hidden" onclick="if(event.target === this) closeAddProductModal()">
     <div class="modal-card">
       <div class="modal-header">
         <h3 class="panel-title" style="font-size:20px;">Add New Jewellery Piece</h3>
-        <button class="modal-close" onclick="closeAddProductModal()">&times;</button>
+        <button type="button" class="modal-close" onclick="closeAddProductModal()" aria-label="Close dialog">&times;</button>
       </div>
 
-      <form id="form-add-product">
-        <div class="form-group">
-          <label class="form-label">Product Title</label>
-          <div class="input-wrapper">
-            <input type="text" id="prod-name" placeholder="e.g. Royal Nizam Kundan Necklace" required>
+      <form id="form-add-product" style="display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden;">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Product Title</label>
+            <div class="input-wrapper">
+              <input type="text" id="prod-name" placeholder="e.g. Royal Nizam Kundan Necklace" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label class="form-label">SKU Code</label>
+              <div class="input-wrapper">
+                <input type="text" id="prod-sku" placeholder="ZM-NK-001" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <div class="input-wrapper">
+                <select id="prod-category-select">
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label class="form-label">Metal</label>
+              <div class="input-wrapper">
+                <select id="prod-metal">
+                  <option value="gold">Gold</option>
+                  <option value="silver">Silver</option>
+                  <option value="platinum">Platinum</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Purity</label>
+              <div class="input-wrapper">
+                <input type="text" id="prod-purity" placeholder="22K" value="22K" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label class="form-label">Gross Weight (grams)</label>
+              <div class="input-wrapper">
+                <input type="number" step="0.01" id="prod-gross-weight" placeholder="32.50" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Net Weight (grams)</label>
+              <div class="input-wrapper">
+                <input type="number" step="0.01" id="prod-net-weight" placeholder="30.20" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Base Price Estimate (₹)</label>
+            <div class="input-wrapper">
+              <input type="number" step="1" id="prod-base-price" placeholder="225000" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Description</label>
+            <div class="input-wrapper">
+              <textarea id="prod-description" rows="3"
+                placeholder="Artisanal 22K Hallmarked gold with antique finish."></textarea>
+            </div>
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-          <div class="form-group">
-            <label class="form-label">SKU Code</label>
-            <div class="input-wrapper">
-              <input type="text" id="prod-sku" placeholder="ZM-NK-001" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Category</label>
-            <div class="input-wrapper">
-              <select id="prod-category-select">
-                <!-- Populated via JS -->
-              </select>
-            </div>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-cancel" onclick="closeAddProductModal()">Cancel</button>
+          <button type="submit" class="btn-primary" style="margin:0; padding:10px 24px;">
+            Create &amp; Publish Product
+          </button>
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-          <div class="form-group">
-            <label class="form-label">Metal</label>
-            <div class="input-wrapper">
-              <select id="prod-metal">
-                <option value="gold">Gold</option>
-                <option value="silver">Silver</option>
-                <option value="platinum">Platinum</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Purity</label>
-            <div class="input-wrapper">
-              <input type="text" id="prod-purity" placeholder="22K" value="22K" required>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-          <div class="form-group">
-            <label class="form-label">Gross Weight (grams)</label>
-            <div class="input-wrapper">
-              <input type="number" step="0.01" id="prod-gross-weight" placeholder="32.50" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Net Weight (grams)</label>
-            <div class="input-wrapper">
-              <input type="number" step="0.01" id="prod-net-weight" placeholder="30.20" required>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Base Price Estimate (₹)</label>
-          <div class="input-wrapper">
-            <input type="number" step="1" id="prod-base-price" placeholder="225000" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <div class="input-wrapper">
-            <textarea id="prod-description" rows="3"
-              placeholder="Artisanal 22K Hallmarked gold with antique finish."></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-primary" style="margin-top:16px;">
-          Create & Publish Product
-        </button>
       </form>
     </div>
   </div>
@@ -6674,12 +8337,16 @@
 
     // Helper: Toast alerts
     function showToast(message, type = 'info') {
+      let displayMsg = message;
+      if (typeof displayMsg === 'string' && (displayMsg.trim() === 'Validation failed' || displayMsg.includes('Validation failed'))) {
+        displayMsg = 'Please upload a category image. Uploading an image is mandatory.';
+      }
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
       toast.innerHTML = `
         <span style="font-size:18px;">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
-        <span>${message}</span>
+        <span>${displayMsg}</span>
       `;
       container.appendChild(toast);
       setTimeout(() => {
@@ -6710,7 +8377,13 @@
 
         if (!response.ok) {
           const errData = await response.json().catch(() => ({}));
-          throw new Error(errData.message || `API error ${response.status}`);
+          let errMsg = (errData.errors && Array.isArray(errData.errors) && errData.errors.length > 0)
+            ? errData.errors.join(', ')
+            : (errData.message || `API error ${response.status}`);
+          if (errMsg === 'Validation failed' || errMsg.includes('Validation failed')) {
+            errMsg = 'Please upload a category image before uploading category.';
+          }
+          throw new Error(errMsg);
         }
 
         const json = await response.json();
@@ -6813,9 +8486,20 @@
       sidebarBackdrop.addEventListener('click', closeSidebar);
     }
 
-    // Escape key closes sidebar
+    // Escape key closes any active modal and sidebar drawer
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSidebar();
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        const permModal = document.getElementById('modal-image-permission');
+        if (permModal && !permModal.classList.contains('hidden')) {
+          handleCatPermissionDeny();
+          return;
+        }
+        closeSidebar();
+        if (typeof closeCategoryModal === 'function') closeCategoryModal();
+        if (typeof closeAddProductModal === 'function') closeAddProductModal();
+        if (typeof closeViewOfferModal === 'function') closeViewOfferModal();
+        if (typeof closeDeleteOfferModal === 'function') closeDeleteOfferModal();
+      }
     });
 
     // Clicking any navigation link closes sidebar drawer
@@ -6977,16 +8661,13 @@
         loadEnquiries()
       ]);
 
-      // Auto-refresh enquiries, rates, and dashboard stats so all KPIs stay synced with database
+      // Auto-refresh enquiries, rates, and dashboard stats so all KPIs and notifications stay synced with database
       if (!window.__adminRefreshInterval) {
         window.__adminRefreshInterval = setInterval(() => {
           loadDashboardStats();
           loadLiveTicker();
-          const activeSec = document.querySelector('.content-section:not(.hidden)');
-          if (activeSec && activeSec.id === 'section-enquiries') {
-            loadEnquiries();
-          }
-        }, 10000);
+          loadEnquiries(); // Always sync enquiries and topbar notification bell in real time
+        }, 4000);
 
         window.addEventListener('focus', () => {
           loadDashboardStats();
@@ -7123,8 +8804,13 @@
         const enqBadge = document.getElementById('badge-enquiries-count');
         if (enqBadge) enqBadge.textContent = enquiriesCount;
         const bellDot = document.getElementById('header-bell-dot');
-        if (bellDot) {
-          bellDot.style.display = enquiriesCount > 0 ? 'block' : 'none';
+        if (bellDot && !bellDot.textContent) {
+          if (enquiriesCount > 0) {
+            bellDot.textContent = enquiriesCount > 99 ? '99+' : enquiriesCount;
+            bellDot.style.display = 'block';
+          } else {
+            bellDot.style.display = 'none';
+          }
         }
 
         // Render Recent Enquiries (5-Column Layout: ID, CUSTOMER, SUBJECT, DATE, STATUS)
@@ -7237,6 +8923,8 @@
     async function loadBullionRates() {
       try {
         const rates = await apiRequest('/rates/current');
+        window.lastBullionRatesData = rates;
+        recalculateAdminGoldPrice();
 
         // 1. Format timestamp for hero banner pill (e.g. "Last updated: Today, 1:29 PM IST")
         const heroUpdatedEl = document.getElementById('hero-rates-updated-text');
@@ -7538,6 +9226,214 @@
       }
     }
 
+    // =============================================================
+    // GOLD PRICE CALCULATOR LOGIC (MATCHES WIREFRAME)
+    // =============================================================
+    function getAdminKaratRate(base24KRate, karat) {
+      const ratios = {
+        '24K': 1,
+        '22K': 22 / 24,
+        '20K': 20 / 24,
+        '18K': 18 / 24,
+        '16K': 16 / 24
+      };
+      if (window.lastBullionRatesData) {
+        if (karat === '24K' && window.lastBullionRatesData.gold24K) return window.lastBullionRatesData.gold24K;
+        if (karat === '22K' && window.lastBullionRatesData.gold22K) return window.lastBullionRatesData.gold22K;
+        if (karat === '20K' && window.lastBullionRatesData.gold20K) return window.lastBullionRatesData.gold20K;
+        if (karat === '18K' && window.lastBullionRatesData.gold18K) return window.lastBullionRatesData.gold18K;
+      }
+      return Math.round(base24KRate * (ratios[karat] || 1));
+    }
+
+    let adminSavedGoldKarat = '24K';
+
+    const ADMIN_SILVER_PURITY_OPTIONS = [
+      { key: '999', label: 'Fine Silver — 999 (99.9%)', shortLabel: 'Fine Silver 999', purityLabel: '99.9% Pure', fineness: 999 },
+      { key: '958', label: 'Britannia Silver — 958 (95.84%)', shortLabel: 'Britannia Silver 958', purityLabel: '95.84% Pure', fineness: 958 },
+      { key: '925', label: 'Sterling Silver — 925 (92.5%)', shortLabel: 'Sterling Silver 925', purityLabel: '92.5% Pure', fineness: 925 },
+      { key: '900', label: 'Coin Silver — 900 (90.0%)', shortLabel: 'Coin Silver 900', purityLabel: '90.0% Pure', fineness: 900 }
+    ];
+
+    const ADMIN_GOLD_KARAT_OPTIONS = [
+      { key: '24K', label: '24K (999 Purity)', purityLabel: '99.9% Pure • Hallmarked' },
+      { key: '22K', label: '22K (916 Purity)', purityLabel: '91.6% Pure • Hallmarked' },
+      { key: '20K', label: '20K (833 Purity)', purityLabel: '83.3% Pure • Hallmarked' },
+      { key: '18K', label: '18K (750 Purity)', purityLabel: '75.0% Pure • Hallmarked' },
+      { key: '16K', label: '16K (667 Purity)', purityLabel: '66.7% Pure • Hallmarked' }
+    ];
+
+    function getAdminSilverPurityRate(fineSilverRate, purityKey) {
+      if (window.lastBullionRatesData) {
+        const raw = window.lastBullionRatesData;
+        if (purityKey === '999' && (raw.silver999 || raw.silver)) return Number(raw.silver999 || raw.silver);
+        if (purityKey === '958' && raw.silver958) return Number(raw.silver958);
+        if (purityKey === '925' && raw.silver925) return Number(raw.silver925);
+        if (purityKey === '900' && raw.silver900) return Number(raw.silver900);
+      }
+      const opt = ADMIN_SILVER_PURITY_OPTIONS.find(p => p.key === purityKey) || ADMIN_SILVER_PURITY_OPTIONS[0];
+      if (opt.key === '999') return fineSilverRate;
+      return Math.round((fineSilverRate * (opt.fineness / 1000)) * 100) / 100;
+    }
+
+    function onAdminMetalChange() {
+      const metal = document.getElementById('admin-calc-metal')?.value || 'gold';
+      const karatSelect = document.getElementById('admin-calc-karat');
+      const karatLabel = document.getElementById('admin-calc-karat-label');
+
+      if (metal === 'silver') {
+        if (karatLabel) karatLabel.textContent = 'Silver Purity';
+        if (karatSelect) {
+          if (['16K', '18K', '20K', '22K', '24K'].includes(karatSelect.value)) {
+            adminSavedGoldKarat = karatSelect.value;
+          }
+          karatSelect.innerHTML = ADMIN_SILVER_PURITY_OPTIONS.map(opt =>
+            `<option value="${opt.key}">${opt.label}</option>`
+          ).join('');
+          karatSelect.disabled = false;
+          karatSelect.style.opacity = '1';
+          karatSelect.style.cursor = 'pointer';
+        }
+      } else {
+        if (karatLabel) karatLabel.textContent = 'Karat';
+        if (karatSelect) {
+          karatSelect.innerHTML = ADMIN_GOLD_KARAT_OPTIONS.map(opt =>
+            `<option value="${opt.key}" ${opt.key === adminSavedGoldKarat ? 'selected' : ''}>${opt.label}</option>`
+          ).join('');
+          karatSelect.disabled = false;
+          karatSelect.style.opacity = '1';
+          karatSelect.style.cursor = 'pointer';
+        }
+      }
+      recalculateAdminGoldPrice();
+    }
+
+    function recalculateAdminGoldPrice(showFeedback = false) {
+      const metal = document.getElementById('admin-calc-metal')?.value || 'gold';
+      const base24KRate = (window.lastBullionRatesData && window.lastBullionRatesData.gold24K)
+        ? window.lastBullionRatesData.gold24K
+        : 7450;
+      const fineSilverRate = (window.lastBullionRatesData && window.lastBullionRatesData.silver)
+        ? Number(window.lastBullionRatesData.silver)
+        : 92.5;
+
+      let activeRate = 0;
+      let purityShortName = '';
+
+      if (metal === 'silver') {
+        const purityKey = document.getElementById('admin-calc-karat')?.value || '999';
+        const opt = ADMIN_SILVER_PURITY_OPTIONS.find(p => p.key === purityKey) || ADMIN_SILVER_PURITY_OPTIONS[0];
+        activeRate = getAdminSilverPurityRate(fineSilverRate, purityKey);
+        purityShortName = opt.shortLabel;
+
+        const rateHelper = document.getElementById('admin-calc-rate-helper');
+        if (rateHelper) rateHelper.textContent = `${opt.purityLabel} Pure • ${opt.shortLabel}`;
+
+        const karatHelper = document.getElementById('admin-calc-karat-helper');
+        if (karatHelper) karatHelper.textContent = `${opt.purityLabel} Pure • Hallmarked`;
+      } else {
+        const karat = document.getElementById('admin-calc-karat')?.value || '24K';
+        const opt = ADMIN_GOLD_KARAT_OPTIONS.find(k => k.key === karat) || ADMIN_GOLD_KARAT_OPTIONS[0];
+        activeRate = getAdminKaratRate(base24KRate, karat);
+        purityShortName = karat;
+
+        const rateHelper = document.getElementById('admin-calc-rate-helper');
+        if (rateHelper) rateHelper.textContent = karat === '24K' ? 'Live 24K Pure Market Benchmark' : `${karat} Market Benchmark`;
+
+        const karatHelper = document.getElementById('admin-calc-karat-helper');
+        if (karatHelper) karatHelper.textContent = opt.purityLabel;
+      }
+
+      const weightInput = document.getElementById('admin-calc-weight');
+      const mcInput = document.getElementById('admin-calc-mc');
+      const mcType = document.getElementById('admin-calc-mc-type')?.value || 'percentage';
+
+      let weight = parseFloat(weightInput?.value || 0);
+      if (isNaN(weight) || weight < 0) weight = 0;
+
+      let mc = parseFloat(mcInput?.value || 0);
+      if (isNaN(mc) || mc < 0) mc = 0;
+
+      const metalValue = Math.round(activeRate * weight * 100) / 100;
+      let mcAmount = 0;
+      if (mcType === 'percentage') {
+        mcAmount = Math.round((metalValue * (mc / 100)) * 100) / 100;
+      } else {
+        mcAmount = mc;
+      }
+
+      const total = Math.round((metalValue + mcAmount) * 100) / 100;
+
+      // Update UI elements
+      const rateDisplay = document.getElementById('admin-calc-rate-display');
+      if (rateDisplay) rateDisplay.textContent = `₹ ${activeRate.toLocaleString('en-IN')} / gram`;
+
+      const breakdownRateLabel = document.getElementById('admin-calc-breakdown-rate-label');
+      if (breakdownRateLabel) {
+        breakdownRateLabel.textContent = metal === 'silver' ? `Silver Rate (${purityShortName})` : `Gold Rate (${purityShortName})`;
+      }
+
+      const breakdownRateVal = document.getElementById('admin-calc-breakdown-rate-val');
+      if (breakdownRateVal) breakdownRateVal.textContent = `₹ ${activeRate.toLocaleString('en-IN')} / g`;
+
+      const breakdownWeight = document.getElementById('admin-calc-breakdown-weight');
+      if (breakdownWeight) breakdownWeight.textContent = `${weight > 0 ? weight.toFixed(2) : '0.00'} g`;
+
+      const breakdownMetalLabel = document.getElementById('admin-calc-breakdown-metal-label');
+      if (breakdownMetalLabel) {
+        breakdownMetalLabel.textContent = metal === 'silver' ? 'Silver Value' : 'Gold Value';
+      }
+
+      const breakdownGoldVal = document.getElementById('admin-calc-breakdown-gold-val');
+      if (breakdownGoldVal) {
+        breakdownGoldVal.textContent = `₹ ${metalValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
+
+      const breakdownMcLabel = document.getElementById('admin-calc-breakdown-mc-label');
+      if (breakdownMcLabel) {
+        breakdownMcLabel.textContent = mcType === 'percentage' ? `Making Charges (${mc}%)` : `Making Charges (Fixed ₹)`;
+      }
+
+      const breakdownMcVal = document.getElementById('admin-calc-breakdown-mc-val');
+      if (breakdownMcVal) breakdownMcVal.textContent = `₹ ${mcAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      const totalVal = document.getElementById('admin-calc-total-val');
+      if (totalVal) totalVal.textContent = `₹ ${total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      const totalSub = document.getElementById('admin-calc-total-sub');
+      if (totalSub) {
+        totalSub.textContent = metal === 'silver' ? `${purityShortName} + Artisanal Making` : 'Raw Gold + Artisanal Making';
+      }
+
+      if (showFeedback) {
+        if (weight <= 0) {
+          showToast('Please enter a weight greater than 0 grams.', 'warning');
+        } else {
+          showToast('Jewellery estimate updated successfully.', 'success');
+        }
+      }
+    }
+
+    function resetAdminGoldCalculator() {
+      const metalSelect = document.getElementById('admin-calc-metal');
+      if (metalSelect) metalSelect.value = 'gold';
+
+      adminSavedGoldKarat = '24K';
+      onAdminMetalChange();
+
+      const weightInput = document.getElementById('admin-calc-weight');
+      if (weightInput) weightInput.value = '';
+
+      const mcInput = document.getElementById('admin-calc-mc');
+      if (mcInput) mcInput.value = '';
+
+      const mcType = document.getElementById('admin-calc-mc-type');
+      if (mcType) mcType.value = 'percentage';
+
+      recalculateAdminGoldPrice();
+      showToast('Calculator reset to 24K default.', 'info');
+    }
+
     // 4. Shop Rates
     async function loadShopRates() {
       const tbody = document.getElementById('shop-rates-tbody');
@@ -7707,12 +9603,69 @@
         removeCatImage();
       }
 
+      const modalBody = modal.querySelector('.modal-body');
+      if (modalBody) modalBody.scrollTop = 0;
+
       modal.classList.remove('hidden');
+      checkCategoryFormValidity();
     }
 
     function closeCategoryModal() {
       const modal = document.getElementById('modal-category');
       if (modal) modal.classList.add('hidden');
+      closeCatPermissionModal();
+    }
+
+    function requestCatImagePermission() {
+      // If admin already allowed permission previously, skip popup and open file picker directly
+      const isAllowed = localStorage.getItem('admin_image_permission_granted') === 'true';
+      if (isAllowed) {
+        const fileInput = document.getElementById('cat-file-input');
+        if (fileInput) fileInput.click();
+        return;
+      }
+
+      const permModal = document.getElementById('modal-image-permission');
+      if (permModal) {
+        permModal.classList.remove('hidden');
+        permModal.setAttribute('aria-hidden', 'false');
+      } else {
+        const fileInput = document.getElementById('cat-file-input');
+        if (fileInput) fileInput.click();
+      }
+    }
+
+    function closeCatPermissionModal() {
+      const permModal = document.getElementById('modal-image-permission');
+      if (permModal) {
+        permModal.classList.add('hidden');
+        permModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function handleCatPermissionAllow() {
+      // Save permission so admin is not asked again on future clicks
+      try {
+        localStorage.setItem('admin_image_permission_granted', 'true');
+      } catch (e) {
+        console.warn('Could not save storage permission to localStorage', e);
+      }
+      closeCatPermissionModal();
+      const fileInput = document.getElementById('cat-file-input');
+      if (fileInput) {
+        fileInput.click();
+      }
+    }
+
+    function handleCatPermissionDeny() {
+      // If admin clicks Deny, clear any saved permission so it asks every time
+      try {
+        localStorage.removeItem('admin_image_permission_granted');
+      } catch (e) {
+        console.warn('Could not clear storage permission from localStorage', e);
+      }
+      closeCatPermissionModal();
+      showToast('Storage permission denied. Image upload was cancelled.', 'warning');
     }
 
     function openEditCategoryModal(catId) {
@@ -7730,6 +9683,7 @@
           slugInput.value = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         }
       }
+      checkCategoryFormValidity();
     }
 
     function handleCatFileSelect(files) {
@@ -7813,6 +9767,7 @@
         if (emptyState) emptyState.style.display = 'block';
         if (previewState) previewState.style.display = 'none';
       }
+      checkCategoryFormValidity();
     }
 
     function removeCatImage() {
@@ -7821,6 +9776,52 @@
       if (hiddenInput) hiddenInput.value = '';
       if (fileInput) fileInput.value = '';
       setCatImagePreview('');
+    }
+
+    function checkCategoryFormValidity() {
+      const imageInput = document.getElementById('cat-form-image');
+      const image = imageInput ? imageInput.value.trim() : '';
+      const nameInput = document.getElementById('cat-form-name');
+      const name = nameInput ? nameInput.value.trim() : '';
+      const saveBtn = document.getElementById('btn-cat-save');
+      const badge = document.getElementById('cat-image-badge');
+      const errorMsg = document.getElementById('cat-image-error-msg');
+      const dropzone = document.getElementById('cat-image-dropzone');
+
+      const hasImage = !!image;
+      const hasName = !!name;
+
+      if (badge) {
+        if (hasImage) {
+          badge.textContent = 'Image Uploaded ✓';
+          badge.style.background = '#ECFDF5';
+          badge.style.color = '#059669';
+          badge.style.border = '1px solid #A7F3D0';
+        } else {
+          badge.textContent = 'Image Required *';
+          badge.style.background = '#FEF2F2';
+          badge.style.color = '#DC2626';
+          badge.style.border = '1px solid #FECACA';
+        }
+      }
+
+      if (hasImage) {
+        if (dropzone) dropzone.classList.remove('dropzone-error');
+        if (errorMsg) errorMsg.style.display = 'none';
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.removeAttribute('title');
+          saveBtn.style.opacity = '1';
+          saveBtn.style.cursor = 'pointer';
+        }
+      } else {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.title = 'Please upload a category image before uploading category';
+          saveBtn.style.opacity = '0.75';
+          saveBtn.style.cursor = 'pointer';
+        }
+      }
     }
 
     function initDropzoneEvents() {
@@ -7854,6 +9855,24 @@
 
     async function handleCategoryFormSubmit(e) {
       e.preventDefault();
+
+      const image = (document.getElementById('cat-form-image')?.value || '').trim();
+      const dropzone = document.getElementById('cat-image-dropzone');
+      const errorMsg = document.getElementById('cat-image-error-msg');
+
+      if (!image) {
+        showToast('Please upload a category image. Uploading an image is mandatory.', 'error');
+        if (dropzone) {
+          dropzone.classList.remove('dropzone-error');
+          void dropzone.offsetWidth;
+          dropzone.classList.add('dropzone-error');
+          dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (errorMsg) errorMsg.style.display = 'flex';
+        checkCategoryFormValidity();
+        return;
+      }
+
       const saveBtn = document.getElementById('btn-cat-save');
       const origText = saveBtn ? saveBtn.textContent : 'Save Category';
       if (saveBtn) {
@@ -7867,7 +9886,6 @@
       if (!slug) {
         slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       }
-      const image = document.getElementById('cat-form-image').value.trim() || null;
       const description = document.getElementById('cat-form-desc').value.trim() || null;
       const isActive = document.getElementById('cat-form-active').checked;
 
@@ -7885,7 +9903,11 @@
         await loadCategories();
         loadCategoriesForSelect();
       } catch (err) {
-        showToast(err.message || 'Failed to save category', 'error');
+        let msg = err.message || 'Failed to save category';
+        if (msg === 'Validation failed' || msg.includes('Validation failed')) {
+          msg = 'Please upload a category image. Uploading an image is mandatory.';
+        }
+        showToast(msg, 'error');
       } finally {
         if (saveBtn) {
           saveBtn.disabled = false;
@@ -7920,6 +9942,7 @@
     let allEnquiriesList = [];
     let currentEnquiriesFilter = 'all';
     let currentEnquiriesSearch = '';
+    let lastSeenEnquiryCount = null;
 
     window.filterEnquiriesByStatus = function (status) {
       currentEnquiriesFilter = status;
@@ -7973,11 +9996,26 @@
         const inProgressCount = allEnquiriesList.filter(e => (e.status || '').toLowerCase() === 'in_progress').length;
         const closedCount = allEnquiriesList.filter(e => (e.status || '').toLowerCase() === 'closed').length;
 
-        // Notification Badges in Topbar & Sidebar
+        // If a new customer enquiry arrived while admin is viewing, show alert toast
+        if (lastSeenEnquiryCount !== null && totalCount > lastSeenEnquiryCount) {
+          const newest = allEnquiriesList[0];
+          showToast(`🔔 New Customer Enquiry from ${newest?.name || 'Customer'} (+91 ${newest?.mobile || ''})!`, 'info');
+        }
+        lastSeenEnquiryCount = totalCount;
+
+        // Notification Badges in Topbar Bell & Sidebar
         const badge = document.getElementById('badge-enquiries-count');
         if (badge) badge.textContent = totalCount;
         const bellDot = document.getElementById('header-bell-dot');
-        if (bellDot) bellDot.style.display = newCount > 0 ? 'block' : 'none';
+        if (bellDot) {
+          if (newCount > 0) {
+            bellDot.textContent = newCount > 99 ? '99+' : newCount;
+            bellDot.style.display = 'block';
+          } else {
+            bellDot.textContent = '';
+            bellDot.style.display = 'none';
+          }
+        }
 
         // Update KPI Cards
         const statTotal = document.getElementById('enq-stat-total');
@@ -8054,6 +10092,9 @@
             year: 'numeric'
           }) + '<br><span style="font-size:11px; color:#9E9184;">' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + '</span>';
 
+          const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+          const itemsCount = (enq.items && enq.items.length) || enq.itemCount || 1;
+
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
@@ -8067,6 +10108,7 @@
                   <span>${enq.referenceNumber}</span>
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
+                ${isBulk ? `<div style="margin-top:5px;"><span class="badge-bulk-wishlist" onclick="openEnquiryModal('${enq.id}', event)" title="Click to view all associated wishlist items">💎 Wishlist (${itemsCount})</span></div>` : ''}
               </td>
               <td>
                 <div style="font-weight:700; color:#1C1510; font-size:13.5px;">${enq.name || 'Valued Customer'}</div>
@@ -8096,17 +10138,32 @@
                 <div style="font-size: 13px; line-height: 1.5; max-width: 380px; color: #2B221B; white-space: pre-wrap; word-break: break-word;">
                   ${enq.message ? enq.message : '<em style="color:#9E9184;">General Catalogue Enquiry</em>'}
                 </div>
+                ${isBulk ? `
+                  <div>
+                    <button type="button" class="btn-view-items-pill" onclick="openEnquiryModal('${enq.id}', event)">
+                      <span>💎 View All ${itemsCount} Wishlist Items</span> &rarr;
+                    </button>
+                  </div>
+                ` : ''}
               </td>
               <td>
                 <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
               </td>
               <td>
-                <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
-                  <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
-                  <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
-                  <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
-                  <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
-                </select>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
+                    <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
+                    <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
+                    <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
+                    <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
+                  </select>
+                  <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send official message/update to customer for this enquiry">
+                    <span>💬 Message</span>
+                  </button>
+                  <button type="button" class="btn-enq-details" onclick="openEnquiryModal('${enq.id}', event)" title="View all enquiry items and customer details">
+                    <span>🔍 Details</span>
+                  </button>
+                </div>
               </td>
               <td style="font-size:12px; color:#5C4E42; white-space:nowrap; line-height:1.35;">${formattedDate}</td>
             </tr>
@@ -8124,6 +10181,9 @@
             month: 'short'
           }) + ', ' + new Date(enq.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+          const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+          const itemsCount = (enq.items && enq.items.length) || enq.itemCount || 1;
+
           const status = (enq.status || 'new').toLowerCase();
           const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
           const whatsappUrl = cleanPhone
@@ -8134,9 +10194,12 @@
             <div class="enquiry-card-mobile">
               <!-- Top Row: Ref Badge & Date -->
               <div class="enquiry-card-topbar">
-                <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
-                  <span>${enq.referenceNumber}</span>
-                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <div class="enquiry-ref-badge" onclick="copyEnquiryRef('${enq.referenceNumber}', event)" title="Click to copy Reference #">
+                    <span>${enq.referenceNumber}</span>
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </div>
+                  ${isBulk ? `<span class="badge-bulk-wishlist" onclick="openEnquiryModal('${enq.id}', event)">💎 Bulk (${itemsCount})</span>` : ''}
                 </div>
                 <div class="enquiry-date-text">${formattedDate}</div>
               </div>
@@ -8174,20 +10237,32 @@
               <!-- Message Card -->
               <div class="enquiry-message-card">
                 <div class="enquiry-message-body">${enq.message ? enq.message : 'General Catalogue Enquiry'}</div>
+                ${isBulk ? `
+                  <div style="margin-top:8px;">
+                    <button type="button" class="btn-view-items-pill" style="width:100%; justify-content:center;" onclick="openEnquiryModal('${enq.id}', event)">
+                      <span>💎 View All ${itemsCount} Wishlist Items</span> &rarr;
+                    </button>
+                  </div>
+                ` : ''}
               </div>
 
               <!-- Card Footer: Status Badge & Status Changer -->
               <div class="enquiry-card-footer">
-                <div class="enquiry-status-group">
+                <div class="enquiry-status-group" style="width:100%; justify-content:space-between; flex-wrap:wrap; gap:8px;">
                   <span class="enquiry-status-badge status-badge-${status}">${statusLabel}</span>
                   <div style="display:flex; align-items:center; gap:6px;">
-                    <span style="font-size:11.5px; color:#8C8074; font-weight:600;">Status:</span>
                     <select class="enquiry-select-status" onchange="updateEnquiryStatus('${enq.id}', this.value)">
                       <option value="new" ${status === 'new' ? 'selected' : ''}>🟡 New</option>
                       <option value="contacted" ${status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
                       <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>🟣 In Progress</option>
                       <option value="closed" ${status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
                     </select>
+                    <button type="button" class="btn-enq-msg" onclick="sendEnquiryMessage('${enq.id}', '${enq.referenceNumber}', '${(enq.name || 'Customer').replace(/'/g, "\\'")}', event)" title="Send message to customer">
+                      <span>💬 Message</span>
+                    </button>
+                    <button type="button" class="btn-enq-details" onclick="openEnquiryModal('${enq.id}', event)" title="View all enquiry items">
+                      <span>🔍 Details</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -8197,13 +10272,242 @@
       }
     }
 
+    let currentViewingEnquiry = null;
+
+    window.openEnquiryModal = async function(id, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      try {
+        const enq = await apiRequest(`/admin/enquiries/${id}`);
+        if (!enq) {
+          showToast('Enquiry details not found', 'error');
+          return;
+        }
+        currentViewingEnquiry = enq;
+
+        const isBulk = enq.isBulkWishlist || (enq.items && enq.items.length > 0) || (enq.itemCount > 1);
+        const refElem = document.getElementById('view-enq-ref');
+        if (refElem) refElem.textContent = enq.referenceNumber || 'ZM-ENQ-XXXX';
+
+        const bulkBadge = document.getElementById('view-enq-bulk-badge');
+        if (bulkBadge) {
+          if (isBulk) {
+            bulkBadge.style.display = 'inline-flex';
+            bulkBadge.textContent = `💎 Bulk Wishlist (${(enq.items && enq.items.length) || enq.itemCount || 1} items)`;
+          } else {
+            bulkBadge.style.display = 'none';
+          }
+        }
+
+        const dateElem = document.getElementById('view-enq-date');
+        if (dateElem) {
+          const dateStr = new Date(enq.createdAt).toLocaleDateString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+          dateElem.textContent = `Submitted on ${dateStr}`;
+        }
+
+        const status = (enq.status || 'new').toLowerCase();
+        const statusLabel = status === 'in_progress' ? 'In Progress' : (status.charAt(0).toUpperCase() + status.slice(1));
+        const statusBadge = document.getElementById('view-enq-status-badge');
+        if (statusBadge) {
+          statusBadge.className = `enquiry-status-badge status-badge-${status}`;
+          statusBadge.textContent = statusLabel;
+        }
+
+        // Customer details
+        const nameElem = document.getElementById('view-enq-name');
+        if (nameElem) nameElem.textContent = enq.name || 'Valued Customer';
+        const emailElem = document.getElementById('view-enq-email');
+        if (emailElem) emailElem.textContent = enq.email || (enq.user && enq.user.email) || 'No email provided';
+        const phoneElem = document.getElementById('view-enq-phone');
+        const cleanPhone = (enq.mobile || (enq.user && enq.user.mobile) || enq.phone || '').replace(/\D/g, '').slice(-10);
+        if (phoneElem) phoneElem.textContent = cleanPhone ? `+91 ${cleanPhone}` : 'No phone number';
+
+        const initials = (enq.name || 'CU').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const avatarElem = document.getElementById('view-enq-avatar');
+        if (avatarElem) avatarElem.textContent = initials || 'CU';
+
+        const btnCall = document.getElementById('view-enq-btn-call');
+        if (btnCall) {
+          if (cleanPhone) {
+            btnCall.style.display = 'inline-flex';
+            btnCall.href = `tel:${cleanPhone}`;
+          } else {
+            btnCall.style.display = 'none';
+          }
+        }
+
+        const btnWa = document.getElementById('view-enq-btn-whatsapp');
+        if (btnWa) {
+          if (cleanPhone) {
+            btnWa.style.display = 'inline-flex';
+            btnWa.href = `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(`Hello ${enq.name || 'Valued Customer'}, greetings from Zewar Mahal! We received your enquiry (Ref: ${enq.referenceNumber}). How may our jewellery concierge assist you today?`)}`;
+          } else {
+            btnWa.style.display = 'none';
+          }
+        }
+
+        // Message
+        const msgElem = document.getElementById('view-enq-message');
+        if (msgElem) msgElem.textContent = enq.message || 'General Enquiry';
+
+        // Products Grid
+        const itemsGrid = document.getElementById('view-enq-items-grid');
+        const headingElem = document.getElementById('view-enq-items-heading');
+        const totalValElem = document.getElementById('view-enq-total-value');
+
+        const items = enq.items || [];
+        if (items.length > 0) {
+          if (headingElem) headingElem.textContent = `Associated Wishlist Products (${items.length} pieces)`;
+          let totalSum = 0;
+
+          itemsGrid.innerHTML = items.map((it, idx) => {
+            const price = Number(it.price) || 0;
+            totalSum += price;
+            const origPrice = it.originalPrice ? Number(it.originalPrice) : null;
+            const weightText = it.weight ? `${it.weight} g` : '';
+            const purityText = it.purity || '22K';
+            const specLine = [weightText, purityText].filter(Boolean).join(' | ');
+
+            // Find image
+            let imgSrc = '/admin/images/necklaces/necklace-1.jpg';
+            const nameLower = (it.productName || '').toLowerCase();
+            const rawSrc = (it.imageSource || '').toLowerCase();
+            if (rawSrc.includes('bangle') || nameLower.includes('bangle')) imgSrc = '/admin/images/bangles/bangle-2.jpg';
+            else if (rawSrc.includes('ring') || nameLower.includes('ring')) imgSrc = '/admin/images/rings/ring-1.jpg';
+            else if (rawSrc.includes('earring') || nameLower.includes('earring') || nameLower.includes('choker') || nameLower.includes('bridal')) imgSrc = '/admin/images/earrings/earrings-1.jpg';
+            else if (rawSrc.includes('necklace') || nameLower.includes('necklace')) imgSrc = '/admin/images/necklaces/necklace-1.jpg';
+
+            return `
+              <div class="enq-modal-product-card">
+                <img src="${imgSrc}" class="enq-product-thumb" alt="${it.productName}">
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:10px; font-weight:700; color:#A67C52; text-transform:uppercase; letter-spacing:0.5px;">${it.categoryName || 'JEWELLERY'}</div>
+                  <div style="font-weight:700; font-size:13.5px; color:#1C1510; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${it.productName}">${it.productName}</div>
+                  <div style="font-size:11.5px; color:#7D7166; margin-top:2px;">${specLine}</div>
+                  <div style="display:flex; align-items:baseline; gap:6px; margin-top:4px;">
+                    <strong style="color:#B57319; font-size:13.5px;">₹ ${price.toLocaleString('en-IN')}</strong>
+                    ${origPrice ? `<span style="font-size:11px; color:#A39688; text-decoration:line-through;">₹ ${origPrice.toLocaleString('en-IN')}</span>` : ''}
+                  </div>
+                  ${it.sku ? `<div style="font-size:10.5px; color:#9E9184; font-family:monospace; margin-top:2px;">SKU: ${it.sku}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          if (totalValElem) totalValElem.textContent = `Total Estimated Value: ₹ ${totalSum.toLocaleString('en-IN')}`;
+        } else if (enq.product) {
+          // Single product enquiry
+          const p = enq.product;
+          if (headingElem) headingElem.textContent = `Associated Product (1 piece)`;
+          const price = Number(p.price) || 0;
+          if (totalValElem) totalValElem.textContent = `Price: ₹ ${price.toLocaleString('en-IN')}`;
+          const imgUrl = (p.images && p.images[0] && p.images[0].url) || '/admin/images/necklaces/necklace-1.jpg';
+
+          itemsGrid.innerHTML = `
+            <div class="enq-modal-product-card" style="grid-column: 1 / -1;">
+              <img src="${imgUrl}" class="enq-product-thumb" alt="${p.name}">
+              <div style="flex:1;">
+                <div style="font-size:10px; font-weight:700; color:#A67C52; text-transform:uppercase;">${p.category?.name || 'JEWELLERY'}</div>
+                <div style="font-weight:700; font-size:14px; color:#1C1510;">${p.name}</div>
+                <div style="font-size:12px; color:#7D7166; margin-top:2px;">${p.purity || '22K'} • ${p.weightGrams ? `${p.weightGrams}g` : ''}</div>
+                <div style="font-size:14px; font-weight:700; color:#B57319; margin-top:4px;">₹ ${price.toLocaleString('en-IN')}</div>
+                ${p.sku ? `<div style="font-size:11px; color:#9E9184; font-family:monospace;">SKU: ${p.sku}</div>` : ''}
+              </div>
+            </div>
+          `;
+        } else {
+          if (headingElem) headingElem.textContent = `No Specific Products Attached`;
+          if (totalValElem) totalValElem.textContent = '';
+          itemsGrid.innerHTML = `<div style="grid-column:1 / -1; padding:16px; text-align:center; color:#8C8074; font-size:13px; background:#FAF7F2; border-radius:8px;">General enquiry without specific catalogue pieces attached.</div>`;
+        }
+
+        // Status select
+        const statusSelect = document.getElementById('view-enq-modal-status-select');
+        if (statusSelect) statusSelect.value = status;
+
+        // Admin notes
+        const notesElem = document.getElementById('view-enq-modal-notes');
+        if (notesElem) notesElem.value = enq.adminNotes || '';
+
+        document.getElementById('modal-view-enquiry').classList.remove('hidden');
+      } catch (err) {
+        showToast('Failed to load enquiry: ' + err.message, 'error');
+      }
+    };
+
+    window.closeEnquiryModal = function() {
+      document.getElementById('modal-view-enquiry').classList.add('hidden');
+      currentViewingEnquiry = null;
+    };
+
+    window.saveEnquiryModalStatus = async function() {
+      if (!currentViewingEnquiry) return;
+      const statusSelect = document.getElementById('view-enq-modal-status-select');
+      const newStatus = statusSelect ? statusSelect.value : 'new';
+      try {
+        await apiRequest(`/admin/enquiries/${currentViewingEnquiry.id}/status`, 'PATCH', { status: newStatus });
+        showToast(`Enquiry status updated to "${newStatus.replace('_', ' ')}"! Customer notified.`, 'success');
+        currentViewingEnquiry.status = newStatus;
+        const statusBadge = document.getElementById('view-enq-status-badge');
+        if (statusBadge) {
+          const statusLabel = newStatus === 'in_progress' ? 'In Progress' : (newStatus.charAt(0).toUpperCase() + newStatus.slice(1));
+          statusBadge.className = `enquiry-status-badge status-badge-${newStatus}`;
+          statusBadge.textContent = statusLabel;
+        }
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to update status: ' + err.message, 'error');
+      }
+    };
+
+    window.saveEnquiryModalNotes = async function() {
+      if (!currentViewingEnquiry) return;
+      const notesElem = document.getElementById('view-enq-modal-notes');
+      const notes = notesElem ? notesElem.value.trim() : '';
+      if (!notes) {
+        showToast('Please enter a note or message first', 'error');
+        return;
+      }
+      try {
+        await apiRequest(`/admin/enquiries/${currentViewingEnquiry.id}`, 'PATCH', { adminNotes: notes });
+        showToast('Follow-up note saved & notification dispatched to customer!', 'success');
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to save note: ' + err.message, 'error');
+      }
+    };
+
     window.updateEnquiryStatus = async function (id, status) {
       try {
         await apiRequest(`/admin/enquiries/${id}/status`, 'PATCH', { status });
-        showToast(`Status updated to "${status.replace('_', ' ')}"`, 'success');
+        showToast(`Status updated to "${status.replace('_', ' ')}"! Customer notification sent.`, 'success');
         loadEnquiries();
       } catch (err) {
         showToast(err.message, 'error');
+      }
+    };
+
+    window.sendEnquiryMessage = async function (id, refNo, customerName, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      const msg = prompt(`💬 Send message to ${customerName} regarding Enquiry ${refNo}:\n\n(This notification will appear in the customer's notification feed from Zewar Mahal Admin)`);
+      if (msg === null) return;
+      if (!msg.trim()) {
+        showToast('Message cannot be empty', 'error');
+        return;
+      }
+      try {
+        await apiRequest(`/admin/enquiries/${id}`, 'PATCH', { adminNotes: msg.trim() });
+        showToast(`Message sent to ${customerName}! It is now visible in their notification feed.`, 'success');
+        await loadEnquiries();
+      } catch (err) {
+        showToast('Failed to send message: ' + (err.message || 'Server error'), 'error');
       }
     };
 
@@ -9023,7 +11327,12 @@
 
     // Modal Add Product
     window.openAddProductModal = function () {
-      document.getElementById('modal-add-product').classList.remove('hidden');
+      const modal = document.getElementById('modal-add-product');
+      if (modal) {
+        const modalBody = modal.querySelector('.modal-body');
+        if (modalBody) modalBody.scrollTop = 0;
+        modal.classList.remove('hidden');
+      }
     };
     window.closeAddProductModal = function () {
       document.getElementById('modal-add-product').classList.add('hidden');
