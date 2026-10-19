@@ -3161,6 +3161,19 @@
       transform: scale(0.99);
     }
 
+    .compact-luxury-dropzone.dropzone-error {
+      border-color: #DC2626 !important;
+      background: #FEF2F2 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+      animation: dropzone-shake 0.35s ease;
+    }
+
+    @keyframes dropzone-shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+
     .compact-dropzone-empty {
       display: flex;
       align-items: center;
@@ -6503,8 +6516,15 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" style="font-size:13.5px; font-weight:600; color:#2D251E; margin-bottom:8px; display:block;">Upload Category Image</label>
-            <input type="hidden" id="cat-form-image">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <label class="form-label" style="font-size:13.5px; font-weight:600; color:#2D251E; margin-bottom:0; display:block;">
+                Upload Category Image <span style="color:var(--danger, #DC2626); font-weight:700;">*</span>
+              </label>
+              <span id="cat-image-badge" style="font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; transition:all 0.2s;">
+                Image Required *
+              </span>
+            </div>
+            <input type="hidden" id="cat-form-image" required>
             <input type="file" id="cat-file-input" accept="image/png, image/jpeg, image/jpg, image/webp"
               style="display:none;" onchange="handleCatFileSelect(this.files)">
 
@@ -6521,7 +6541,7 @@
                   </div>
                   <div class="compact-dropzone-text">
                     <div class="compact-main-title">Choose image or drag and drop</div>
-                    <div class="compact-sub-title">PNG, JPG or WEBP (max. 5 MB)</div>
+                    <div class="compact-sub-title">PNG, JPG or WEBP (max. 5 MB) &bull; <strong style="color:#B87925;">Mandatory</strong></div>
                   </div>
                 </div>
                 <button type="button" class="btn-browse-files compact-browse-btn"
@@ -6544,6 +6564,14 @@
                     onclick="event.stopPropagation(); removeCatImage();">&times;</button>
                 </div>
               </div>
+            </div>
+            <div id="cat-image-error-msg" style="display:none; color:#DC2626; font-size:12px; font-weight:500; margin-top:6px; align-items:center; gap:5px;">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>Uploading an image is mandatory before uploading category.</span>
             </div>
           </div>
 
@@ -7767,6 +7795,7 @@
       if (modalBody) modalBody.scrollTop = 0;
 
       modal.classList.remove('hidden');
+      checkCategoryFormValidity();
     }
 
     function closeCategoryModal() {
@@ -7789,6 +7818,7 @@
           slugInput.value = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         }
       }
+      checkCategoryFormValidity();
     }
 
     function handleCatFileSelect(files) {
@@ -7872,6 +7902,7 @@
         if (emptyState) emptyState.style.display = 'block';
         if (previewState) previewState.style.display = 'none';
       }
+      checkCategoryFormValidity();
     }
 
     function removeCatImage() {
@@ -7880,6 +7911,52 @@
       if (hiddenInput) hiddenInput.value = '';
       if (fileInput) fileInput.value = '';
       setCatImagePreview('');
+    }
+
+    function checkCategoryFormValidity() {
+      const imageInput = document.getElementById('cat-form-image');
+      const image = imageInput ? imageInput.value.trim() : '';
+      const nameInput = document.getElementById('cat-form-name');
+      const name = nameInput ? nameInput.value.trim() : '';
+      const saveBtn = document.getElementById('btn-cat-save');
+      const badge = document.getElementById('cat-image-badge');
+      const errorMsg = document.getElementById('cat-image-error-msg');
+      const dropzone = document.getElementById('cat-image-dropzone');
+
+      const hasImage = !!image;
+      const hasName = !!name;
+
+      if (badge) {
+        if (hasImage) {
+          badge.textContent = 'Image Uploaded ✓';
+          badge.style.background = '#ECFDF5';
+          badge.style.color = '#059669';
+          badge.style.border = '1px solid #A7F3D0';
+        } else {
+          badge.textContent = 'Image Required *';
+          badge.style.background = '#FEF2F2';
+          badge.style.color = '#DC2626';
+          badge.style.border = '1px solid #FECACA';
+        }
+      }
+
+      if (hasImage) {
+        if (dropzone) dropzone.classList.remove('dropzone-error');
+        if (errorMsg) errorMsg.style.display = 'none';
+        if (saveBtn) {
+          saveBtn.disabled = !hasName;
+          saveBtn.removeAttribute('title');
+          saveBtn.style.opacity = hasName ? '1' : '0.6';
+          saveBtn.style.cursor = hasName ? 'pointer' : 'not-allowed';
+        }
+      } else {
+        if (saveBtn) {
+          saveBtn.disabled = true;
+          saveBtn.title = 'Uploading image is mandatory before uploading category';
+          saveBtn.style.opacity = '0.55';
+          saveBtn.style.cursor = 'not-allowed';
+        }
+      }
     }
 
     function initDropzoneEvents() {
@@ -7913,6 +7990,24 @@
 
     async function handleCategoryFormSubmit(e) {
       e.preventDefault();
+
+      const image = document.getElementById('cat-form-image').value.trim();
+      const dropzone = document.getElementById('cat-image-dropzone');
+      const errorMsg = document.getElementById('cat-image-error-msg');
+
+      if (!image) {
+        showToast('Uploading an image is mandatory before uploading category!', 'error');
+        if (dropzone) {
+          dropzone.classList.remove('dropzone-error');
+          void dropzone.offsetWidth;
+          dropzone.classList.add('dropzone-error');
+          dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (errorMsg) errorMsg.style.display = 'flex';
+        checkCategoryFormValidity();
+        return;
+      }
+
       const saveBtn = document.getElementById('btn-cat-save');
       const origText = saveBtn ? saveBtn.textContent : 'Save Category';
       if (saveBtn) {
@@ -7926,7 +8021,6 @@
       if (!slug) {
         slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       }
-      const image = document.getElementById('cat-form-image').value.trim() || null;
       const description = document.getElementById('cat-form-desc').value.trim() || null;
       const isActive = document.getElementById('cat-form-active').checked;
 

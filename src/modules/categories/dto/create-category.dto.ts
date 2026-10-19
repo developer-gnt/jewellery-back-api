@@ -17,13 +17,14 @@ export class CreateCategoryDto {
   @MaxLength(120, { message: 'Slug cannot exceed 120 characters' })
   slug?: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     example: 'https://cdn.zewarmahal.com/categories/rings.jpg',
-    description: 'Category thumbnail/banner image URL',
+    description: 'Category thumbnail/banner image URL (mandatory)',
+    required: true,
   })
-  @IsOptional()
-  @IsString({ message: 'Image must be a string URL' })
-  image?: string;
+  @IsNotEmpty({ message: 'Category image is required. Please upload an image.' })
+  @IsString({ message: 'Image must be a string' })
+  image: string;
 
   @ApiPropertyOptional({
     example: 'Exclusive handcrafted gold and diamond rings',

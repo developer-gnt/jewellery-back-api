@@ -81,6 +81,10 @@ export class CategoriesService {
   }
 
   async create(dto: CreateCategoryDto) {
+    if (!dto.image || !dto.image.trim()) {
+      throw new BadRequestException('Category image is required. Please upload an image before creating a category.');
+    }
+
     const slug = dto.slug ? this.slugify(dto.slug) : this.slugify(dto.name);
 
     const existing = await this.categoryRepository.findOne({
