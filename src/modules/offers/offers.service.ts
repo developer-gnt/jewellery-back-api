@@ -52,9 +52,6 @@ export class OffersService {
     }
 
     if (applicableOn === 'Specific Pieces') {
-      if (!categoryId) {
-        throw new BadRequestException('Category is required when offer applicability is "Specific Pieces"');
-      }
       if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
         throw new BadRequestException('At least one catalogue product must be selected for "Specific Pieces"');
       }
@@ -65,13 +62,20 @@ export class OffersService {
         if (products.length !== productIds.length) {
           throw new BadRequestException('One or more selected products do not exist');
         }
-        for (const product of products) {
-          if (product.categoryId !== categoryId) {
-            throw new BadRequestException(`Selected product "${product.name}" does not belong to the selected category`);
+        if (categoryId) {
+          for (const product of products) {
+            if (product.categoryId !== categoryId) {
+              throw new BadRequestException(`Selected product "${product.name}" does not belong to the selected category`);
+            }
+          }
+        } else if (products.length > 0 && products[0].categoryId) {
+          const allSame = products.every(p => p.categoryId === products[0].categoryId);
+          if (allSame) {
+            categoryId = products[0].categoryId;
           }
         }
       }
-      return { categoryId, productIds, products };
+      return { categoryId: categoryId || null, productIds, products };
     }
 
     return {
