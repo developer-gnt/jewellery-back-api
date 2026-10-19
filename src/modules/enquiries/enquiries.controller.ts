@@ -17,6 +17,7 @@ import {
 import { EnquiriesService } from './enquiries.service.js';
 import { CreateEnquiryDto } from './dto/create-enquiry.dto.js';
 import { UpdateEnquiryStatusDto } from './dto/update-enquiry-status.dto.js';
+import { UpdateEnquiryDto } from './dto/update-enquiry.dto.js';
 import { QueryEnquiriesDto } from './dto/query-enquiries.dto.js';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
 import { AdminGuard } from '../../common/guards/admin.guard.js';
@@ -29,6 +30,7 @@ export class EnquiriesController {
   constructor(private readonly enquiriesService: EnquiriesService) {}
 
   @Public()
+  @UseGuards(JwtAuthGuard)
   @Post('enquiries')
   @ApiOperation({ summary: 'Submit a product or general enquiry (Customer or Guest)' })
   @ApiResponse({
@@ -93,5 +95,18 @@ export class EnquiriesController {
     @Body() dto: UpdateEnquiryStatusDto,
   ) {
     return this.enquiriesService.updateStatus(id, dto);
+  }
+
+  @Patch('admin/enquiries/:id')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: 'Update enquiry details including customer mobile number or message' })
+  @ApiResponse({ status: 200, description: 'Enquiry details updated successfully' })
+  @ApiResponse({ status: 404, description: 'Enquiry not found' })
+  updateEnquiry(
+    @Param('id') id: string,
+    @Body() dto: UpdateEnquiryDto,
+  ) {
+    return this.enquiriesService.updateEnquiry(id, dto);
   }
 }

@@ -38,7 +38,9 @@ export class HomeService {
     const now = new Date();
     return this.offerRepository
       .createQueryBuilder('offer')
+      .leftJoinAndSelect('offer.category', 'category')
       .where('offer.isActive = true')
+      .andWhere('offer.isDraft = false')
       .andWhere('(offer.startDate IS NULL OR offer.startDate <= :now)', { now })
       .andWhere('(offer.endDate IS NULL OR offer.endDate >= :now)', { now })
       .orderBy('offer.createdAt', 'DESC')

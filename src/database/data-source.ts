@@ -17,6 +17,8 @@ import { Enquiry } from '../modules/enquiries/entities/enquiry.entity.js';
 import { UserDevice } from '../modules/notifications/entities/user-device.entity.js';
 import { Notification } from '../modules/notifications/entities/notification.entity.js';
 
+import { StoreSetting } from '../modules/settings/entities/store-setting.entity.js';
+
 dotenv.config();
 
 const __dirname = import.meta.dirname;
@@ -35,6 +37,7 @@ export const AppDataSource = new DataSource({
     NotificationPreference,
     UserAddress,
     UserWishlist,
+    StoreSetting,
     Admin,
     RefreshToken,
     Category,
