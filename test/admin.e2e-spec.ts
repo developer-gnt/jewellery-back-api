@@ -2,10 +2,10 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
-import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module.js';
 import { ResponseInterceptor } from '../src/common/interceptors/response.interceptor.js';
 import { AllExceptionsFilter } from '../src/common/filters/all-exceptions.filter.js';
+import { App } from 'supertest/types.js';
 
 describe('Admin CMS APIs (e2e)', () => {
   let app: INestApplication<App>;

@@ -35,11 +35,15 @@ export class User {
   @Column({ type: 'varchar', length: 100, nullable: true })
   city: string | null;
 
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  customerCode: string | null;
+
   @Column({ type: 'varchar', length: 20, default: 'customer' })
   role: string;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
+
 
   @Column({ type: 'boolean', default: false })
   isDeleted: boolean;

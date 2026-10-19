@@ -7,6 +7,7 @@ import {
   Index,
 } from 'typeorm';
 
+@Index('UQ_shop_rates_metal_purity_active', ['metal', 'purity', 'isActive'], { unique: true })
 @Entity('shop_rates')
 export class ShopRate {
   @PrimaryGeneratedColumn('uuid')

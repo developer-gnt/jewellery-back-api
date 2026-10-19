@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException, Optional } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Offer } from './entities/offer.entity.js';
+import { Product } from '../products/entities/product.entity.js';
 import { NotificationsService } from '../notifications/notifications.service.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
@@ -12,13 +13,80 @@ export class OffersService {
     @InjectRepository(Offer)
     private readonly offerRepository: Repository<Offer>,
     @Optional()
+    @InjectRepository(Product)
+    private readonly productRepository?: Repository<Product>,
+    @Optional()
     private readonly notificationsService?: NotificationsService,
   ) {}
+
+  private async validateApplicability(
+    applicableOn: string | undefined | null,
+    categoryId: string | undefined | null,
+    productIds: string[] | undefined | null,
+    isDraft: boolean,
+  ): Promise<{ categoryId: string | null; productIds: string[] | null; products: Product[] }> {
+    if (isDraft) {
+      if (applicableOn === 'All Jewellery') {
+        return { categoryId: null, productIds: [], products: [] };
+      }
+      let products: Product[] = [];
+      if (productIds && productIds.length > 0 && this.productRepository) {
+        products = await this.productRepository.findBy({ id: In(productIds) });
+      }
+      return {
+        categoryId: categoryId || null,
+        productIds: productIds || [],
+        products,
+      };
+    }
+
+    if (applicableOn === 'All Jewellery') {
+      return { categoryId: null, productIds: [], products: [] };
+    }
+
+    if (applicableOn === 'Category') {
+      if (!categoryId) {
+        throw new BadRequestException('Category is required when offer applicability is "Category"');
+      }
+      return { categoryId, productIds: [], products: [] };
+    }
+
+    if (applicableOn === 'Specific Pieces') {
+      if (!categoryId) {
+        throw new BadRequestException('Category is required when offer applicability is "Specific Pieces"');
+      }
+      if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
+        throw new BadRequestException('At least one catalogue product must be selected for "Specific Pieces"');
+      }
+
+      let products: Product[] = [];
+      if (this.productRepository) {
+        products = await this.productRepository.findBy({ id: In(productIds) });
+        if (products.length !== productIds.length) {
+          throw new BadRequestException('One or more selected products do not exist');
+        }
+        for (const product of products) {
+          if (product.categoryId !== categoryId) {
+            throw new BadRequestException(`Selected product "${product.name}" does not belong to the selected category`);
+          }
+        }
+      }
+      return { categoryId, productIds, products };
+    }
+
+    return {
+      categoryId: categoryId || null,
+      productIds: productIds || [],
+      products: [],
+    };
+  }
 
   async findAll(onlyActive = true, type?: string) {
     const qb = this.offerRepository
       .createQueryBuilder('offer')
-      .leftJoinAndSelect('offer.category', 'category');
+      .leftJoinAndSelect('offer.category', 'category')
+      .leftJoinAndSelect('offer.products', 'product')
+      .leftJoinAndSelect('product.images', 'productImage');
 
     if (onlyActive) {
       const now = new Date();
@@ -38,9 +106,16 @@ export class OffersService {
   }
 
   async findOne(id: string) {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      throw new NotFoundException(`Offer with ID "${id}" not found`);
+    }
+
     const offer = await this.offerRepository
       .createQueryBuilder('offer')
       .leftJoinAndSelect('offer.category', 'category')
+      .leftJoinAndSelect('offer.products', 'product')
+      .leftJoinAndSelect('product.images', 'productImage')
       .where('offer.id = :id', { id })
       .getOne();
 
@@ -95,10 +170,21 @@ export class OffersService {
   }
 
   async create(dto: CreateOfferDto) {
+    const isDraft = dto.isDraft ?? false;
+    const { categoryId, productIds, products } = await this.validateApplicability(
+      dto.applicableOn,
+      dto.categoryId,
+      dto.productIds,
+      isDraft,
+    );
+
     const offer = this.offerRepository.create({
       ...dto,
+      categoryId,
+      productIds,
+      products,
       type: dto.type || 'offer',
-      isDraft: dto.isDraft ?? false,
+      isDraft,
       isActive: dto.isActive ?? true,
     });
 
@@ -121,7 +207,23 @@ export class OffersService {
   async update(id: string, dto: UpdateOfferDto) {
     const offer = await this.findOne(id);
 
-    Object.assign(offer, dto);
+    const isDraft = dto.isDraft !== undefined ? dto.isDraft : offer.isDraft;
+    const applicableOn = dto.applicableOn !== undefined ? dto.applicableOn : offer.applicableOn;
+    const incomingCategoryId = dto.categoryId !== undefined ? dto.categoryId : offer.categoryId;
+    const incomingProductIds = dto.productIds !== undefined ? dto.productIds : offer.productIds;
+
+    const { categoryId, productIds, products } = await this.validateApplicability(
+      applicableOn,
+      incomingCategoryId,
+      incomingProductIds,
+      isDraft,
+    );
+
+    Object.assign(offer, dto, {
+      categoryId,
+      productIds,
+      products,
+    });
 
     await this.offerRepository.save(offer);
     return this.findOne(id);
