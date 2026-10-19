@@ -3,6 +3,7 @@ import {
   Logger,
   HttpException,
   HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SmsService } from './sms.service.js';
@@ -11,6 +12,7 @@ import { Redis } from 'ioredis';
 interface MemoryOtpRecord {
   otp: string;
   expiresAt: number;
+  used: boolean;
 }
 
 interface RateLimitRecord {
@@ -24,7 +26,8 @@ export class OtpService {
   private redisClient: Redis | null = null;
   private readonly memoryStore = new Map<string, MemoryOtpRecord>();
   private readonly rateLimitStore = new Map<string, RateLimitRecord>();
-  private readonly OTP_TTL_SECONDS = 120; // 2 minutes
+  private readonly OTP_TTL_SECONDS = 120; // 2 minutes validity
+  private readonly RECORD_RETENTION_MS = 15 * 60 * 1000; // 15 mins history for accurate status
   private readonly MAX_REQUESTS = 5;
   private readonly RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 
@@ -46,7 +49,7 @@ export class OtpService {
         maxRetriesPerRequest: 1,
         lazyConnect: true,
         connectTimeout: 2000,
-        retryStrategy: () => null, // don't spam retries if redis is not running
+        retryStrategy: () => null,
       });
 
       this.redisClient.connect().catch(() => {
@@ -64,6 +67,12 @@ export class OtpService {
   }
 
   private checkRateLimit(mobile: string) {
+    const isDev = process.env.NODE_ENV !== 'production';
+    if (isDev) {
+      // Do not block developers with rate limit lockout during local testing
+      return;
+    }
+
     const now = Date.now();
     const record = this.rateLimitStore.get(mobile);
 
@@ -94,18 +103,25 @@ export class OtpService {
   async sendOtp(mobile: string): Promise<{ expiresIn: number; devOtp?: string }> {
     this.checkRateLimit(mobile);
 
-    // Generate 6-digit random OTP
+    // Generate fresh 6-digit random OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const key = `otp:${mobile}`;
+    const expiresAt = Date.now() + this.OTP_TTL_SECONDS * 1000;
+
+    const record: MemoryOtpRecord = {
+      otp,
+      expiresAt,
+      used: false,
+    };
+
+    this.storeInMemory(key, record);
 
     if (this.redisClient) {
       try {
-        await this.redisClient.set(key, otp, 'EX', this.OTP_TTL_SECONDS);
+        await this.redisClient.set(key, JSON.stringify(record), 'EX', 900);
       } catch {
-        this.storeInMemory(key, otp);
+        // Fallback already in memory
       }
-    } else {
-      this.storeInMemory(key, otp);
     }
 
     await this.smsService.sendOtpSms(mobile, otp);
@@ -118,62 +134,78 @@ export class OtpService {
   }
 
   async verifyOtp(mobile: string, inputOtp: string): Promise<boolean> {
-    const isDev = process.env.NODE_ENV !== 'production';
-
-    // Test bypass for automated QA or local dev
-    if (isDev && inputOtp === '123456') {
-      return true;
-    }
-
     const key = `otp:${mobile}`;
-    let storedOtp: string | null = null;
+    let record = await this.getRecord(key);
 
-    if (this.redisClient) {
-      try {
-        storedOtp = await this.redisClient.get(key);
-      } catch {
-        storedOtp = this.getFromMemory(key);
-      }
-    } else {
-      storedOtp = this.getFromMemory(key);
+    // 1. Verify existence of OTP request
+    if (!record) {
+      throw new BadRequestException('No active OTP found for this mobile number. Please request a new OTP.');
     }
 
-    if (!storedOtp) {
-      return false;
+    // 2. Verify one-time use (Revoke after enter)
+    if (record.used) {
+      throw new BadRequestException('This OTP has already been used and revoked. Please request a new OTP.');
     }
 
-    if (storedOtp !== inputOtp) {
-      return false;
-    }
-
-    // Delete once verified
-    if (this.redisClient) {
-      try {
-        await this.redisClient.del(key);
-      } catch {
-        this.memoryStore.delete(key);
-      }
-    } else {
+    // 3. Verify expiration
+    if (Date.now() > record.expiresAt) {
       this.memoryStore.delete(key);
+      if (this.redisClient) {
+        try {
+          await this.redisClient.del(key);
+        } catch {
+          // ignore
+        }
+      }
+      throw new BadRequestException('This OTP has expired. Please request a new OTP.');
     }
 
+    // 4. Verify code accuracy
+    if (record.otp !== inputOtp) {
+      throw new BadRequestException('Invalid OTP code. Please check and try again.');
+    }
+
+    // 5. Instantly REVOKE the OTP so it cannot be used a second time
+    record.used = true;
+    this.memoryStore.set(key, record);
+
+    if (this.redisClient) {
+      try {
+        await this.redisClient.set(key, JSON.stringify(record), 'EX', 300);
+      } catch {
+        // memory already updated
+      }
+    }
+
+    this.logger.log(`OTP successfully verified and revoked for mobile: ${mobile}`);
     return true;
   }
 
-  private storeInMemory(key: string, otp: string) {
-    this.memoryStore.set(key, {
-      otp,
-      expiresAt: Date.now() + this.OTP_TTL_SECONDS * 1000,
-    });
+  private storeInMemory(key: string, record: MemoryOtpRecord) {
+    this.memoryStore.set(key, record);
+    // Cleanup old records after retention window
+    setTimeout(() => {
+      const cur = this.memoryStore.get(key);
+      if (cur && cur.expiresAt < Date.now()) {
+        this.memoryStore.delete(key);
+      }
+    }, this.RECORD_RETENTION_MS);
   }
 
-  private getFromMemory(key: string): string | null {
-    const record = this.memoryStore.get(key);
-    if (!record) return null;
-    if (Date.now() > record.expiresAt) {
-      this.memoryStore.delete(key);
-      return null;
+  private async getRecord(key: string): Promise<MemoryOtpRecord | null> {
+    if (this.redisClient) {
+      try {
+        const raw = await this.redisClient.get(key);
+        if (raw) {
+          return JSON.parse(raw) as MemoryOtpRecord;
+        }
+      } catch {
+        // fallback to memory
+      }
     }
-    return record.otp;
+
+    const memoryRecord = this.memoryStore.get(key);
+    if (!memoryRecord) return null;
+    return memoryRecord;
   }
 }

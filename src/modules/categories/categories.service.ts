@@ -3,22 +3,52 @@ import {
   NotFoundException,
   BadRequestException,
   ConflictException,
+  OnModuleInit,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { Category } from './entities/category.entity.js';
 import { Product } from '../products/entities/product.entity.js';
 import { CreateCategoryDto } from './dto/create-category.dto.js';
 import { UpdateCategoryDto } from './dto/update-category.dto.js';
+import { seedCatalogue } from '../../database/seeds/catalogue.seed.js';
 
 @Injectable()
-export class CategoriesService {
+export class CategoriesService implements OnModuleInit {
+  private readonly logger = new Logger(CategoriesService.name);
+
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    private readonly dataSource: DataSource,
   ) {}
+
+  async onModuleInit() {
+    try {
+      const productCount = await this.productRepository.count();
+      if (productCount < 10) {
+        this.logger.log(
+          `Sparse catalogue detected (${productCount} products). Seeding complete 10-category catalogue...`,
+        );
+        const result = await seedCatalogue(this.dataSource);
+        this.logger.log(
+          `Catalogue seeding complete: ${result.categoriesCount} categories, ${result.productsCount} products.`,
+        );
+      }
+    } catch (err: any) {
+      this.logger.error(
+        `Failed to seed catalogue: ${err?.message}`,
+        err?.stack,
+      );
+    }
+  }
+
+  async runSeed() {
+    return seedCatalogue(this.dataSource);
+  }
 
   private slugify(text: string): string {
     return text

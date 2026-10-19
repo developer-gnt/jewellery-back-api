@@ -14,7 +14,7 @@ export class User {
   id: string;
 
   @Index({ unique: true })
-  @Column({ type: 'varchar', length: 20, unique: true })
+  @Column({ type: 'varchar', length: 15, unique: true })
   mobile: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true })
