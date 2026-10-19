@@ -44,12 +44,24 @@ export class CreateProductDto {
   @IsString({ message: 'Description must be a string' })
   description?: string;
 
-  @ApiProperty({ example: 145000.0, description: 'Price in INR' })
-  @IsNotEmpty({ message: 'Price is required' })
+  @ApiPropertyOptional({ example: 145000.0, description: 'Price in INR (optional; calculated if omitted)' })
+  @IsOptional()
   @Type(() => Number)
   @IsNumber({}, { message: 'Price must be a number' })
   @Min(0, { message: 'Price cannot be negative' })
-  price: number;
+  price?: number;
+
+  @ApiPropertyOptional({ example: 'percentage', description: 'Making charge type: percentage or amount' })
+  @IsOptional()
+  @IsString({ message: 'Making charge type must be a string' })
+  makingChargeType?: string;
+
+  @ApiPropertyOptional({ example: 12.0, description: 'Making charge value (percentage or fixed amount in INR)' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber({}, { message: 'Making charge must be a number' })
+  @Min(0, { message: 'Making charge cannot be negative' })
+  makingCharge?: number;
 
   @ApiPropertyOptional({ example: 'gold', description: 'Metal type: gold, silver, platinum' })
   @IsOptional()

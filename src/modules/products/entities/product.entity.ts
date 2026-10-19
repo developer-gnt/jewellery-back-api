@@ -28,8 +28,14 @@ export class Product {
   @Column({ type: 'text', nullable: true })
   description: string | null;
 
-  @Column({ type: 'decimal', precision: 12, scale: 2 })
-  price: number;
+  @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
+  price: number | null;
+
+  @Column({ type: 'varchar', length: 20, default: 'percentage', nullable: true })
+  makingChargeType: string | null;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, nullable: true })
+  makingCharge: number | null;
 
   @Column({ type: 'varchar', length: 50, default: 'gold' })
   metal: string;

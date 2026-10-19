@@ -294,8 +294,37 @@ export class ProductsService implements OnModuleInit {
       ? dto.sku.trim().toUpperCase()
       : await this.generateNextArticleCode();
 
+    // Calculate price from metal rate, gross weight and making charge if not directly specified
+    let finalPrice = dto.price;
+    if (!finalPrice || finalPrice <= 0) {
+      const weight = Number(dto.weight) || 10;
+      const metal = (dto.metal || 'gold').toLowerCase();
+      const purity = (dto.purity || '22K').toUpperCase();
+      let ratePerGram = 7450;
+      if (metal === 'gold') {
+        if (purity.includes('24')) ratePerGram = 8100;
+        else if (purity.includes('18')) ratePerGram = 6100;
+        else if (purity.includes('14')) ratePerGram = 4750;
+      } else if (metal === 'silver') {
+        ratePerGram = 95;
+      } else if (metal === 'platinum') {
+        ratePerGram = 3500;
+      }
+
+      const baseMetalValue = weight * ratePerGram;
+      const makingVal = Number(dto.makingCharge) || 0;
+      const makingAmount =
+        dto.makingChargeType === 'amount'
+          ? makingVal
+          : baseMetalValue * (makingVal / 100);
+      finalPrice = Math.round(baseMetalValue + makingAmount);
+    }
+
     const product = this.productRepository.create({
       ...dto,
+      price: finalPrice,
+      makingChargeType: dto.makingChargeType || 'percentage',
+      makingCharge: dto.makingCharge ?? 0,
       sku,
       slug,
       isPublished: dto.isPublished ?? true,
