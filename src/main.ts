@@ -89,6 +89,11 @@ async function bootstrap() {
     },
   );
 
+  // Serve static public assets (jewellery images, uploads)
+  const publicDir = path.join(process.cwd(), 'public');
+  app.use('/images', express.static(path.join(publicDir, 'images')));
+  app.use('/public', express.static(publicDir));
+
   const port = configService.get<number>('app.port', 3000);
   await app.listen(port);
 
