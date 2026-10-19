@@ -67,6 +67,12 @@ export class OtpService {
   }
 
   private checkRateLimit(mobile: string) {
+    const isDev = process.env.NODE_ENV !== 'production';
+    if (isDev) {
+      // Do not block developers with rate limit lockout during local testing
+      return;
+    }
+
     const now = Date.now();
     const record = this.rateLimitStore.get(mobile);
 
