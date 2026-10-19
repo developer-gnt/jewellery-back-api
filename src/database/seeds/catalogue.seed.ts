@@ -92,6 +92,20 @@ export const SEED_CATEGORIES: SeedCategoryItem[] = [
 export const SEED_PRODUCTS: SeedProductItem[] = [
   // ── Necklaces ─────────────────────────────────────────────────────────────
   {
+    name: 'Elegant Diamond Necklace',
+    slug: 'elegant-diamond-necklace',
+    sku: 'PROD-NECK-001',
+    categorySlug: 'necklaces',
+    description: 'An exquisite diamond necklace handcrafted with 18K gold and certified diamonds. A customer favourite bestseller.',
+    price: 124000,
+    metal: 'diamond',
+    purity: '18K Diamond & Gold',
+    weight: 22.4,
+    isFeatured: true,
+    isLatest: true,
+    images: ['/images/necklaces/necklace-1.jpg'],
+  },
+  {
     name: 'Royal Diamond Necklace',
     slug: 'royal-diamond-necklace',
     sku: 'NECK-DIA-001',

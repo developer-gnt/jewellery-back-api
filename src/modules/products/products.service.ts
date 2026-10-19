@@ -55,9 +55,12 @@ export class ProductsService {
           categoryId: query.category,
         });
       } else {
-        qb.andWhere('(category.slug = :categorySlug OR LOWER(category.name) = LOWER(:categorySlug))', {
-          categorySlug: query.category,
-        });
+        const cat = query.category.toLowerCase().trim();
+        const stripped = cat.replace(/^cat-/, '');
+        qb.andWhere(
+          '(category.slug = :cat OR category.slug = :stripped OR LOWER(category.name) = :cat OR LOWER(category.name) = :stripped)',
+          { cat, stripped },
+        );
       }
     }
 
@@ -134,7 +137,7 @@ export class ProductsService {
       .leftJoinAndSelect('product.images', 'image')
       .where('product.isPublished = true')
       .andWhere(
-        '(LOWER(product.name) LIKE LOWER(:term) OR LOWER(product.description) LIKE LOWER(:term) OR LOWER(product.metal) LIKE LOWER(:term))',
+        '(LOWER(product.name) LIKE LOWER(:term) OR LOWER(product.description) LIKE LOWER(:term) OR LOWER(product.metal) LIKE LOWER(:term) OR LOWER(category.name) LIKE LOWER(:term) OR LOWER(category.slug) LIKE LOWER(:term))',
         { term: `%${searchTerm}%` },
       )
       .orderBy('product.createdAt', 'DESC')
