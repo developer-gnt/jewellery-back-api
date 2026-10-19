@@ -7473,7 +7473,7 @@
                 <div class="calc-field-group">
                   <div class="calc-field-label-row">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-                    <span class="calc-field-label">Karat</span>
+                    <span class="calc-field-label" id="admin-calc-karat-label">Karat</span>
                   </div>
                   <select id="admin-calc-karat" class="calc-select-box" onchange="recalculateAdminGoldPrice()">
                     <option value="24K" selected>24K (999 Purity)</option>
@@ -7535,7 +7535,7 @@
                   <span class="calc-row-val" id="admin-calc-breakdown-weight">0.00 g</span>
                 </div>
                 <div class="calc-breakdown-row">
-                  <span class="calc-row-label">Gold Value</span>
+                  <span class="calc-row-label" id="admin-calc-breakdown-metal-label">Gold Value</span>
                   <span class="calc-row-val" id="admin-calc-breakdown-gold-val">₹ 0.00</span>
                 </div>
                 <div class="calc-breakdown-row">
@@ -7546,7 +7546,10 @@
 
               <!-- Total Banner -->
               <div class="calc-total-banner">
-                <span class="calc-total-label">Total Estimated Price</span>
+                <div>
+                  <span class="calc-total-label">Total Estimated Price</span>
+                  <span id="admin-calc-total-sub" style="display:block; font-size:11px; font-weight:normal; opacity:0.85;">Raw Gold + Artisanal Making</span>
+                </div>
                 <span class="calc-total-price" id="admin-calc-total-val">₹ 0.00</span>
               </div>
             </div>
@@ -8833,31 +8836,64 @@
       return Math.round(base24KRate * (ratios[karat] || 1));
     }
 
+    let adminSavedGoldKarat = '24K';
+
+    const ADMIN_SILVER_PURITY_OPTIONS = [
+      { key: '999', label: 'Fine Silver — 999 (99.9%)', shortLabel: 'Fine Silver 999', purityLabel: '99.9% Pure', fineness: 999 },
+      { key: '958', label: 'Britannia Silver — 958 (95.84%)', shortLabel: 'Britannia Silver 958', purityLabel: '95.84% Pure', fineness: 958 },
+      { key: '925', label: 'Sterling Silver — 925 (92.5%)', shortLabel: 'Sterling Silver 925', purityLabel: '92.5% Pure', fineness: 925 },
+      { key: '900', label: 'Coin Silver — 900 (90.0%)', shortLabel: 'Coin Silver 900', purityLabel: '90.0% Pure', fineness: 900 }
+    ];
+
+    const ADMIN_GOLD_KARAT_OPTIONS = [
+      { key: '24K', label: '24K (999 Purity)', purityLabel: '99.9% Pure • Hallmarked' },
+      { key: '22K', label: '22K (916 Purity)', purityLabel: '91.6% Pure • Hallmarked' },
+      { key: '20K', label: '20K (833 Purity)', purityLabel: '83.3% Pure • Hallmarked' },
+      { key: '18K', label: '18K (750 Purity)', purityLabel: '75.0% Pure • Hallmarked' },
+      { key: '16K', label: '16K (667 Purity)', purityLabel: '66.7% Pure • Hallmarked' }
+    ];
+
+    function getAdminSilverPurityRate(fineSilverRate, purityKey) {
+      if (window.lastBullionRatesData) {
+        const raw = window.lastBullionRatesData;
+        if (purityKey === '999' && (raw.silver999 || raw.silver)) return Number(raw.silver999 || raw.silver);
+        if (purityKey === '958' && raw.silver958) return Number(raw.silver958);
+        if (purityKey === '925' && raw.silver925) return Number(raw.silver925);
+        if (purityKey === '900' && raw.silver900) return Number(raw.silver900);
+      }
+      const opt = ADMIN_SILVER_PURITY_OPTIONS.find(p => p.key === purityKey) || ADMIN_SILVER_PURITY_OPTIONS[0];
+      if (opt.key === '999') return fineSilverRate;
+      return Math.round((fineSilverRate * (opt.fineness / 1000)) * 100) / 100;
+    }
+
     function onAdminMetalChange() {
       const metal = document.getElementById('admin-calc-metal')?.value || 'gold';
       const karatSelect = document.getElementById('admin-calc-karat');
-      const metalLabel = document.getElementById('admin-calc-metal-label');
-      const rateHelper = document.getElementById('admin-calc-rate-helper');
-      const karatHelper = document.getElementById('admin-calc-karat-helper');
+      const karatLabel = document.getElementById('admin-calc-karat-label');
 
       if (metal === 'silver') {
-        if (metalLabel) metalLabel.textContent = 'Silver Rate';
+        if (karatLabel) karatLabel.textContent = 'Silver Purity';
         if (karatSelect) {
-          karatSelect.disabled = true;
-          karatSelect.style.opacity = '0.5';
-          karatSelect.style.cursor = 'not-allowed';
-        }
-        if (rateHelper) rateHelper.textContent = 'Live 99.9% Pure Silver Benchmark';
-        if (karatHelper) karatHelper.textContent = 'Purity handled separately (Silver)';
-      } else {
-        if (metalLabel) metalLabel.textContent = 'Gold Rate';
-        if (karatSelect) {
+          if (['16K', '18K', '20K', '22K', '24K'].includes(karatSelect.value)) {
+            adminSavedGoldKarat = karatSelect.value;
+          }
+          karatSelect.innerHTML = ADMIN_SILVER_PURITY_OPTIONS.map(opt =>
+            `<option value="${opt.key}">${opt.label}</option>`
+          ).join('');
           karatSelect.disabled = false;
           karatSelect.style.opacity = '1';
           karatSelect.style.cursor = 'pointer';
         }
-        if (rateHelper) rateHelper.textContent = 'Live 24K Pure Market Benchmark';
-        if (karatHelper) karatHelper.textContent = '99.9% Pure • Hallmarked';
+      } else {
+        if (karatLabel) karatLabel.textContent = 'Karat';
+        if (karatSelect) {
+          karatSelect.innerHTML = ADMIN_GOLD_KARAT_OPTIONS.map(opt =>
+            `<option value="${opt.key}" ${opt.key === adminSavedGoldKarat ? 'selected' : ''}>${opt.label}</option>`
+          ).join('');
+          karatSelect.disabled = false;
+          karatSelect.style.opacity = '1';
+          karatSelect.style.cursor = 'pointer';
+        }
       }
       recalculateAdminGoldPrice();
     }
@@ -8867,12 +8903,37 @@
       const base24KRate = (window.lastBullionRatesData && window.lastBullionRatesData.gold24K)
         ? window.lastBullionRatesData.gold24K
         : 7450;
-      const silverRate = (window.lastBullionRatesData && window.lastBullionRatesData.silver)
+      const fineSilverRate = (window.lastBullionRatesData && window.lastBullionRatesData.silver)
         ? Number(window.lastBullionRatesData.silver)
         : 92.5;
 
-      const karat = document.getElementById('admin-calc-karat')?.value || '24K';
-      const activeRate = metal === 'silver' ? silverRate : getAdminKaratRate(base24KRate, karat);
+      let activeRate = 0;
+      let purityShortName = '';
+
+      if (metal === 'silver') {
+        const purityKey = document.getElementById('admin-calc-karat')?.value || '999';
+        const opt = ADMIN_SILVER_PURITY_OPTIONS.find(p => p.key === purityKey) || ADMIN_SILVER_PURITY_OPTIONS[0];
+        activeRate = getAdminSilverPurityRate(fineSilverRate, purityKey);
+        purityShortName = opt.shortLabel;
+
+        const rateHelper = document.getElementById('admin-calc-rate-helper');
+        if (rateHelper) rateHelper.textContent = `${opt.purityLabel} Pure • ${opt.shortLabel}`;
+
+        const karatHelper = document.getElementById('admin-calc-karat-helper');
+        if (karatHelper) karatHelper.textContent = `${opt.purityLabel} Pure • Hallmarked`;
+      } else {
+        const karat = document.getElementById('admin-calc-karat')?.value || '24K';
+        const opt = ADMIN_GOLD_KARAT_OPTIONS.find(k => k.key === karat) || ADMIN_GOLD_KARAT_OPTIONS[0];
+        activeRate = getAdminKaratRate(base24KRate, karat);
+        purityShortName = karat;
+
+        const rateHelper = document.getElementById('admin-calc-rate-helper');
+        if (rateHelper) rateHelper.textContent = karat === '24K' ? 'Live 24K Pure Market Benchmark' : `${karat} Market Benchmark`;
+
+        const karatHelper = document.getElementById('admin-calc-karat-helper');
+        if (karatHelper) karatHelper.textContent = opt.purityLabel;
+      }
+
       const weightInput = document.getElementById('admin-calc-weight');
       const mcInput = document.getElementById('admin-calc-mc');
       const mcType = document.getElementById('admin-calc-mc-type')?.value || 'percentage';
@@ -8899,7 +8960,7 @@
 
       const breakdownRateLabel = document.getElementById('admin-calc-breakdown-rate-label');
       if (breakdownRateLabel) {
-        breakdownRateLabel.textContent = metal === 'silver' ? 'Silver Rate (99.9%)' : `Gold Rate (${karat})`;
+        breakdownRateLabel.textContent = metal === 'silver' ? `Silver Rate (${purityShortName})` : `Gold Rate (${purityShortName})`;
       }
 
       const breakdownRateVal = document.getElementById('admin-calc-breakdown-rate-val');
@@ -8907,6 +8968,11 @@
 
       const breakdownWeight = document.getElementById('admin-calc-breakdown-weight');
       if (breakdownWeight) breakdownWeight.textContent = `${weight > 0 ? weight.toFixed(2) : '0.00'} g`;
+
+      const breakdownMetalLabel = document.getElementById('admin-calc-breakdown-metal-label');
+      if (breakdownMetalLabel) {
+        breakdownMetalLabel.textContent = metal === 'silver' ? 'Silver Value' : 'Gold Value';
+      }
 
       const breakdownGoldVal = document.getElementById('admin-calc-breakdown-gold-val');
       if (breakdownGoldVal) {
@@ -8924,6 +8990,11 @@
       const totalVal = document.getElementById('admin-calc-total-val');
       if (totalVal) totalVal.textContent = `₹ ${total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
+      const totalSub = document.getElementById('admin-calc-total-sub');
+      if (totalSub) {
+        totalSub.textContent = metal === 'silver' ? `${purityShortName} + Artisanal Making` : 'Raw Gold + Artisanal Making';
+      }
+
       if (showFeedback) {
         if (weight <= 0) {
           showToast('Please enter a weight greater than 0 grams.', 'warning');
@@ -8937,16 +9008,8 @@
       const metalSelect = document.getElementById('admin-calc-metal');
       if (metalSelect) metalSelect.value = 'gold';
 
-      const karatSelect = document.getElementById('admin-calc-karat');
-      if (karatSelect) {
-        karatSelect.value = '24K';
-        karatSelect.disabled = false;
-        karatSelect.style.opacity = '1';
-        karatSelect.style.cursor = 'pointer';
-      }
-
-      const metalLabel = document.getElementById('admin-calc-metal-label');
-      if (metalLabel) metalLabel.textContent = 'Gold Rate';
+      adminSavedGoldKarat = '24K';
+      onAdminMetalChange();
 
       const weightInput = document.getElementById('admin-calc-weight');
       if (weightInput) weightInput.value = '';
